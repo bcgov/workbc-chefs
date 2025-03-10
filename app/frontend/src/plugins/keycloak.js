@@ -1,6 +1,7 @@
 // Sourced from https://github.com/fredicious/vue-keycloak-js
-import Keycloak from 'keycloak-js';
-
+//import Keycloak from 'keycloak-js';
+import Keycloak from './min.keycloak'
+//var Keycloak = require('keycloak-js')
 let installed = false;
 
 export default {
@@ -68,7 +69,7 @@ export default {
 
 function init(config, watch, options) {
   const ctor = sanitizeConfig(config);
-  const keycloak = Keycloak(ctor);
+  const keycloak = new Keycloak(ctor);
 
   watch.$once('ready', function (cb) {
     cb && cb();
