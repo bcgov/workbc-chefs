@@ -1,7 +1,5 @@
 // Sourced from https://github.com/fredicious/vue-keycloak-js
-//import Keycloak from 'keycloak-js';
-import Keycloak from './min.keycloak'
-//var Keycloak = require('keycloak-js')
+import Keycloak from 'keycloak-js';
 let installed = false;
 
 export default {
