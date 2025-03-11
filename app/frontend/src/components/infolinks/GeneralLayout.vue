@@ -232,7 +232,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-.submissions-table >>> tbody tr {
+.submissions-table :deep(tbody tr) {
   background: #bfbdbd14 !important;
   border: 1px solid #7070703f !important;
   margin-bottom: 35px !important;

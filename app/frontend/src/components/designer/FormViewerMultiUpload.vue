@@ -10,14 +10,11 @@
         <p class="my-2" :lang="lang">
           {{ $t('trans.formViewerMultiUpload.uploadSucessMsg') }}
           <span class="link">
-            <vue-blob-json-csv
-              tag-name="b"
-              file-type="json"
-              :file-name="json_csv.file_name"
-              :title="$t('trans.formViewerMultiUpload.download')"
-              :data="json_csv.data"
-              :confirm="this.$t('trans.formViewerMultiUpload.confirmDownload')"
-              :lang="lang"
+            <vue-json-csv
+            tag="b"
+            :name="json_csv.file_name"
+            :label="$t('trans.formViewerMultiUpload.download')"
+            :json-data="json_csv.data"
             />
             <v-icon class="mr-1" color="#003366">download</v-icon>
           </span>
@@ -106,16 +103,12 @@
               {{ this.$t('trans.formViewerMultiUpload.downloadDraftSubmns') }}
               <br />
               <span class="link">
-                <vue-blob-json-csv
-                  tag-name="b"
-                  file-type="csv"
-                  :file-name="response.file_name"
-                  :title="this.$t('trans.formViewerMultiUpload.downloadReport')"
-                  :data="response.response"
-                  :confirm="
-                    this.$t('trans.formViewerMultiUpload.doYouWantToDownload')
-                  "
-                  :lang="lang"
+                <vue-json-csv
+                tag="b"
+                type="csv"
+                :name="response.file_name"
+                :label="this.$t('trans.formViewerMultiUpload.downloadReport')"
+                :json-data="response.response"
                 />
                 <v-icon class="mr-1" color="#003366">download</v-icon>
               </span>
@@ -149,13 +142,16 @@
 import { defineComponent, nextTick } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
-import { Formio, Utils } from 'vue-formio';
+import { Formio, Utils } from '@formio/vue';
 // import { nextTick } from 'process';
 import _ from 'lodash';
+import JsonCSV from 'vue-json-csv';
 export default defineComponent({
-  emits: ['toggleBlock', 'set-error', 'save-bulk-data', 'reset-message'],
-  name: 'FormViewerDownloadButton',
-  components: {},
+emits: ['toggleBlock', 'set-error', 'save-bulk-data', 'reset-message'],
+name: 'FormViewerDownloadButton',
+components: {
+    'vue-json-csv': JsonCSV,
+},
 
   props: {
     formElement: undefined,

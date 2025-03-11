@@ -126,7 +126,7 @@ import { defineComponent } from 'vue';
 
 //import Vue from 'vue';
 import { mapActions, mapGetters } from 'vuex';
-import { FormBuilder } from 'vue-formio';
+import { FormBuilder } from '@formio/vue';
 import { mapFields } from 'vuex-map-fields';
 import { compare, applyPatch, deepClone } from 'fast-json-patch';
 import templateExtensions from '~/plugins/templateExtensions';
