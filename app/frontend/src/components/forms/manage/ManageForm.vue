@@ -23,7 +23,7 @@
                 small
                 icon
                 color="primary"
-                @click.native.stop="enableSettingsEdit"
+                @click.stop="enableSettingsEdit"
               >
                 <v-icon>edit</v-icon>
               </v-btn>
@@ -160,6 +160,8 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters, mapActions } from 'vuex';
 
 import { FormPermissions, NotificationTypes } from '@/utils/constants';
@@ -168,9 +170,10 @@ import FormSettings from '@/components/designer/FormSettings.vue';
 import ManageVersions from '@/components/forms/manage/ManageVersions.vue';
 import Subscription from '@/components/forms/manage/Subscription.vue';
 
-export default {
+export default defineComponent({
   name: 'ManageForm',
   components: { ApiKey, FormSettings, ManageVersions, Subscription },
+
   data() {
     return {
       apiKeyPanel: 1,
@@ -182,6 +185,7 @@ export default {
       subscription: false,
     };
   },
+
   computed: {
     ...mapGetters('form', [
       'apiKey',
@@ -236,6 +240,7 @@ export default {
       }
     },
   },
+
   methods: {
     ...mapActions('form', [
       'fetchForm',
@@ -276,10 +281,11 @@ export default {
       this.subscriptionsPanel = value;
     },
   },
+
   async mounted() {
     await this.readFormSubscriptionData(this.form.id);
   },
-};
+});
 </script>
 
 <style>

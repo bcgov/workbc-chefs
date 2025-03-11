@@ -59,18 +59,22 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 import formService from '@/services/formService.js';
 
-export default {
+export default defineComponent({
   name: 'AuditHistory',
+
   props: {
     submissionId: {
       type: String,
       required: true,
     },
   },
+
   data() {
     return {
       dialog: false,
@@ -78,6 +82,7 @@ export default {
       history: [],
     };
   },
+
   computed: {
     headers() {
       return [
@@ -90,6 +95,7 @@ export default {
     },
     ...mapGetters('form', ['isRTL', 'lang']),
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     async loadHistory() {
@@ -112,5 +118,5 @@ export default {
       }
     },
   },
-};
+});
 </script>

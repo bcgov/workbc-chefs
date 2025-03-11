@@ -48,7 +48,7 @@
             :type="
               showSecret ? $t('trans.apiKey.text') : $t('trans.apiKey.password')
             "
-            :value="secret"
+            :modelValue="secret"
             :lang="lang"
           />
         </v-col>
@@ -160,11 +160,14 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { FormPermissions } from '@/utils/constants';
 
-export default {
+export default defineComponent({
   name: 'ApiKey',
+
   data() {
     return {
       loading: false,
@@ -173,6 +176,7 @@ export default {
       showSecret: false,
     };
   },
+
   computed: {
     ...mapGetters('form', ['apiKey', 'form', 'permissions', 'isRTL', 'lang']),
     canDeleteKey() {
@@ -193,6 +197,7 @@ export default {
       return this.apiKey && this.apiKey.secret ? this.apiKey.secret : undefined;
     },
   },
+
   methods: {
     ...mapActions('form', ['deleteApiKey', 'generateApiKey', 'readApiKey']),
     async createKey() {
@@ -217,10 +222,11 @@ export default {
       this.showSecret = !this.showSecret;
     },
   },
+
   created() {
     if (this.canGenerateKey) {
       this.readKey();
     }
   },
-};
+});
 </script>

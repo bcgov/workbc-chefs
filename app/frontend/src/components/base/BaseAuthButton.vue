@@ -10,10 +10,13 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters, mapActions } from 'vuex';
 
-export default {
+export default defineComponent({
   name: 'BaseAuthButton',
+
   computed: {
     ...mapGetters('auth', ['authenticated', 'keycloakReady']),
     ...mapGetters('form', ['lang']),
@@ -21,6 +24,7 @@ export default {
       return this.$route && this.$route.meta && this.$route.meta.hasLogin;
     },
   },
+
   methods: mapActions('auth', ['login', 'logout']),
-};
+});
 </script>

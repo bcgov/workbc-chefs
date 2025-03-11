@@ -52,9 +52,13 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
+  emits: ['deleted'],
+
   props: {
     disabled: {
       type: Boolean,
@@ -69,12 +73,15 @@ export default {
       required: true,
     },
   },
+
   data() {
     return {
       showDeleteDialog: false,
     };
   },
+
   computed: mapGetters('form', ['form', 'lang', 'isRTL']),
+
   methods: {
     ...mapActions('form', ['deleteSubmission']),
     async delSub() {
@@ -83,5 +90,5 @@ export default {
       this.$emit('deleted');
     },
   },
-};
+});
 </script>

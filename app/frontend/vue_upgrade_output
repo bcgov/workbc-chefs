@@ -1,0 +1,1150 @@
+Processed 524 of 524 matching files with 0 errors
+╔══════════════════════════════════════╤═══════╗
+║ Codemod name                         │ Count ║
+╟──────────────────────────────────────┼───────╢
+║ vue-set                              │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-delete                           │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-contextual-h                     │ 1     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-defineComponent                  │ 89    ║
+╟──────────────────────────────────────┼───────╢
+║ vue-v-on-native                      │ 1     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-hook-events                      │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-v-bind-sync                      │ 2     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-scoped-slots                     │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-nextTick                         │ 6     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-lifecycle-hooks                  │ 3     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-data-function                    │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-functional-component             │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-remove-$listeners                │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-v-model                          │ 33    ║
+╟──────────────────────────────────────┼───────╢
+║ vue-v-deep                           │ 3     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-array-watch                      │ 4     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-emits-sfc                        │ 12    ║
+╟──────────────────────────────────────┼───────╢
+║ vue-emits-non-sfc                    │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-transition-group-root-element    │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-transition-props                 │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vuex-instantiation                   │ 1     ║
+╟──────────────────────────────────────┼───────╢
+║ test-utils-wrapper-destroy           │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ test-utils-propsData                 │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ test-utils-scoped-slots-mount-option │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ test-utils-global-mount-options      │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-router-instantiation             │ 1     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-router-onReady                   │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-router-getMatchedComponents      │ 0     ║
+╟──────────────────────────────────────┼───────╢
+║ vue-router-view-slot-content         │ 0     ║
+╚══════════════════════════════════════╧═══════╝
+
+MANUAL MIGRATIONS:
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/main.js 25:1-25:51
+Move Vue.component() to chain from createApp()
+See: https://v3-migration.vuejs.org/breaking-changes/global-api.html#global-api-application-instance
+
+22 | /* import font awesome icon component */
+23 | import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+24 | /* add font awesome icon component */
+25 | Vue.component('font-awesome-icon', FontAwesomeIcon);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+26 | import VueBlobJsonCsv from 'vue-blob-json-csv';
+27 | Vue.use(VueBlobJsonCsv);
+28 | 
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/main.js 27:1-27:23
+Move Vue.use() to chain from createApp()
+See: https://v3-migration.vuejs.org/breaking-changes/global-api.html#global-api-application-instance
+
+24 | /* add font awesome icon component */
+25 | Vue.component('font-awesome-icon', FontAwesomeIcon);
+26 | import VueBlobJsonCsv from 'vue-blob-json-csv';
+27 | Vue.use(VueBlobJsonCsv);
+   | ^^^^^^^^^^^^^^^^^^^^^^^
+28 | 
+29 | import VueKeycloakJs from '~/plugins/keycloak';
+30 | import vuetify from '~/plugins/vuetify';
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/main.js 49:3-49:74
+Move Vue.component() to chain from createApp()
+See: https://v3-migration.vuejs.org/breaking-changes/global-api.html#global-api-application-instance
+
+46 |     .split('/')
+47 |     .pop()
+48 |     .replace(/\.\w+$/, '');
+49 |   Vue.component(componentName, componentConfig.default || componentConfig);
+   |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+50 | });
+51 | 
+52 | // IE11 Detection (https://stackoverflow.com/a/21825207)
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/main.js 103:5-103:17
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+100 | 
+101 |     // Mount the configuration as a prototype for easier access from Vue
+102 |     const config = JSON.parse(sessionStorage.getItem(storageKey));
+103 |     Vue.prototype.$config = Object.freeze(config);
+    |     ^^^^^^^^^^^^^
+104 | 
+105 |     if (
+106 |       !config ||
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/main.js 129:3-143:4
+Move Vue.use() to chain from createApp()
+See: https://v3-migration.vuejs.org/breaking-changes/global-api.html#global-api-application-instance
+
+126 |  * @param {object} config A config object
+127 |  */
+128 | function loadKeycloak(config) {
+129 |   Vue.use(VueKeycloakJs, {
+    |   ^^^^^^^^^^^^^^^^^^^^^^^^
+130 |     init: { onLoad: 'check-sso' },
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+131 |     config: {
+    | ^^^^^^^^^^^^^
+132 |       clientId: config.keycloak.clientId,
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+133 |       realm: config.keycloak.realm,
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+134 |       url: config.keycloak.serverUrl,
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+135 |     },
+    | ^^^^^^
+136 |     onReady: () => {
+    | ^^^^^^^^^^^^^^^^^^^^
+137 |       initializeApp(true, config.basePath);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+138 |     },
+    | ^^^^^^
+139 |     onInitError: (error) => {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+140 |       console.error('Keycloak failed to initialize'); // eslint-disable-line no-console
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+141 |       console.error(error); // eslint-disable-line no-console
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+142 |     },
+    | ^^^^^^
+143 |   });
+    | ^^^^
+144 | }
+145 | 
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/index.js 7:1-7:13
+Move Vue.use() to chain from createApp()
+See: https://v3-migration.vuejs.org/breaking-changes/global-api.html#global-api-application-instance
+
+ 4 | import form from '@/store/modules/form.js';
+ 5 | import notifications from '@/store/modules/notifications.js';
+ 6 | 
+ 7 | Vue.use(Vuex);
+   | ^^^^^^^^^^^^^
+ 8 | 
+ 9 | const plugins = [];
+10 | 
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 25:26-25:38
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+22 |     redirectUri: undefined,
+23 |   },
+24 |   getters: {
+25 |     authenticated: () => Vue.prototype.$keycloak.authenticated,
+   |                          ^^^^^^^^^^^^^
+26 |     createLoginUrl: () => (options) =>
+27 |       Vue.prototype.$keycloak.createLoginUrl(options),
+28 |     createLogoutUrl: () => (options) =>
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 27:7-27:19
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+24 |   getters: {
+25 |     authenticated: () => Vue.prototype.$keycloak.authenticated,
+26 |     createLoginUrl: () => (options) =>
+27 |       Vue.prototype.$keycloak.createLoginUrl(options),
+   |       ^^^^^^^^^^^^^
+28 |     createLogoutUrl: () => (options) =>
+29 |       Vue.prototype.$keycloak.createLogoutUrl(options),
+30 |     email: () =>
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 29:7-29:19
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+26 |     createLoginUrl: () => (options) =>
+27 |       Vue.prototype.$keycloak.createLoginUrl(options),
+28 |     createLogoutUrl: () => (options) =>
+29 |       Vue.prototype.$keycloak.createLogoutUrl(options),
+   |       ^^^^^^^^^^^^^
+30 |     email: () =>
+31 |       Vue.prototype.$keycloak.tokenParsed
+32 |         ? Vue.prototype.$keycloak.tokenParsed.email
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 31:7-31:19
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+28 |     createLogoutUrl: () => (options) =>
+29 |       Vue.prototype.$keycloak.createLogoutUrl(options),
+30 |     email: () =>
+31 |       Vue.prototype.$keycloak.tokenParsed
+   |       ^^^^^^^^^^^^^
+32 |         ? Vue.prototype.$keycloak.tokenParsed.email
+33 |         : '',
+34 |     fullName: () => Vue.prototype.$keycloak.fullName,
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 32:11-32:23
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+29 |       Vue.prototype.$keycloak.createLogoutUrl(options),
+30 |     email: () =>
+31 |       Vue.prototype.$keycloak.tokenParsed
+32 |         ? Vue.prototype.$keycloak.tokenParsed.email
+   |           ^^^^^^^^^^^^^
+33 |         : '',
+34 |     fullName: () => Vue.prototype.$keycloak.fullName,
+35 |     hasResourceRoles: (_state, getters) => (resource, roles) => {
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 34:21-34:33
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+31 |       Vue.prototype.$keycloak.tokenParsed
+32 |         ? Vue.prototype.$keycloak.tokenParsed.email
+33 |         : '',
+34 |     fullName: () => Vue.prototype.$keycloak.fullName,
+   |                     ^^^^^^^^^^^^^
+35 |     hasResourceRoles: (_state, getters) => (resource, roles) => {
+36 |       if (!getters.authenticated) return false;
+37 |       if (!roles.length) return true; // No roles to check against
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 45:7-45:19
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+42 |       return false; // There are roles to check, but nothing in token to check against
+43 |     },
+44 |     identityProvider: () =>
+45 |       Vue.prototype.$keycloak.tokenParsed
+   |       ^^^^^^^^^^^^^
+46 |         ? Vue.prototype.$keycloak.tokenParsed.identity_provider
+47 |         : null,
+48 |     isAdmin: (_state, getters) => getters.hasResourceRoles('chefs', ['admin']),
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 46:11-46:23
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+43 |     },
+44 |     identityProvider: () =>
+45 |       Vue.prototype.$keycloak.tokenParsed
+46 |         ? Vue.prototype.$keycloak.tokenParsed.identity_provider
+   |           ^^^^^^^^^^^^^
+47 |         : null,
+48 |     isAdmin: (_state, getters) => getters.hasResourceRoles('chefs', ['admin']),
+49 |     isUser: (_state, getters) => getters.hasResourceRoles('chefs', ['user']),
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 50:26-50:38
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+47 |         : null,
+48 |     isAdmin: (_state, getters) => getters.hasResourceRoles('chefs', ['admin']),
+49 |     isUser: (_state, getters) => getters.hasResourceRoles('chefs', ['user']),
+50 |     keycloakReady: () => Vue.prototype.$keycloak.ready,
+   |                          ^^^^^^^^^^^^^
+51 |     keycloakSubject: () => Vue.prototype.$keycloak.subject,
+52 |     identityProviderIdentity: () =>
+53 |       Vue.prototype.$keycloak.tokenParsed.idp_userid,
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 51:28-51:40
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+48 |     isAdmin: (_state, getters) => getters.hasResourceRoles('chefs', ['admin']),
+49 |     isUser: (_state, getters) => getters.hasResourceRoles('chefs', ['user']),
+50 |     keycloakReady: () => Vue.prototype.$keycloak.ready,
+51 |     keycloakSubject: () => Vue.prototype.$keycloak.subject,
+   |                            ^^^^^^^^^^^^^
+52 |     identityProviderIdentity: () =>
+53 |       Vue.prototype.$keycloak.tokenParsed.idp_userid,
+54 |     moduleLoaded: () => !!Vue.prototype.$keycloak,
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 53:7-53:19
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+50 |     keycloakReady: () => Vue.prototype.$keycloak.ready,
+51 |     keycloakSubject: () => Vue.prototype.$keycloak.subject,
+52 |     identityProviderIdentity: () =>
+53 |       Vue.prototype.$keycloak.tokenParsed.idp_userid,
+   |       ^^^^^^^^^^^^^
+54 |     moduleLoaded: () => !!Vue.prototype.$keycloak,
+55 |     realmAccess: () => Vue.prototype.$keycloak.tokenParsed.realm_access,
+56 |     redirectUri: (state) => state.redirectUri,
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 54:27-54:39
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+51 |     keycloakSubject: () => Vue.prototype.$keycloak.subject,
+52 |     identityProviderIdentity: () =>
+53 |       Vue.prototype.$keycloak.tokenParsed.idp_userid,
+54 |     moduleLoaded: () => !!Vue.prototype.$keycloak,
+   |                           ^^^^^^^^^^^^^
+55 |     realmAccess: () => Vue.prototype.$keycloak.tokenParsed.realm_access,
+56 |     redirectUri: (state) => state.redirectUri,
+57 |     resourceAccess: () => Vue.prototype.$keycloak.tokenParsed.resource_access,
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 55:24-55:36
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+52 |     identityProviderIdentity: () =>
+53 |       Vue.prototype.$keycloak.tokenParsed.idp_userid,
+54 |     moduleLoaded: () => !!Vue.prototype.$keycloak,
+55 |     realmAccess: () => Vue.prototype.$keycloak.tokenParsed.realm_access,
+   |                        ^^^^^^^^^^^^^
+56 |     redirectUri: (state) => state.redirectUri,
+57 |     resourceAccess: () => Vue.prototype.$keycloak.tokenParsed.resource_access,
+58 |     token: () => Vue.prototype.$keycloak.token,
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 57:27-57:39
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+54 |     moduleLoaded: () => !!Vue.prototype.$keycloak,
+55 |     realmAccess: () => Vue.prototype.$keycloak.tokenParsed.realm_access,
+56 |     redirectUri: (state) => state.redirectUri,
+57 |     resourceAccess: () => Vue.prototype.$keycloak.tokenParsed.resource_access,
+   |                           ^^^^^^^^^^^^^
+58 |     token: () => Vue.prototype.$keycloak.token,
+59 |     tokenParsed: () => Vue.prototype.$keycloak.tokenParsed,
+60 |     userName: () => Vue.prototype.$keycloak.userName,
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 58:18-58:30
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+55 |     realmAccess: () => Vue.prototype.$keycloak.tokenParsed.realm_access,
+56 |     redirectUri: (state) => state.redirectUri,
+57 |     resourceAccess: () => Vue.prototype.$keycloak.tokenParsed.resource_access,
+58 |     token: () => Vue.prototype.$keycloak.token,
+   |                  ^^^^^^^^^^^^^
+59 |     tokenParsed: () => Vue.prototype.$keycloak.tokenParsed,
+60 |     userName: () => Vue.prototype.$keycloak.userName,
+61 |     user: (_state, getters) => {
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 59:24-59:36
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+56 |     redirectUri: (state) => state.redirectUri,
+57 |     resourceAccess: () => Vue.prototype.$keycloak.tokenParsed.resource_access,
+58 |     token: () => Vue.prototype.$keycloak.token,
+59 |     tokenParsed: () => Vue.prototype.$keycloak.tokenParsed,
+   |                        ^^^^^^^^^^^^^
+60 |     userName: () => Vue.prototype.$keycloak.userName,
+61 |     user: (_state, getters) => {
+62 |       const user = {
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 60:21-60:33
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+57 |     resourceAccess: () => Vue.prototype.$keycloak.tokenParsed.resource_access,
+58 |     token: () => Vue.prototype.$keycloak.token,
+59 |     tokenParsed: () => Vue.prototype.$keycloak.tokenParsed,
+60 |     userName: () => Vue.prototype.$keycloak.userName,
+   |                     ^^^^^^^^^^^^^
+61 |     user: (_state, getters) => {
+62 |       const user = {
+63 |         username: '',
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 95:32-95:44
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+92 |   actions: {
+93 |     // TODO: Ideally move this to notifications module, but some strange interactions with lazy loading in unit tests
+94 |     errorNavigate(_store, msg) {
+95 |       const router = getRouter(Vue.prototype.$config.basePath);
+   |                                ^^^^^^^^^^^^^
+96 |       router.replace({ name: 'Error', params: { msg: msg } });
+97 |     },
+98 |     alertNavigate(_store, { type, message }) {
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 99:32-99:44
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+ 96 |       router.replace({ name: 'Error', params: { msg: msg } });
+ 97 |     },
+ 98 |     alertNavigate(_store, { type, message }) {
+ 99 |       const router = getRouter(Vue.prototype.$config.basePath);
+    |                                ^^^^^^^^^^^^^
+100 |       router.replace({
+101 |         name: 'Alert',
+102 |         params: { message: message, type: type },
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 127:36-127:48
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+124 |           window.location.replace(getters.createLoginUrl(options));
+125 |         } else {
+126 |           // Navigate to internal login page if no idpHint specified
+127 |           const router = getRouter(Vue.prototype.$config.basePath);
+    |                                    ^^^^^^^^^^^^^
+128 |           router.replace({
+129 |             name: 'Login',
+130 |             params: { idpHint: ['idir', 'bceid'] },
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/store/modules/auth.js 139:48-139:60
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+136 |       if (getters.keycloakReady) {
+137 |         window.location.replace(
+138 |           getters.createLogoutUrl({
+139 |             redirectUri: `${location.origin}/${Vue.prototype.$config.basePath}`,
+    |                                                ^^^^^^^^^^^^^
+140 |           })
+141 |         );
+142 |       }
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/services/interceptors.js 12:7-12:19
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+ 9 |  */
+10 | export function appAxios(timeout = 10000) {
+11 |   const axiosOptions = { timeout: timeout };
+12 |   if (Vue.prototype.$config) {
+   |       ^^^^^^^^^^^^^
+13 |     const config = Vue.prototype.$config;
+14 |     axiosOptions.baseURL = `${config.basePath}/${config.apiPath}`;
+15 |   }
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/services/interceptors.js 13:20-13:32
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+10 | export function appAxios(timeout = 10000) {
+11 |   const axiosOptions = { timeout: timeout };
+12 |   if (Vue.prototype.$config) {
+13 |     const config = Vue.prototype.$config;
+   |                    ^^^^^^^^^^^^^
+14 |     axiosOptions.baseURL = `${config.basePath}/${config.apiPath}`;
+15 |   }
+16 | 
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/services/interceptors.js 22:9-22:21
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+19 |   instance.interceptors.request.use(
+20 |     (cfg) => {
+21 |       if (
+22 |         Vue.prototype.$keycloak &&
+   |         ^^^^^^^^^^^^^
+23 |         Vue.prototype.$keycloak.ready &&
+24 |         Vue.prototype.$keycloak.authenticated
+25 |       ) {
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/services/interceptors.js 23:9-23:21
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+20 |     (cfg) => {
+21 |       if (
+22 |         Vue.prototype.$keycloak &&
+23 |         Vue.prototype.$keycloak.ready &&
+   |         ^^^^^^^^^^^^^
+24 |         Vue.prototype.$keycloak.authenticated
+25 |       ) {
+26 |         cfg.headers.Authorization = `Bearer ${Vue.prototype.$keycloak.token}`;
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/services/interceptors.js 24:9-24:21
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+21 |       if (
+22 |         Vue.prototype.$keycloak &&
+23 |         Vue.prototype.$keycloak.ready &&
+24 |         Vue.prototype.$keycloak.authenticated
+   |         ^^^^^^^^^^^^^
+25 |       ) {
+26 |         cfg.headers.Authorization = `Bearer ${Vue.prototype.$keycloak.token}`;
+27 |       }
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/services/interceptors.js 26:47-26:59
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+23 |         Vue.prototype.$keycloak.ready &&
+24 |         Vue.prototype.$keycloak.authenticated
+25 |       ) {
+26 |         cfg.headers.Authorization = `Bearer ${Vue.prototype.$keycloak.token}`;
+   |                                               ^^^^^^^^^^^^^
+27 |       }
+28 |       return Promise.resolve(cfg);
+29 |     },
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/router/index.js 9:1-9:18
+Move Vue.use() to chain from createApp()
+See: https://v3-migration.vuejs.org/breaking-changes/global-api.html#global-api-application-instance
+
+ 6 | import { IdentityProviders } from '@/utils/constants';
+ 7 | import { preFlightAuth } from '@/utils/permissionUtils';
+ 8 | 
+ 9 | Vue.use(VueRouter);
+   | ^^^^^^^^^^^^^^^^^^
+10 | 
+11 | let isFirstTransition = true;
+12 | let router = undefined;
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/router/index.js 436:9-436:18
+router.app was removed.
+See: https://router.vuejs.org/guide/migration/#Removal-of-router-app
+
+433 |     if (isFirstTransition) {
+434 |       // Always call rbac/current if authenticated and on first page load
+435 |       if (
+436 |         router.app.$keycloak &&
+    |         ^^^^^^^^^^
+437 |         router.app.$keycloak.ready &&
+438 |         router.app.$keycloak.authenticated
+439 |       ) {
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/router/index.js 437:9-437:18
+router.app was removed.
+See: https://router.vuejs.org/guide/migration/#Removal-of-router-app
+
+434 |       // Always call rbac/current if authenticated and on first page load
+435 |       if (
+436 |         router.app.$keycloak &&
+437 |         router.app.$keycloak.ready &&
+    |         ^^^^^^^^^^
+438 |         router.app.$keycloak.authenticated
+439 |       ) {
+440 |         store.dispatch('form/getFormsForCurrentUser');
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/router/index.js 438:9-438:18
+router.app was removed.
+See: https://router.vuejs.org/guide/migration/#Removal-of-router-app
+
+435 |       if (
+436 |         router.app.$keycloak &&
+437 |         router.app.$keycloak.ready &&
+438 |         router.app.$keycloak.authenticated
+    |         ^^^^^^^^^^
+439 |       ) {
+440 |         store.dispatch('form/getFormsForCurrentUser');
+441 |       }
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/router/index.js 457:7-457:16
+router.app was removed.
+See: https://router.vuejs.org/guide/migration/#Removal-of-router-app
+
+454 |     // in those cases, see the beforeEnter navigation guards for auth loop determination
+455 |     if (
+456 |       to.matched.some((route) => route.meta.requiresAuth) &&
+457 |       router.app.$keycloak &&
+    |       ^^^^^^^^^^
+458 |       router.app.$keycloak.ready &&
+459 |       !router.app.$keycloak.authenticated
+460 |     ) {
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/router/index.js 458:7-458:16
+router.app was removed.
+See: https://router.vuejs.org/guide/migration/#Removal-of-router-app
+
+455 |     if (
+456 |       to.matched.some((route) => route.meta.requiresAuth) &&
+457 |       router.app.$keycloak &&
+458 |       router.app.$keycloak.ready &&
+    |       ^^^^^^^^^^
+459 |       !router.app.$keycloak.authenticated
+460 |     ) {
+461 |       const redirectUri =
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/router/index.js 459:8-459:17
+router.app was removed.
+See: https://router.vuejs.org/guide/migration/#Removal-of-router-app
+
+456 |       to.matched.some((route) => route.meta.requiresAuth) &&
+457 |       router.app.$keycloak &&
+458 |       router.app.$keycloak.ready &&
+459 |       !router.app.$keycloak.authenticated
+    |        ^^^^^^^^^^
+460 |     ) {
+461 |       const redirectUri =
+462 |         location.origin + basePath + to.path + location.search;
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/plugins/vuetify.js 22:1-22:16
+Move Vue.use() to chain from createApp()
+See: https://v3-migration.vuejs.org/breaking-changes/global-api.html#global-api-application-instance
+
+19 | import es from 'vuetify/lib/locale/es';
+20 | import ar from 'vuetify/lib/locale/ar';
+21 | 
+22 | Vue.use(Vuetify);
+   | ^^^^^^^^^^^^^^^^
+23 | 
+24 | export default new Vuetify({
+25 |   defaultAssets: {
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/plugins/keycloak.js 55:27-55:39
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+52 |         };
+53 |       },
+54 |     });
+55 |     Object.defineProperty(Vue.prototype, '$keycloak', {
+   |                           ^^^^^^^^^^^^^
+56 |       get() {
+57 |         return watch;
+58 |       },
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/internationalization/index.js 23:1-23:16
+Move Vue.use() to chain from createApp()
+See: https://v3-migration.vuejs.org/breaking-changes/global-api.html#global-api-application-instance
+
+20 | import zh from '@/internationalization/trans/chefs/zh';
+21 | import zhTW from '@/internationalization/trans/chefs/zhTW';
+22 | 
+23 | Vue.use(VueI18n);
+   | ^^^^^^^^^^^^^^^^
+24 | 
+25 | const messages = {
+26 |   ar: ar,
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/SubmissionsTable.vue 181:12-181:37
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+178 |       </template>
+179 | 
+180 |       <template #[`item.date`]="{ item }">
+181 |         {{ item.date | formatDateLong }}
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+182 |       </template>
+183 |       <template #[`item.updatedAt`]="{ item }">
+184 |         {{ item.updatedAt | formatDateLong }}
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/SubmissionsTable.vue 184:12-184:42
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+181 |         {{ item.date | formatDateLong }}
+182 |       </template>
+183 |       <template #[`item.updatedAt`]="{ item }">
+184 |         {{ item.updatedAt | formatDateLong }}
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+185 |       </template>
+186 |       <template #[`item.status`]="{ item }">
+187 |         {{ item.status }}
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/FormSubmission.vue 17:16-17:56
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+14 |           <h1>{{ form.name }}</h1>
+15 |           <p :lang="lang">
+16 |             <strong>{{ $t('trans.formSubmission.submitted') }}</strong>
+17 |             {{ formSubmission.createdAt | formatDateLong }}
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+18 |             <br />
+19 |             <strong>{{ $t('trans.formSubmission.confirmationID') }}</strong>
+20 |             {{ formSubmission.confirmationId }}
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/FormSubmission.vue 27:18-27:58
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+24 |             <br />
+25 |             <span v-if="formSubmission.updatedBy">
+26 |               <strong>{{ $t('trans.formSubmission.updatedAt') }}:</strong>
+27 |               {{ formSubmission.updatedAt | formatDateLong }}
+   |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+28 |               <br />
+29 |               <strong>{{ $t('trans.formSubmission.updatedBy') }}:</strong>
+30 |               {{ formSubmission.updatedBy }}
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/submission/StatusTable.vue 15:18-15:44
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+12 |       :lang="lang"
+13 |     >
+14 |       <template #[`item.createdAt`]="{ item }">
+15 |         <span>{{ item.createdAt | formatDate }}</span>
+   |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+16 |       </template>
+17 | 
+18 |       <template #[`item.user`]="{ item }">{{
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/submission/NotesPanel.vue 71:14-71:44
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+68 |     <ul class="mt-5" :class="{ 'dir-rtl': isRTL, 'mr-2': isRTL }">
+69 |       <li class="mb-2" v-for="note in notes" :key="note.noteId">
+70 |         <strong>
+71 |           {{ note.createdAt | formatDateLong }} -
+   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+72 |           {{ note.createdBy }}
+73 |         </strong>
+74 |         <br />
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/submission/MySubmissionsTable.vue 95:12-95:43
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+92 |       @update:options="updateTableOptions"
+93 |     >
+94 |       <template #[`item.lastEdited`]="{ item }">
+95 |         {{ item.lastEdited | formatDateLong }}
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+96 |       </template>
+97 |       <template #[`item.submittedDate`]="{ item }">
+98 |         {{ item.submittedDate | formatDateLong }}
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/submission/MySubmissionsTable.vue 98:12-98:46
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+ 95 |         {{ item.lastEdited | formatDateLong }}
+ 96 |       </template>
+ 97 |       <template #[`item.submittedDate`]="{ item }">
+ 98 |         {{ item.submittedDate | formatDateLong }}
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 99 |       </template>
+100 | 
+101 |       <template #[`item.completedDate`]="{ item }">
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/submission/MySubmissionsTable.vue 102:12-102:46
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+ 99 |       </template>
+100 | 
+101 |       <template #[`item.completedDate`]="{ item }">
+102 |         {{ item.completedDate | formatDateLong }}
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+103 |       </template>
+104 |       <template #[`item.actions`]="{ item }">
+105 |         <MySubmissionsActions
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/submission/AuditHistory.vue 46:18-46:54
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+43 |             :lang="lang"
+44 |           >
+45 |             <template #[`item.actionTimestamp`]="{ item }">
+46 |               {{ item.actionTimestamp | formatDateLong }}
+   |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+47 |             </template>
+48 |           </v-data-table>
+49 |         </v-card-text>
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/manage/ManageVersions.vue 83:12-83:42
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+80 | 
+81 |       <!-- Created date  -->
+82 |       <template #[`item.createdAt`]="{ item }">
+83 |         {{ item.createdAt | formatDateLong }}
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+84 |       </template>
+85 | 
+86 |       <!-- Created by  -->
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/manage/ManageForm.vue 19:20-19:46
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+16 |             <span :lang="lang">
+17 |               <small>
+18 |                 {{ $t('trans.manageForm.created') }}:
+19 |                 {{ form.createdAt | formatDate }} ({{ form.createdBy }})
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 |               </small>
+21 |               <v-btn
+22 |                 v-if="canEditForm"
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/manage/ManageForm.vue 79:20-79:58
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+76 |             <span v-if="subscriptionData" :lang="lang">
+77 |               <small v-if="subscriptionData.updatedBy">
+78 |                 {{ $t('trans.manageForm.updated') }}:
+79 |                 {{ subscriptionData.updatedAt | formatDate }} ({{
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+80 |                   subscriptionData.updatedBy
+81 |                 }})
+82 |               </small>
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/manage/ManageForm.vue 85:20-85:58
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+82 |               </small>
+83 |               <small v-else>
+84 |                 {{ $t('trans.manageForm.created') }}:
+85 |                 {{ subscriptionData.createdAt | formatDate }} ({{
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+86 |                   subscriptionData.createdBy
+87 |                 }})
+88 |               </small>
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/manage/ManageForm.vue 114:20-114:48
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+111 |             <span v-if="apiKey" :lang="lang">
+112 |               <small v-if="apiKey.updatedBy">
+113 |                 {{ $t('trans.manageForm.updated') }}:
+114 |                 {{ apiKey.updatedAt | formatDate }} ({{ apiKey.updatedBy }})
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+115 |               </small>
+116 |               <small v-else>
+117 |                 {{ $t('trans.manageForm.created') }}:
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/forms/manage/ManageForm.vue 118:20-118:48
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+115 |               </small>
+116 |               <small v-else>
+117 |                 {{ $t('trans.manageForm.created') }}:
+118 |                 {{ apiKey.createdAt | formatDate }} ({{ apiKey.createdBy }})
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+119 |               </small>
+120 |             </span>
+121 |           </div>
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/designer/FormViewer.vue 324:21-324:33
+Move Vue.prototype assignment to createApp().config.globalProperties
+
+321 |         // pass in options for custom components to use
+322 |         componentOptions: {
+323 |           simplefile: {
+324 |             config: Vue.prototype.$config,
+    |                     ^^^^^^^^^^^^^
+325 |             chefsToken: this.getCurrentAuthHeader,
+326 |           },
+327 |         },
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/designer/FloatButton.vue 26:9-26:17
+The 'tag' attribute was removed from router-link
+See: https://router.vuejs.org/guide/migration/#Removal-of-event-and-tag-props-in-router-link-
+
+23 |           query: { f: formId, fd: 'formDesigner', d: draftId },
+24 |         }"
+25 |         :class="{ 'disabled-router': !formId }"
+26 |         tag="div"
+   |         ^^^^^^^^^
+27 |       >
+28 |         <div
+29 |           class="text"
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/designer/FloatButton.vue 50:9-50:17
+The 'tag' attribute was removed from router-link
+See: https://router.vuejs.org/guide/migration/#Removal-of-event-and-tag-props-in-router-link-
+
+47 |         ref="settingsRouterLink"
+48 |         :to="{ name: 'FormManage', query: { f: formId } }"
+49 |         :class="{ 'disabled-router': !formId }"
+50 |         tag="div"
+   |         ^^^^^^^^^
+51 |       >
+52 |         <div
+53 |           class="text"
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/base/BaseCopyToClipboard.vue 32:1-32:21
+Move Vue.use() to chain from createApp()
+See: https://v3-migration.vuejs.org/breaking-changes/global-api.html#global-api-application-instance
+
+29 | import i18n from '@/internationalization';
+30 | 
+31 | VueClipboard.config.autoSetContainer = true;
+32 | Vue.use(VueClipboard);
+   | ^^^^^^^^^^^^^^^^^^^^^
+33 | 
+34 | export default defineComponent({
+35 |   emits: ['copied'],
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/admin/AdminVersions.vue 30:10-30:40
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+27 | 
+28 |     <!-- Created date  -->
+29 |     <template #[`item.createdAt`]="{ item }">
+30 |       {{ item.createdAt | formatDateLong }}
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+31 |     </template>
+32 | 
+33 |     <!-- Updated at  -->
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/admin/AdminVersions.vue 35:10-35:40
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+32 | 
+33 |     <!-- Updated at  -->
+34 |     <template #[`item.updatedAt`]="{ item }">
+35 |       {{ item.updatedAt | formatDateLong }}
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+36 |     </template>
+37 | 
+38 |     <!-- Actions -->
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/admin/AdminUsersTable.vue 37:12-37:38
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+34 |       :lang="lang"
+35 |     >
+36 |       <template #[`item.created`]="{ item }">
+37 |         {{ item.createdAt | formatDate }}
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+38 |       </template>
+39 |       <template #[`item.actions`]="{ item }">
+40 |         <router-link :to="{ name: 'AdministerUser', query: { u: item.id } }">
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/admin/AdminFormsTable.vue 52:12-52:42
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+49 |       :no-data-text="$t('trans.adminFormsTable.noDataText')"
+50 |     >
+51 |       <template #[`item.createdAt`]="{ item }">
+52 |         {{ item.createdAt | formatDateLong }} - {{ item.createdBy }}
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+53 |       </template>
+54 |       <template #[`item.updatedAt`]="{ item }">
+55 |         {{ item.updatedAt | formatDateLong }} - {{ item.updatedBy }}
+
+---
+
+
+/Users/brankowork/Projects/common-hosted-form-service/app/frontend/src/components/admin/AdminFormsTable.vue 55:12-55:42
+Filters have been removed.
+See: https://v3-migration.vuejs.org/breaking-changes/filters.html#filters
+
+52 |         {{ item.createdAt | formatDateLong }} - {{ item.createdBy }}
+53 |       </template>
+54 |       <template #[`item.updatedAt`]="{ item }">
+55 |         {{ item.updatedAt | formatDateLong }} - {{ item.updatedBy }}
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+56 |       </template>
+57 |       <template #[`item.actions`]="{ item }">
+58 |         <router-link :to="{ name: 'AdministerForm', query: { f: item.id } }">
+
+---
+
+

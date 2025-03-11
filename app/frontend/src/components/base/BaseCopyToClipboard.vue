@@ -23,7 +23,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import Vue from 'vue';
+import Vue, { defineComponent } from 'vue';
 import VueClipboard from 'vue-clipboard2';
 import { NotificationTypes } from '@/utils/constants';
 import i18n from '@/internationalization';
@@ -31,8 +31,10 @@ import i18n from '@/internationalization';
 VueClipboard.config.autoSetContainer = true;
 Vue.use(VueClipboard);
 
-export default {
+export default defineComponent({
+  emits: ['copied'],
   name: 'BaseCopyToClipboard',
+
   props: {
     buttonText: {
       type: String,
@@ -54,6 +56,7 @@ export default {
       default: i18n.t('trans.baseCopyToClipboard.copyToClipboard'),
     },
   },
+
   data() {
     return {
       clipSnackbar: {
@@ -62,6 +65,7 @@ export default {
       },
     };
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     clipboardSuccessHandler() {
@@ -77,5 +81,5 @@ export default {
       });
     },
   },
-};
+});
 </script>

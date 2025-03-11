@@ -9,14 +9,17 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapState, mapGetters } from 'vuex';
-export default {
+export default defineComponent({
   name: 'BaseNotificationContainer',
+
   computed: {
     ...mapState('notifications', ['notifications']),
     ...mapGetters('form', ['isRTL']),
   },
-};
+});
 </script>
 
 <style scoped>

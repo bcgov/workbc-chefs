@@ -23,17 +23,21 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { formService } from '@/services';
 
-export default {
+export default defineComponent({
   name: 'StatusTable',
+
   props: {
     submissionId: {
       required: true,
       type: String,
     },
   },
+
   data: () => ({
     statuses: [],
     loading: true,
@@ -54,6 +58,7 @@ export default {
     },
     ...mapGetters('form', ['isRTL', 'lang']),
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     async getData() {
@@ -75,10 +80,11 @@ export default {
       }
     },
   },
+
   mounted() {
     this.getData();
   },
-};
+});
 </script>
 
 <style scoped>

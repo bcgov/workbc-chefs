@@ -136,21 +136,26 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters, mapActions } from 'vuex';
 
 import MySubmissionsActions from '@/components/forms/submission/MySubmissionsActions.vue';
 
-export default {
+export default defineComponent({
   name: 'MySubmissionsTable',
+
   components: {
     MySubmissionsActions,
   },
+
   props: {
     formId: {
       type: String,
       required: true,
     },
   },
+
   data() {
     return {
       headers: [],
@@ -183,6 +188,7 @@ export default {
       search: '',
     };
   },
+
   computed: {
     ...mapGetters('form', [
       'form',
@@ -284,6 +290,7 @@ export default {
       return this.form && this.form.enableCopyExistingSubmission;
     },
   },
+
   methods: {
     ...mapActions('form', ['fetchForm', 'fetchSubmissions', 'fetchFormFields']),
     onShowColumnDialog() {
@@ -391,7 +398,7 @@ export default {
 
     await this.populateSubmissionsTable();
   },
-};
+});
 </script>
 
 <style scoped>

@@ -125,25 +125,30 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import AddOwner from './AddOwner.vue';
 import AdminVersions from './AdminVersions.vue';
 
 import VueJsonPretty from 'vue-json-pretty';
 
-export default {
+export default defineComponent({
   name: 'AdministerForm',
+
   components: {
     AddOwner,
     AdminVersions,
     VueJsonPretty,
   },
+
   props: {
     formId: {
       type: String,
       required: true,
     },
   },
+
   data() {
     return {
       formDetails: {},
@@ -154,10 +159,12 @@ export default {
       showRestoreDialog: false,
     };
   },
+
   computed: {
     ...mapGetters('admin', ['form', 'roles', 'apiKey']),
     ...mapGetters('form', ['lang']),
   },
+
   methods: {
     ...mapActions('admin', [
       'deleteApiKey',
@@ -177,6 +184,7 @@ export default {
       this.showRestoreDialog = false;
     },
   },
+
   async mounted() {
     await Promise.all([
       this.readForm(this.formId),
@@ -189,5 +197,5 @@ export default {
 
     this.loading = false;
   },
-};
+});
 </script>

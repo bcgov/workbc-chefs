@@ -23,11 +23,11 @@
         </v-card-title>
         <v-card-subtitle class="mt-1">
           <v-radio-group v-model="selectedIdp" row>
-            <v-radio label="IDIR" :value="ID_PROVIDERS.IDIR" />
-            <v-radio label="Basic BCeID" :value="ID_PROVIDERS.BCEIDBASIC" />
+            <v-radio label="IDIR" :modelValue="ID_PROVIDERS.IDIR" />
+            <v-radio label="Basic BCeID" :modelValue="ID_PROVIDERS.BCEIDBASIC" />
             <v-radio
               label="Business BCeID"
-              :value="ID_PROVIDERS.BCEIDBUSINESS"
+              :modelValue="ID_PROVIDERS.BCEIDBUSINESS"
             />
           </v-radio-group>
         </v-card-subtitle>
@@ -48,7 +48,7 @@
                   :label="autocompleteLabel"
                   :loading="isLoadingDropdown"
                   return-object
-                  :search-input.sync="findUsers"
+                  v-model:search-input="findUsers"
                 >
                   <!-- no data -->
                   <template #no-data>
@@ -212,6 +212,8 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 import {
@@ -222,8 +224,9 @@ import {
 } from '@/utils/constants';
 import { rbacService, userService } from '@/services';
 
-export default {
+export default defineComponent({
   name: 'ManageSubmissionUsers',
+
   props: {
     isDraft: {
       type: Boolean,
@@ -234,6 +237,7 @@ export default {
       required: true,
     },
   },
+
   data() {
     return {
       dialog: false,
@@ -262,6 +266,7 @@ export default {
         : this.$t('trans.manageSubmissionUsers.exactEmailOrUsername');
     },
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     // show users in dropdown that have a text match on multiple properties
@@ -369,6 +374,7 @@ export default {
         .sort((a, b) => b.isOwner - a.isOwner);
     },
   },
+
   watch: {
     selectedIdp(newIdp, oldIdp) {
       if (newIdp !== oldIdp) {
@@ -418,8 +424,9 @@ export default {
       }
     },
   },
+
   created() {
     this.getSubmissionUsers();
   },
-};
+});
 </script>

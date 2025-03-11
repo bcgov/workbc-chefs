@@ -8,19 +8,24 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import AdministerForm from '@/components/admin/AdministerForm.vue';
 import { mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
   name: 'AdminFormView',
+
   components: {
     AdministerForm,
   },
+
   props: {
     f: String,
   },
+
   computed: {
     ...mapGetters('form', ['lang', 'isRTL']),
   },
-};
+});
 </script>

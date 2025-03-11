@@ -31,7 +31,7 @@
             {{ $t('trans.shareForm.copyQRCode') }}
           </p>
           <v-alert
-            :value="warning"
+            :modelValue="warning"
             :class="[NOTIFICATIONS_TYPES.WARNING.class, { 'dir-rtl': isRTL }]"
             :icon="NOTIFICATIONS_TYPES.WARNING.icon"
             transition="scale-transition"
@@ -46,7 +46,7 @@
             outlined
             label="URL"
             data-test="text-shareUrl"
-            :value="formLink"
+            :modelValue="formLink"
             :class="{ 'dir-rtl': isRTL }"
           >
             <template #prepend>
@@ -86,7 +86,7 @@
             <v-col cols="auto">
               <div class="qrCodeContainer">
                 <qrcode-vue
-                  :value="formLink"
+                  :modelValue="formLink"
                   :size="qrSize"
                   renderAs="canvas"
                   :level="qrLevel"
@@ -130,13 +130,16 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import QrcodeVue from 'qrcode.vue';
 import { NotificationTypes } from '@/utils/constants';
 import { mapGetters } from 'vuex';
-export default {
+export default defineComponent({
   components: {
     QrcodeVue,
   },
+
   props: {
     formId: {
       type: String,
@@ -147,6 +150,7 @@ export default {
       default: false,
     },
   },
+
   data() {
     return {
       dialog: false,
@@ -154,6 +158,7 @@ export default {
       qrSize: 900,
     };
   },
+
   computed: {
     ...mapGetters('form', ['lang']),
 
@@ -166,6 +171,7 @@ export default {
     },
     ...mapGetters('form', ['isRTL']),
   },
+
   methods: {
     downloadQr() {
       let link = document.createElement('a');
@@ -174,7 +180,7 @@ export default {
       link.click();
     },
   },
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -185,7 +191,7 @@ export default {
     padding-left: 75px;
   }
 
-  ::v-deep canvas {
+  :deep(canvas) {
     margin-top: 50px;
     max-width: 250px;
     max-height: 250px;

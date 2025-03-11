@@ -14,15 +14,19 @@
 </template>
 
 <script>
+import { defineComponent, nextTick } from 'vue';
+
 import { mapGetters, mapActions } from 'vuex';
 import FormDesigner from '@/components/designer/FormDesigner.vue';
 import { IdentityProviders } from '@/utils/constants';
 
-export default {
+export default defineComponent({
   name: 'FormDesign',
+
   components: {
     FormDesigner,
   },
+
   props: {
     d: String,
     f: String,
@@ -34,8 +38,9 @@ export default {
       default: false,
     },
   },
+
   mounted() {
-    this.$nextTick(() => {
+    nextTick(() => {
       this.$refs.formDesigner.onFormLoad();
     });
   },
@@ -43,10 +48,12 @@ export default {
   methods: {
     ...mapActions('form', ['listFCProactiveHelp', 'deleteCurrentForm']),
   },
+
   computed: {
     ...mapGetters('form', ['form']),
     IDP: () => IdentityProviders,
   },
+
   beforeRouteLeave(_to, _from, next) {
     this.form.isDirty
       ? next(
@@ -56,8 +63,9 @@ export default {
         )
       : next();
   },
+
   beforeMount() {
     this.listFCProactiveHelp();
   },
-};
+});
 </script>

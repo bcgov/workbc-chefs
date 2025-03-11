@@ -9,15 +9,19 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import AdminPage from '@/components/admin/AdminPage.vue';
 import { mapGetters } from 'vuex';
-export default {
+export default defineComponent({
   name: 'AdminRoot',
+
   components: {
     AdminPage,
   },
+
   computed: {
     ...mapGetters('form', ['isRTL', 'lang']),
   },
-};
+});
 </script>

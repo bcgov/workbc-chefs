@@ -69,11 +69,15 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters } from 'vuex';
 import i18n from '@/internationalization';
 
-export default {
+export default defineComponent({
+  emits: ['saving-filter-data', 'cancel-filter-data'],
   name: 'BaseFilter',
+
   props: {
     inputHeaders: {
       type: Array,
@@ -126,9 +130,11 @@ export default {
       default: i18n.t('trans.baseFilter.filter'),
     },
   },
+
   computed: {
     ...mapGetters('form', ['isRTL', 'lang']),
   },
+
   data() {
     return {
       selectedData: this.preselectedData,
@@ -151,7 +157,7 @@ export default {
         this.$emit('cancel-filter-data');
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

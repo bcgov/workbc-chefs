@@ -27,12 +27,15 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 import { IdentityProviders } from '@/utils/constants';
 
-export default {
+export default defineComponent({
   name: 'Login',
+
   props: {
     idpHint: {
       type: Array,
@@ -42,10 +45,12 @@ export default {
       ],
     },
   },
+
   created() {
     // If component gets idpHint, invoke login flow via vuex
     if (this.idpHint && this.idpHint.length === 1) this.login(this.idpHint[0]);
   },
+
   computed: {
     ...mapGetters('auth', ['authenticated', 'createLoginUrl', 'keycloakReady']),
     ...mapGetters('form', ['lang']),
@@ -63,6 +68,7 @@ export default {
       return IdentityProviders;
     },
   },
+
   methods: {
     ...mapActions('auth', ['login']),
     buttonEnabled(type) {
@@ -70,5 +76,5 @@ export default {
       return this.idpHint ? this.idpHint.includes(type) : false;
     },
   },
-};
+});
 </script>

@@ -262,13 +262,16 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { formService } from '@/services';
 import { FormPermissions } from '@/utils/constants';
 
-export default {
+export default defineComponent({
   name: 'ManageVersions',
   inject: ['fd', 'draftId', 'formId'],
+
   data() {
     return {
       formSchema: {
@@ -287,6 +290,7 @@ export default {
       rerenderTable: 0,
     };
   },
+
   computed: {
     ...mapGetters('form', ['drafts', 'form', 'permissions', 'isRTL', 'lang']),
     headers() {
@@ -353,6 +357,7 @@ export default {
       return this.permissions.includes(FormPermissions.FORM_UPDATE);
     },
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     ...mapActions('form', [
@@ -490,13 +495,14 @@ export default {
       }
     },
   },
+
   created() {
     //check if the navigation to this page is from FormDesigner
     if (this.fd) {
       this.turnOnPublish();
     }
   },
-};
+});
 </script>
 
 <style scoped>

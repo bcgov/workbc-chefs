@@ -88,11 +88,14 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 
-export default {
+export default defineComponent({
   name: 'Subscription',
+
   data() {
     return {
       loading: false,
@@ -115,10 +118,12 @@ export default {
       ],
     };
   },
+
   computed: {
     ...mapGetters('form', ['apiKey', 'form', 'lang', 'permissions', 'version']),
     ...mapFields('form', ['subscriptionData']),
   },
+
   methods: {
     ...mapActions('form', ['updateSubscription', 'readFormSubscriptionData']),
     ...mapActions('notifications', ['addNotification']),
@@ -153,5 +158,5 @@ export default {
       this.showSecret = !this.showSecret;
     },
   },
-};
+});
 </script>

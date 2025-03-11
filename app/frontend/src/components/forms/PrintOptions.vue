@@ -104,11 +104,13 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { formService, utilsService } from '@/services';
 import { NotificationTypes } from '@/utils/constants';
 
-export default {
+export default defineComponent({
   data() {
     return {
       dialog: false,
@@ -121,6 +123,7 @@ export default {
       },
     };
   },
+
   props: {
     submissionId: String,
     submission: {
@@ -135,6 +138,7 @@ export default {
     },
     ...mapGetters('form', ['isRTL', 'lang']),
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     async printBrowser() {
@@ -251,6 +255,7 @@ export default {
       };
     },
   },
+
   watch: {
     files() {
       if (this.templateForm.files && this.templateForm.files instanceof File) {
@@ -262,5 +267,5 @@ export default {
       }
     },
   },
-};
+});
 </script>

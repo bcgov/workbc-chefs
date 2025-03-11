@@ -196,6 +196,8 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 import { rbacService, roleService } from '@/services';
@@ -208,17 +210,20 @@ import {
 
 import AddTeamMember from '@/components/forms/manage/AddTeamMember.vue';
 
-export default {
+export default defineComponent({
   name: 'TeamManagement',
+
   components: {
     AddTeamMember,
   },
+
   props: {
     formId: {
       type: String,
       required: true,
     },
   },
+
   computed: {
     ...mapFields('form', ['form.userType']),
     ...mapGetters('form', ['permissions', 'isRTL', 'lang']),
@@ -284,6 +289,7 @@ export default {
         : this.filterData;
     },
   },
+
   data() {
     return {
       formUsers: [],
@@ -305,6 +311,7 @@ export default {
       updating: false,
     };
   },
+
   methods: {
     ...mapActions('form', ['fetchForm', 'getFormPermissionsForUser']),
     ...mapActions('notifications', ['addNotification']),
@@ -607,6 +614,7 @@ export default {
       this.showColumnsDialog = false;
     },
   },
+
   async mounted() {
     // TODO: Make sure vuex fetchForm has been called at least once before this
     await Promise.all([
@@ -616,7 +624,7 @@ export default {
     ]);
     await this.getFormUsers(), (this.loading = false);
   },
-};
+});
 </script>
 
 <style scoped>

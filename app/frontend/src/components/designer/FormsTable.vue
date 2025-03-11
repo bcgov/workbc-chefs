@@ -129,6 +129,8 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { IdentityProviders } from '@/utils/constants';
 import {
@@ -137,8 +139,9 @@ import {
   checkSubmissionView,
 } from '@/utils/permissionUtils';
 
-export default {
+export default defineComponent({
   name: 'FormsTable',
+
   data() {
     return {
       // Assigning width: '1%' to dynamically assign width to the Table's Columns as described by this post on Stack Overflow:
@@ -150,6 +153,7 @@ export default {
       search: '',
     };
   },
+
   computed: {
     ...mapGetters('form', ['formList', 'isRTL', 'lang']),
     ...mapGetters('auth', ['user']),
@@ -180,6 +184,7 @@ export default {
     },
     ID_PROVIDERS: () => IdentityProviders,
   },
+
   methods: {
     ...mapActions('form', ['getFormsForCurrentUser']),
     checkFormManage: checkFormManage,
@@ -192,11 +197,12 @@ export default {
       this.showDescriptionDialog = true;
     },
   },
+
   async mounted() {
     await this.getFormsForCurrentUser();
     this.loading = false;
   },
-};
+});
 </script>
 
 <style scoped>

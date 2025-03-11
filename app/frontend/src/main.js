@@ -4,7 +4,7 @@ import '~/assets/scss/style.scss';
 import i18n from '~/internationalization';
 import axios from 'axios';
 import NProgress from 'nprogress';
-import Vue from 'vue';
+import Vue, { h } from 'vue';
 import App from '~/App.vue';
 import '~/filters';
 import auth from '~/store/modules/auth.js';
@@ -74,7 +74,7 @@ function initializeApp(kcSuccess = false, basePath = '/') {
     i18n,
     store,
     vuetify,
-    render: (h) => h(App),
+    render: () => h(App),
   }).$mount('#app');
 
   NProgress.done();

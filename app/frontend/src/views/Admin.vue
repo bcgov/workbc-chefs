@@ -9,17 +9,21 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters } from 'vuex';
 
 import admin from '@/store/modules/admin.js';
 import { IdentityProviders } from '@/utils/constants';
 
-export default {
+export default defineComponent({
   name: 'Admin',
+
   computed: {
     ...mapGetters('auth', ['isAdmin']),
     IDP: () => IdentityProviders,
   },
+
   created() {
     if (this.$store.hasModule('admin')) {
       this.$store.unregisterModule('admin');
@@ -28,5 +32,5 @@ export default {
       this.$store.registerModule('admin', admin);
     }
   },
-};
+});
 </script>

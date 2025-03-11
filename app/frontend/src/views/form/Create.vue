@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import { defineComponent, nextTick } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 import FormDesigner from '@/components/designer/FormDesigner.vue';
@@ -71,18 +73,21 @@ import FormSettings from '@/components/designer/FormSettings.vue';
 import FormDisclaimer from '@/components/designer/FormDisclaimer.vue';
 import { IdentityMode, IdentityProviders } from '@/utils/constants';
 
-export default {
+export default defineComponent({
   name: 'FormCreate',
+
   components: {
     FormDesigner,
     FormSettings,
     FormDisclaimer,
   },
+
   computed: {
     ...mapFields('form', ['form.idps', 'form.isDirty', 'form.userType']),
     ...mapGetters('form', ['isRTL', 'lang']),
     IDP: () => IdentityProviders,
   },
+
   data() {
     return {
       creatorStep: 1,
@@ -90,6 +95,7 @@ export default {
       disclaimerRules: [(v) => !!v || this.$t('trans.create.agreementErrMsg')],
     };
   },
+
   methods: {
     ...mapActions('form', ['listFCProactiveHelp', 'resetForm']),
     reRenderFormDesigner() {
@@ -97,34 +103,38 @@ export default {
       this.$refs.formDesigner.onFormLoad();
     },
   },
+
   created() {
     this.resetForm();
   },
+
   mounted() {
     this.listFCProactiveHelp();
-    this.$nextTick(() => {
+    nextTick(() => {
       this.$refs.formDesigner.onFormLoad();
     });
   },
+
   watch: {
     idps() {
       if (this.userType === IdentityMode.LOGIN && this.$refs.settingsForm)
         this.$refs.settingsForm.validate();
     },
   },
+
   beforeRouteLeave(_to, _from, next) {
     this.isDirty
       ? next(window.confirm(this.$t('trans.create.confirmPageNav')))
       : next();
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
 /* unset 'overflow: hidden' from all parents of FormDesigner, so FormDesigner's 'sticky' components menu sticks. */
 .v-stepper,
 .v-stepper__items,
-.v-stepper ::v-deep .v-stepper__wrapper {
+.v-stepper :deep(.v-stepper__wrapper) {
   overflow: initial !important;
 }
 </style>

@@ -23,30 +23,36 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 import ManageForm from '@/components/forms/manage/ManageForm.vue';
 import ManageFormActions from '@/components/forms/manage/ManageFormActions.vue';
 import { FormPermissions, IdentityProviders } from '@/utils/constants';
 
-export default {
+export default defineComponent({
   name: 'ManageLayout',
   components: { ManageForm, ManageFormActions },
+
   props: {
     f: {
       type: String,
       required: true,
     },
   },
+
   data() {
     return {
       loading: true,
     };
   },
+
   computed: {
     ...mapGetters('form', ['form', 'permissions', 'isRTL', 'lang']),
     IDP: () => IdentityProviders,
   },
+
   methods: {
     ...mapActions('form', [
       'fetchDrafts',
@@ -54,6 +60,7 @@ export default {
       'getFormPermissionsForUser',
     ]),
   },
+
   async mounted() {
     this.loading = true;
     await Promise.all([
@@ -66,5 +73,5 @@ export default {
       await this.fetchDrafts(this.f);
     this.loading = false;
   },
-};
+});
 </script>

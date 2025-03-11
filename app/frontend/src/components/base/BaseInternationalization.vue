@@ -26,18 +26,22 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions } from 'vuex';
 import { faCaretDown, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 library.add(faCaretDown, faGlobe);
 
-export default {
+export default defineComponent({
   name: 'BaseInternationalization',
+
   computed: {
     hasLogin() {
       return this.$route && this.$route.meta && this.$route.meta.hasLogin;
     },
   },
+
   data: () => {
     return {
       language: 'English',
@@ -80,7 +84,7 @@ export default {
       this.setMultiLanguage(lang.keyword);
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

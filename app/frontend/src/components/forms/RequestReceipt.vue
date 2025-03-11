@@ -61,13 +61,16 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 import { NotificationTypes } from '@/utils/constants';
 import { formService } from '@/services';
 
-export default {
+export default defineComponent({
   name: 'RequestReceipt',
+
   data: () => ({
     emailRules: [(v) => !!v || this.$t('trans.requestReceipt.emailRequired')],
     priority: 'normal',
@@ -75,6 +78,7 @@ export default {
     to: '',
     valid: false,
   }),
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     displayDialog() {
@@ -109,12 +113,15 @@ export default {
       this.valid = false;
     },
   },
+
   computed: {
     ...mapGetters('form', ['isRTL', 'lang']),
   },
+
   mounted() {
     this.resetDialog();
   },
+
   props: {
     email: {
       type: String,
@@ -133,5 +140,5 @@ export default {
       default: 'en',
     },
   },
-};
+});
 </script>

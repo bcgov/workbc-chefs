@@ -7,12 +7,15 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
   name: 'UserHistory',
+
   computed: {
     ...mapGetters('form', ['lang']),
   },
-};
+});
 </script>

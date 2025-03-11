@@ -1,6 +1,6 @@
 import NProgress from 'nprogress';
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+import VueRouter, { createRouter } from 'vue-router';
 
 import store from '@/store';
 import { IdentityProviders } from '@/utils/constants';
@@ -30,7 +30,7 @@ export default function getRouter(basePath = '/') {
   if (router) return router;
 
   // Create new router definition
-  router = new VueRouter({
+  router = createRouter({
     base: basePath,
     mode: 'history',
     routes: [

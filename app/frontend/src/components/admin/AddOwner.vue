@@ -24,19 +24,23 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions } from 'vuex';
 
 import { FormRoleCodes } from '@/utils/constants';
 import { version as uuidVersion, validate as uuidValidate } from 'uuid';
 
-export default {
+export default defineComponent({
   name: 'AddOwner',
+
   props: {
     formId: {
       type: String,
       required: true,
     },
   },
+
   data() {
     return {
       userGuid: '',
@@ -49,6 +53,7 @@ export default {
       ],
     };
   },
+
   methods: {
     ...mapActions('admin', ['addFormUser', 'readRoles']),
     ...mapActions('form', ['lang']),
@@ -62,5 +67,5 @@ export default {
       }
     },
   },
-};
+});
 </script>

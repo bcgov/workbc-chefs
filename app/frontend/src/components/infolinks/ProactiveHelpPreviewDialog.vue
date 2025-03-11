@@ -76,6 +76,8 @@
   </v-row>
 </template>
 <script>
+import { defineComponent } from 'vue';
+
 import {
   faXmark,
   faSquareArrowUpRight,
@@ -84,7 +86,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 library.add(faXmark, faSquareArrowUpRight);
 import { mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
+  emits: ['close-dialog'],
   name: 'ProactiveHelpPreviewDialog',
 
   data() {
@@ -92,25 +95,29 @@ export default {
       dialog: this.showDialog,
     };
   },
+
   props: {
     showDialog: { type: Boolean, required: true },
     component: { type: Object },
     fcProactiveHelpImageUrl: undefined,
   },
+
   methods: {
     onCloseDialog() {
       this.$emit('close-dialog');
     },
   },
+
   computed: {
     ...mapGetters('form', ['isRTL', 'lang']),
   },
+
   watch: {
     showDialog() {
       this.dialog = this.showDialog;
     },
   },
-};
+});
 </script>
 <style lang="scss" scoped>
 .cursor {

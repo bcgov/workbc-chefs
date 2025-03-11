@@ -84,19 +84,23 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters, mapActions } from 'vuex';
 
 import { FormPermissions } from '@/utils/constants';
 import ShareForm from '@/components/forms/manage/ShareForm.vue';
 
-export default {
+export default defineComponent({
   name: 'ManageFormActions',
   components: { ShareForm },
+
   data() {
     return {
       showDeleteDialog: false,
     };
   },
+
   computed: {
     ...mapGetters('form', ['form', 'permissions', 'isRTL', 'lang']),
     // Permission checks
@@ -121,6 +125,7 @@ export default {
       );
     },
   },
+
   methods: {
     ...mapActions('form', ['deleteCurrentForm']),
     deleteForm() {
@@ -131,5 +136,5 @@ export default {
       });
     },
   },
-};
+});
 </script>

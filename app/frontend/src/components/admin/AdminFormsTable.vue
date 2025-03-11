@@ -84,10 +84,13 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
   name: 'FormsTable',
+
   data() {
     return {
       activeOnly: false,
@@ -96,6 +99,7 @@ export default {
       search: '',
     };
   },
+
   computed: {
     ...mapGetters('admin', ['formList']),
     ...mapGetters('form', ['isRTL', 'lang']),
@@ -131,6 +135,7 @@ export default {
       ];
     },
   },
+
   methods: {
     ...mapActions('admin', ['getForms']),
     async refeshForms() {
@@ -139,11 +144,12 @@ export default {
       this.loading = false;
     },
   },
+
   async mounted() {
     await this.getForms();
     this.loading = false;
   },
-};
+});
 </script>
 
 <style scoped>

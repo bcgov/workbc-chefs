@@ -79,18 +79,22 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions } from 'vuex';
 import { mapGetters } from 'vuex';
 import { formService, rbacService } from '@/services';
 
-export default {
+export default defineComponent({
   name: 'NotesPanel',
+
   props: {
     submissionId: {
       type: String,
       required: true,
     },
   },
+
   data() {
     return {
       historyDialog: false,
@@ -100,9 +104,11 @@ export default {
       showNoteField: false,
     };
   },
+
   computed: {
     ...mapGetters('form', ['isRTL', 'lang']),
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     async addNote() {
@@ -145,10 +151,11 @@ export default {
       }
     },
   },
+
   mounted() {
     this.getNotes();
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

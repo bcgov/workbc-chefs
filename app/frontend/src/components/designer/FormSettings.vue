@@ -51,7 +51,7 @@
             <v-radio
               class="mb-4"
               :class="{ 'dir-rtl': isRTL }"
-              :value="ID_MODE.PUBLIC"
+              :modelValue="ID_MODE.PUBLIC"
             >
               <template #label>
                 <span :class="{ 'mr-2': isRTL }" :lang="lang">
@@ -92,17 +92,17 @@
             <v-expand-transition>
               <v-row v-if="userType === ID_MODE.LOGIN" class="pl-6">
                 <v-radio-group class="my-0" v-model="idps[0]">
-                  <v-radio class="mx-2" :value="ID_PROVIDERS.IDIR">
+                  <v-radio class="mx-2" :modelValue="ID_PROVIDERS.IDIR">
                     <template #label>
                       <span :class="{ 'mr-2': isRTL }"> IDIR </span>
                     </template>
                   </v-radio>
-                  <v-radio class="mx-2" :value="ID_PROVIDERS.BCEIDBOTH">
+                  <v-radio class="mx-2" :modelValue="ID_PROVIDERS.BCEIDBOTH">
                     <template #label>
                       <span :class="{ 'mr-2': isRTL }"> Basic or Business BCeID </span>
                     </template>
                   </v-radio>
-                  <v-radio class="mx-2" :value="ID_PROVIDERS.BCEIDBOTH_WITH_CATCHMENT">
+                  <v-radio class="mx-2" :modelValue="ID_PROVIDERS.BCEIDBOTH_WITH_CATCHMENT">
                     <template #label>
                       <span :class="{ 'mr-2': isRTL }"> Basic or Business BCeID (Catchment Protected) </span>
                     </template>
@@ -518,7 +518,7 @@
                     :class="{ 'mr-2': isRTL }"
                     v-model="schedule.openSubmissionDateTime"
                     data-test="picker-form-openSubmissionDateDraw"
-                    @input="openSubmissionDateDraw = false"
+                    @update:modelValue="openSubmissionDateDraw = false"
                   >
                   </v-date-picker>
                 </v-menu>
@@ -541,7 +541,7 @@
                       <v-radio
                         class="mx-2"
                         :class="{ 'mr-2': isRTL }"
-                        :value="SCHEDULE_TYPE.MANUAL"
+                        :modelValue="SCHEDULE_TYPE.MANUAL"
                       >
                         <template #label>
                           <span :class="{ 'mr-2': isRTL }" :lang="lang"
@@ -556,7 +556,7 @@
                       <v-radio
                         class="mx-2"
                         :class="{ 'mr-2': isRTL }"
-                        :value="SCHEDULE_TYPE.CLOSINGDATE"
+                        :modelValue="SCHEDULE_TYPE.CLOSINGDATE"
                       >
                         <template #label>
                           <span :class="{ 'mr-2': isRTL }" :lang="lang"
@@ -569,7 +569,7 @@
                       <v-radio
                         class="mx-2"
                         :class="{ 'mr-2': isRTL }"
-                        :value="SCHEDULE_TYPE.PERIOD"
+                        :modelValue="SCHEDULE_TYPE.PERIOD"
                       >
                         <template #label>
                           <span :class="{ 'mr-2': isRTL }" :lang="lang"
@@ -621,7 +621,7 @@
                   <v-date-picker
                     v-model="schedule.closeSubmissionDateTime"
                     data-test="picker-form-closeSubmissionDateDraw"
-                    @input="closeSubmissionDateDraw = false"
+                    @update:modelValue="closeSubmissionDateDraw = false"
                   >
                   </v-date-picker>
                 </v-menu>
@@ -828,7 +828,7 @@
                     <v-date-picker
                       v-model="schedule.repeatSubmission.repeatUntil"
                       data-test="picker-form-repeatUntil"
-                      @input="repeatUntil = false"
+                      @update:modelValue="repeatUntil = false"
                     ></v-date-picker>
                   </v-menu>
                 </v-col>
@@ -1113,6 +1113,8 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 import {
@@ -1135,11 +1137,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 library.add(faFlask, faXmark, faSquareArrowUpRight);
 
-export default {
+export default defineComponent({
   name: 'FormSettings',
+
   props: {
     formId: String,
   },
+
   data() {
     // debugger;
     return {
@@ -1159,6 +1163,7 @@ export default {
       // Validation
     };
   },
+
   computed: {
     ...mapFields('form', [
       'form.description',
@@ -1466,7 +1471,9 @@ export default {
       return ScheduleType;
     },
   },
+
   watch: {},
+
   methods: {
     ...mapActions('form', ['fetchForm']),
     userTypeChanged() {
@@ -1561,5 +1568,5 @@ export default {
       }
     },
   },
-};
+});
 </script>

@@ -7,10 +7,12 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { NotificationTypes } from '@/utils/constants';
 import i18n from '@/internationalization';
 
-export default {
+export default defineComponent({
   computed: {
     notificationType() {
       switch (this.type) {
@@ -40,5 +42,5 @@ export default {
       type: String,
     },
   },
-};
+});
 </script>

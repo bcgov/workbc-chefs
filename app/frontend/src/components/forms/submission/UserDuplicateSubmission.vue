@@ -12,15 +12,19 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 import FormViewer from '@/components/designer/FormViewer.vue';
 
-export default {
+export default defineComponent({
   name: 'UserDuplicateSubmission',
+
   components: {
     FormViewer,
   },
+
   props: {
     submissionId: String,
     formId: String,
@@ -30,16 +34,19 @@ export default {
       default: false,
     },
   },
+
   data() {
     return {
       loading: true,
     };
   },
+
   computed: mapGetters('form', ['formSubmission']),
   methods: mapActions('form', ['fetchSubmission']),
+
   async mounted() {
     await this.fetchSubmission({ submissionId: this.submissionId });
     this.loading = false;
   },
-};
+});
 </script>

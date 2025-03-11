@@ -125,10 +125,13 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
   name: 'About',
+
   computed: {
     ...mapGetters('auth', ['authenticated']),
     ...mapGetters('form', ['isRTL', 'lang']),
@@ -139,7 +142,7 @@ export default {
       return process.env.VUE_APP_CHEFSTOURURL;
     },
   },
-};
+});
 //
 </script>
 

@@ -17,11 +17,11 @@
                 fluid
                 hide-details
               >
-                <v-radio class="my-0" label="IDIR" :value="ID_PROVIDERS.IDIR" />
-                <v-radio label="Basic BCeID" :value="ID_PROVIDERS.BCEIDBASIC" />
+                <v-radio class="my-0" label="IDIR" :modelValue="ID_PROVIDERS.IDIR" />
+                <v-radio label="Basic BCeID" :modelValue="ID_PROVIDERS.BCEIDBASIC" />
                 <v-radio
                   label="Business BCeID"
-                  :value="ID_PROVIDERS.BCEIDBUSINESS"
+                  :modelValue="ID_PROVIDERS.BCEIDBUSINESS"
                 />
               </v-radio-group>
             </v-col>
@@ -40,7 +40,7 @@
               :label="autocompleteLabel"
               :loading="isLoading"
               return-object
-              :search-input.sync="searchUsers"
+              v-model:search-input="searchUsers"
               :class="{ label: isRTL }"
             >
               <!-- no data -->
@@ -99,7 +99,7 @@
               <v-chip
                 v-for="role in FORM_ROLES"
                 :key="role"
-                :value="role"
+                :modelValue="role"
                 filter
                 outlined
               >
@@ -163,18 +163,23 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 import { FormRoleCodes, IdentityProviders, Regex } from '@/utils/constants';
 import { userService } from '@/services';
 
-export default {
+export default defineComponent({
+  emits: ['new-users', 'adding-users'],
+
   props: {
     disabled: {
       type: Boolean,
       default: false,
     },
   },
+
   data() {
     return {
       addingUsers: false,
@@ -187,6 +192,7 @@ export default {
       showError: false,
     };
   },
+
   methods: {
     // show users in dropdown that have a text match on multiple properties
     filterObject(item, queryText) {
@@ -209,6 +215,7 @@ export default {
       this.addingUsers = false;
     },
   },
+
   computed: {
     ...mapFields('form', ['form.idps']),
     ...mapGetters('auth', ['identityProvider']),
@@ -236,6 +243,7 @@ export default {
         : this.$t('trans.addTeamMember.enterExactUsername');
     },
   },
+
   watch: {
     selectedIdp(newIdp, oldIdp) {
       if (newIdp !== oldIdp) {
@@ -244,10 +252,14 @@ export default {
         this.showError = false;
       }
     },
-    selectedRoles(newRoles, oldRoles) {
-      if (oldRoles.length === 0 && newRoles.length > 0) {
-        this.showError = false;
-      }
+    selectedRoles: {
+      deep: true,
+
+      handler(newRoles, oldRoles) {
+        if (oldRoles.length === 0 && newRoles.length > 0) {
+          this.showError = false;
+        }
+      },
     },
     addingUsers() {
       this.$emit('adding-users', this.addingUsers);
@@ -290,7 +302,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <style scoped>

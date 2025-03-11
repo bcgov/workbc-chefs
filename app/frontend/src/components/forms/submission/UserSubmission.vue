@@ -10,16 +10,20 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 import FormViewer from '@/components/designer/FormViewer.vue';
 import { NotificationTypes } from '@/utils/constants';
 
-export default {
+export default defineComponent({
   name: 'UserSubmission',
+
   components: {
     FormViewer,
   },
+
   props: {
     submissionId: String,
     readOnly: { type: Boolean, default: true },
@@ -32,16 +36,20 @@ export default {
       default: false,
     },
   },
+
   data() {
     return {
       loading: true,
     };
   },
+
   computed: mapGetters('form', ['formSubmission']),
+
   methods: {
     ...mapActions('form', ['fetchSubmission']),
     ...mapActions('notifications', ['addNotification']),
   },
+
   async mounted() {
     await this.fetchSubmission({ submissionId: this.submissionId });
     // check if we are on a Draft page but the submission is already submitted, we'll redirect user
@@ -63,5 +71,5 @@ export default {
     }
     this.loading = false;
   },
-};
+});
 </script>

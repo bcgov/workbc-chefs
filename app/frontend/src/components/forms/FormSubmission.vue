@@ -74,7 +74,7 @@
         class="pl-0 pt-0"
       >
         <v-alert
-          :value="!submissionReadOnly"
+          :modelValue="!submissionReadOnly"
           :class="[
             'd-print-none ' + NOTIFICATIONS_TYPES.INFO.class,
             { 'dir-rtl': isRTL },
@@ -173,6 +173,8 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 import AuditHistory from '@/components/forms/submission/AuditHistory.vue';
@@ -183,8 +185,9 @@ import StatusPanel from '@/components/forms/submission/StatusPanel.vue';
 import PrintOptions from '@/components/forms/PrintOptions.vue';
 import { NotificationTypes } from '@/utils/constants';
 
-export default {
+export default defineComponent({
   name: 'FormSubmission',
+
   components: {
     AuditHistory,
     DeleteSubmission,
@@ -193,9 +196,11 @@ export default {
     PrintOptions,
     StatusPanel,
   },
+
   props: {
     submissionId: String,
   },
+
   data() {
     return {
       isDraft: true,
@@ -204,6 +209,7 @@ export default {
       submissionReadOnly: true,
     };
   },
+
   computed: {
     ...mapGetters('form', [
       'form',
@@ -216,6 +222,7 @@ export default {
       return NotificationTypes;
     },
   },
+
   methods: {
     ...mapActions('form', ['fetchSubmission', 'getFormPermissionsForUser']),
     onDelete() {
@@ -238,13 +245,14 @@ export default {
       await this.fetchSubmission({ submissionId: this.submissionId });
     },
   },
+
   async mounted() {
     await this.fetchSubmission({ submissionId: this.submissionId });
     // get current user's permissions on associated form
     await this.getFormPermissionsForUser(this.form.id);
     this.loading = false;
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

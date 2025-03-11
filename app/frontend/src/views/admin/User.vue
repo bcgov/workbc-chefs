@@ -8,19 +8,24 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import AdministerUser from '@/components/admin/AdministerUser.vue';
 import { mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
   name: 'AdminUserView',
+
   components: {
     AdministerUser,
   },
+
   props: {
     u: String,
   },
+
   computed: {
     ...mapGetters('form', ['isRTL', 'lang']),
   },
-};
+});
 </script>

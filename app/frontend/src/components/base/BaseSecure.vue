@@ -60,10 +60,13 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
   name: 'BaseSecure',
+
   props: {
     admin: {
       type: Boolean,
@@ -74,6 +77,7 @@ export default {
       default: () => [],
     },
   },
+
   computed: {
     ...mapGetters('auth', [
       'authenticated',
@@ -94,6 +98,7 @@ export default {
       return process.env.VUE_APP_CONTACT;
     },
   },
+
   methods: mapActions('auth', ['login']),
-};
+});
 </script>

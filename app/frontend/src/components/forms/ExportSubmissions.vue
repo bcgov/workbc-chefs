@@ -143,7 +143,7 @@
               {{ $t('trans.exportSubmissions.submissionDate') }}
             </span>
             <v-radio-group v-model="dateRange" hide-details="auto">
-              <v-radio :value="false">
+              <v-radio :modelValue="false">
                 <template v-slot:label>
                   <span
                     :class="{ 'mr-1': isRTL }"
@@ -153,7 +153,7 @@
                   >
                 </template>
               </v-radio>
-              <v-radio :value="true">
+              <v-radio :modelValue="true">
                 <template v-slot:label>
                   <span
                     :class="{ 'mr-1': isRTL }"
@@ -200,7 +200,7 @@
                     <v-date-picker
                       v-model="startDate"
                       data-test="picker-form-startDate"
-                      @input="startDateMenu = false"
+                      @update:modelValue="startDateMenu = false"
                       :max="maxDate"
                     ></v-date-picker>
                   </v-menu>
@@ -235,7 +235,7 @@
                     <v-date-picker
                       v-model="endDate"
                       data-test="picker-form-endDate"
-                      @input="endDateMenu = false"
+                      @update:modelValue="endDateMenu = false"
                       :min="startDate"
                     ></v-date-picker>
                   </v-menu>
@@ -339,6 +339,8 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import moment from 'moment';
 import { mapActions, mapGetters } from 'vuex';
 import formService from '@/services/formService.js';
@@ -351,14 +353,16 @@ import {
 import { library } from '@fortawesome/fontawesome-svg-core';
 library.add(faXmark, faSquareArrowUpRight);
 
-export default {
+export default defineComponent({
   name: 'ExportSubmissions',
+
   props: {
     formId: {
       type: String,
       required: true,
     },
   },
+
   data() {
     return {
       githubLink:
@@ -383,6 +387,7 @@ export default {
       versionRequired: false,
     };
   },
+
   computed: {
     maxDate() {
       let momentObj = moment(Date());
@@ -424,6 +429,7 @@ export default {
       return [];
     },
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     ...mapActions('form', ['fetchForm', 'fetchFormCSVExportFields']),
@@ -557,21 +563,27 @@ export default {
       }
     },
   },
+
   async mounted() {
     this.fetchForm(this.formId);
   },
+
   watch: {
     startDate() {
       this.endDate = moment(Date()).format('YYYY-MM-DD');
     },
-    selected(oldValue, newValue) {
-      if (oldValue !== newValue) {
-        if (this.selected.length === this.FILTER_HEADERS.length) {
-          this.allDataFields = true;
-        } else {
-          this.allDataFields = false;
+    selected: {
+      deep: true,
+
+      handler(oldValue, newValue) {
+        if (oldValue !== newValue) {
+          if (this.selected.length === this.FILTER_HEADERS.length) {
+            this.allDataFields = true;
+          } else {
+            this.allDataFields = false;
+          }
         }
-      }
+      },
     },
     exportFormat(value) {
       if (value === 'json') {
@@ -587,7 +599,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <style scoped>

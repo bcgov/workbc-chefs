@@ -51,10 +51,13 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
   name: 'FormsTable',
+
   data() {
     return {
       activeOnly: false,
@@ -62,6 +65,7 @@ export default {
       search: '',
     };
   },
+
   computed: {
     ...mapGetters('admin', ['userList']),
     ...mapGetters('form', ['isRTL', 'lang']),
@@ -92,14 +96,16 @@ export default {
       ];
     },
   },
+
   methods: {
     ...mapActions('admin', ['getUsers']),
   },
+
   async mounted() {
     await this.getUsers();
     this.loading = false;
   },
-};
+});
 </script>
 
 <style scoped>

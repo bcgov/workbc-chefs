@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+import Vuex, { createStore } from 'vuex';
 
 import form from '@/store/modules/form.js';
 import notifications from '@/store/modules/notifications.js';
@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
   plugins.push(Vuex.createLogger());
 }
 
-export default new Vuex.Store({
+export default createStore({
   // Modules not specified below are expected to dynamically register when needed
   modules: { form, notifications },
   plugins: plugins,

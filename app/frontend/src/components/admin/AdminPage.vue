@@ -19,9 +19,12 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters } from 'vuex';
-export default {
+export default defineComponent({
   name: 'AdminPage',
+
   components: {
     AdminFormsTable: () => import('@/components/admin/AdminFormsTable.vue'),
     AdminUsersTable: () => import('@/components/admin/AdminUsersTable.vue'),
@@ -30,19 +33,22 @@ export default {
     FormComponentsProactiveHelp: () =>
       import('@/components/admin/FormComponentsProactiveHelp.vue'),
   },
+
   data() {
     return {
       tab: null,
       adminDashboardUrl: this.$config.adminDashboardUrl,
     };
   },
+
   computed: {
     ...mapGetters('form', ['isRTL', 'lang']),
   },
+
   watch: {
     isRTL() {
       this.tab = null;
     },
   },
-};
+});
 </script>

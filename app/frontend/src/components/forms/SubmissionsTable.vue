@@ -324,6 +324,8 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters, mapActions } from 'vuex';
 import { FormManagePermissions } from '@/utils/constants';
 import moment from 'moment';
@@ -332,14 +334,16 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 library.add(faTrash);
 
-export default {
+export default defineComponent({
   name: 'SubmissionsTable',
+
   props: {
     formId: {
       type: String,
       required: true,
     },
   },
+
   data() {
     return {
       currentUserOnly: false,
@@ -381,6 +385,7 @@ export default {
       switchSubmissionView: false,
     };
   },
+
   computed: {
     multiDeleteMessage() {
       return this.$t('trans.submissionsTable.multiDelWarning');
@@ -599,6 +604,7 @@ export default {
       }
     },
   },
+
   methods: {
     ...mapActions('form', [
       'fetchForm',
@@ -814,7 +820,7 @@ export default {
   mounted() {
     this.refreshSubmissions();
   },
-};
+});
 </script>
 
 <style scoped>

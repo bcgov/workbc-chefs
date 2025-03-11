@@ -2,7 +2,7 @@
   <v-dialog
     :max-width="width"
     persistent
-    v-bind:value="value"
+    v-bind:modelValue="modelValue"
     @click:outside="closeDialog"
     @keydown.esc="closeDialog"
   >
@@ -110,10 +110,14 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
+  emits: ['close-dialog', 'continue-dialog', 'delete-dialog', 'custom-dialog'],
   name: 'BaseDialog',
+
   methods: {
     closeDialog() {
       this.$emit('close-dialog');
@@ -128,11 +132,13 @@ export default {
       this.$emit('custom-dialog');
     },
   },
+
   computed: {
     ...mapGetters('form', ['isRTL', 'lang']),
   },
+
   props: {
-    value: {
+    modelValue: {
       default: false,
       type: Boolean,
     },
@@ -153,7 +159,7 @@ export default {
       type: Boolean,
     },
   },
-};
+});
 </script>
 
 <style scoped>

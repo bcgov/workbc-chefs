@@ -52,28 +52,35 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { rbacService } from '@/services';
 
 import VueJsonPretty from 'vue-json-pretty';
 
-export default {
+export default defineComponent({
   name: 'Developer',
+
   components: {
     VueJsonPretty,
   },
+
   data() {
     return {
       apiRes: '',
     };
   },
+
   computed: {
     ...mapGetters('auth', ['fullName', 'token', 'tokenParsed', 'userName']),
     ...mapGetters('form', ['lang']),
   },
+
   created() {
     this.getUser();
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     async getUser() {
@@ -90,5 +97,5 @@ export default {
       }
     },
   },
-};
+});
 </script>

@@ -91,16 +91,21 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { FormPermissions } from '@/utils/constants';
 import ManageSubmissionUsers from '@/components/forms/submission/ManageSubmissionUsers.vue';
 import PrintOptions from '@/components/forms/PrintOptions.vue';
 import { mapGetters } from 'vuex';
-export default {
+export default defineComponent({
+  emits: ['switchView', 'save-draft', 'showdoYouWantToSaveTheDraftModal'],
   name: 'MySubmissionsActions',
+
   components: {
     ManageSubmissionUsers,
     PrintOptions,
   },
+
   props: {
     block: {
       type: Boolean,
@@ -142,6 +147,7 @@ export default {
       default: undefined,
     },
   },
+
   computed: {
     ...mapGetters('form', ['lang']),
     canSaveDraft() {
@@ -155,6 +161,7 @@ export default {
     },
     ...mapGetters('form', ['isRTL']),
   },
+
   methods: {
     switchView() {
       this.$emit('switchView');
@@ -163,7 +170,7 @@ export default {
       this.$emit('showdoYouWantToSaveTheDraftModal');
     },
   },
-};
+});
 </script>
 <style lang="scss" scoped>
 ul#menu li {

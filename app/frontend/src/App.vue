@@ -15,16 +15,19 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import BCGovHeader from '~/components/bcgov/BCGovHeader.vue';
 import BCGovFooter from '~/components/bcgov/BCGovFooter.vue';
 import BCGovNavBar from '~/components/bcgov/BCGovNavBar.vue';
 
-export default {
+export default defineComponent({
   name: 'App',
+
   components: {
     BCGovHeader,
     BCGovFooter,
     BCGovNavBar,
   },
-};
+});
 </script>

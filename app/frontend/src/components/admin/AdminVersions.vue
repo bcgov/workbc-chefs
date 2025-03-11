@@ -62,11 +62,14 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { adminService } from '@/services';
 
-export default {
+export default defineComponent({
   name: 'ManageVersions',
+
   data() {
     return {
       headers: [
@@ -110,6 +113,7 @@ export default {
       },
     };
   },
+
   computed: {
     ...mapGetters('admin', ['form']),
     ...mapGetters('form', ['lang']),
@@ -117,6 +121,7 @@ export default {
       return this.form ? this.form.versions : [];
     },
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     ...mapActions('admin', ['restoreForm']),
@@ -155,7 +160,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <style scoped>

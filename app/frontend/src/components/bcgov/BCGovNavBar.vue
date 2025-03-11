@@ -53,17 +53,21 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters } from 'vuex';
 
 import { IdentityProviders } from '../../utils/constants';
 
-export default {
+export default defineComponent({
   name: 'BCGovNavBar',
+
   data() {
     return {
       items: ['french', 'english'],
     };
   },
+
   computed: {
     ...mapGetters('auth', ['authenticated', 'isAdmin', 'identityProvider']),
     ...mapGetters('form', ['lang']),
@@ -75,7 +79,7 @@ export default {
       return this.identityProvider === IdentityProviders.IDIR;
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

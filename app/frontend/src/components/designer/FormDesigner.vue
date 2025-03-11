@@ -122,6 +122,8 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 //import Vue from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import { FormBuilder } from 'vue-formio';
@@ -135,13 +137,15 @@ import { generateIdps } from '@/utils/transformUtils';
 import FloatButton from '@/components/designer/FloatButton.vue';
 import formioIl8next from '@/internationalization/trans/formio/formio.json';
 
-export default {
+export default defineComponent({
   name: 'FormDesigner',
+
   components: {
     FormBuilder,
     FloatButton,
     ProactiveHelpPreviewDialog,
   },
+
   props: {
     draftId: String,
     formId: String,
@@ -159,6 +163,7 @@ export default {
     },
     versionId: String,
   },
+
   data() {
     return {
       offset: true,
@@ -327,6 +332,7 @@ export default {
       };
     },
   },
+
   methods: {
     ...mapActions('form', [
       'fetchForm',
@@ -761,6 +767,7 @@ export default {
       });
     },
   },
+
   created() {
     if (this.formId) {
       this.getFormSchema();
@@ -774,6 +781,7 @@ export default {
       this.patch.originalSchema = deepClone(this.formSchema);
     }
   },
+
   watch: {
     // if form userType (public, idir, team, etc) changes, re-render the form builder
     userType() {
@@ -785,7 +793,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

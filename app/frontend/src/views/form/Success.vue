@@ -34,23 +34,28 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters } from 'vuex';
 
 import FormViewer from '@/components/designer/FormViewer.vue';
 import RequestReceipt from '@/components/forms/RequestReceipt.vue';
 
-export default {
+export default defineComponent({
   name: 'FormView',
+
   props: {
     s: String,
   },
+
   components: {
     FormViewer,
     RequestReceipt,
   },
+
   computed: {
     ...mapGetters('auth', ['email']),
     ...mapGetters('form', ['isRTL', 'lang']),
   },
-};
+});
 </script>

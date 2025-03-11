@@ -8,16 +8,20 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import UserSubmission from '@/components/forms/submission/UserSubmission.vue';
 
-export default {
+export default defineComponent({
   name: 'SubmissionDraftEdit',
+
   components: {
     UserSubmission,
   },
+
   props: {
     s: String,
     sv: Boolean,
   },
-};
+});
 </script>

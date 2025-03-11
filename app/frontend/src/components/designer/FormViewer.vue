@@ -58,7 +58,7 @@
       <div class="form-wrapper">
         <v-alert
           class="mt-2 mb-2"
-          :value="saved || saving"
+          :modelValue="saved || saving"
           :class="[
             saving
               ? NOTIFICATIONS_TYPES.INFO.class
@@ -113,7 +113,7 @@
         <v-alert
           v-if="isLoading && !bulkFile && submissionId == undefined"
           class="mt-2 mb-2"
-          :value="isLoading"
+          :modelValue="isLoading"
           :class="[NOTIFICATIONS_TYPES.INFO.class]"
           :color="NOTIFICATIONS_TYPES.INFO.color"
           :icon="NOTIFICATIONS_TYPES.INFO.icon"
@@ -200,7 +200,7 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import Vue, { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import { Form } from 'vue-formio';
 import templateExtensions from '@/plugins/templateExtensions';
@@ -213,13 +213,16 @@ import { FormPermissions, NotificationTypes } from '@/utils/constants';
 import _ from 'lodash';
 import moment from 'moment';
 
-export default {
+export default defineComponent({
+  emits: ['submission-updated'],
   name: 'FormViewer',
+
   components: {
     Form,
     FormViewerActions,
     FormViewerMultiUpload,
   },
+
   props: {
     bulkState: String,
     displayTitle: {
@@ -248,6 +251,7 @@ export default {
       default: false,
     },
   },
+
   data() {
     return {
       confirmSubmit: false,
@@ -293,6 +297,7 @@ export default {
       showModal: false,
     };
   },
+
   computed: {
     formScheduleExpireMessage() {
       return this.$t('trans.formViewer.formScheduleExpireMessage');
@@ -333,11 +338,13 @@ export default {
       );
     },
   },
+
   watch: {
     lang() {
       this.reRenderFormIo += 1;
     },
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     isFormPublic: isFormPublic,
@@ -1242,6 +1249,7 @@ export default {
       }
     },
   },
+
   async created() {
     if (this.submissionId && this.isDuplicate) {
       // Run when make new submission from existing one called. Get the
@@ -1255,22 +1263,24 @@ export default {
       await this.getFormSchema();
     }
   },
+
   beforeUpdate() {
     // This needs to be ran whenever we have a formSchema change
     if (this.forceNewTabLinks) {
       attachAttributesToLinks(this.formSchema.components);
     }
   },
-  beforeDestroy() {
+
+  beforeUnmount() {
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
 @import '~font-awesome/css/font-awesome.min.css';
 @import '~formiojs/dist/formio.form.min.css';
 
-.form-wrapper ::v-deep .formio-form {
+.form-wrapper :deep(.formio-form) {
   &.formio-read-only {
     // in submission review mode, make readonly formio fields consistently greyed-out
     .form-control,

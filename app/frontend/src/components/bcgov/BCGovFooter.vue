@@ -38,9 +38,12 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters } from 'vuex';
-export default {
+export default defineComponent({
   name: 'BCGovFooter',
+
   computed: {
     ...mapGetters('form', ['lang']),
     formSubmitMode() {
@@ -48,7 +51,7 @@ export default {
       return this.$route && this.$route.meta && this.$route.meta.formSubmitMode;
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

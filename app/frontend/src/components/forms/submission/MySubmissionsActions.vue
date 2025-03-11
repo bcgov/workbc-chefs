@@ -100,15 +100,20 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters } from 'vuex';
 import DeleteSubmission from '@/components/forms/submission/DeleteSubmission.vue';
 import { FormPermissions } from '@/utils/constants';
 
-export default {
+export default defineComponent({
+  emits: ['draft-deleted'],
   name: 'MySubmissionsActions',
+
   components: {
     DeleteSubmission,
   },
+
   props: {
     submission: {
       type: Object,
@@ -119,12 +124,14 @@ export default {
       required: true,
     },
   },
+
   computed: {
     ...mapGetters('form', ['form', 'lang']),
     isCopyFromExistingSubmissionEnabled() {
       return this.form && this.form.enableCopyExistingSubmission;
     },
   },
+
   methods: {
     draftDeleted() {
       this.$emit('draft-deleted');
@@ -146,5 +153,5 @@ export default {
       );
     },
   },
-};
+});
 </script>

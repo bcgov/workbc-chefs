@@ -10,20 +10,25 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters, mapActions } from 'vuex';
 import i18n from '@/internationalization';
-export default {
+export default defineComponent({
   name: 'Error',
+
   props: {
     msg: {
       default: i18n.t('trans.error.somethingWentWrong'),
       type: String,
     },
   },
+
   computed: {
     ...mapGetters('auth', ['authenticated', 'keycloakReady']),
     ...mapGetters('form', ['lang']),
   },
+
   methods: mapActions('auth', ['logout']),
-};
+});
 </script>

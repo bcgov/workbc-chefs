@@ -62,7 +62,7 @@
                     v-model="moreHelpInfoLink"
                     flat
                     :disabled="!isLinkEnabled"
-                    :value="moreHelpInfoLink"
+                    :modelValue="moreHelpInfoLink"
                     data-cy="more_help_info_link_text_field"
                     class="text-style"
                     color="#1A5A96"
@@ -170,14 +170,18 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 library.add(faCloudArrowUp);
 
 import { mapActions, mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
+  emits: ['close-dialog'],
   name: 'ProactiveHelpDialog',
+
   data() {
     return {
       errors: [],
@@ -214,6 +218,7 @@ export default {
       linkError: false,
     };
   },
+
   props: {
     showDialog: { type: Boolean, required: true },
     component: { type: Object },
@@ -290,6 +295,7 @@ export default {
       this.link = '';
     },
   },
+
   watch: {
     showDialog() {
       this.dialog = this.showDialog;
@@ -298,11 +304,12 @@ export default {
       this.componentName_ = this.componentName;
     },
   },
+
   computed: {
     ...mapGetters('admin', ['fcHelpInfoImageUpload', 'fcProactiveHelpVersion']),
     ...mapGetters('form', ['isRTL', 'lang']),
   },
-};
+});
 </script>
 <style lang="scss" scoped>
 .active:hover {

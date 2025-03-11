@@ -33,12 +33,15 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import GeneralLayout from '@/components/infolinks/GeneralLayout.vue';
 import { mapActions, mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
   name: 'FormComponentsProactiveHelp',
   components: { GeneralLayout },
+
   data() {
     return {
       layout: {
@@ -109,6 +112,7 @@ export default {
       panelHeadStyle: new Map(),
     };
   },
+
   methods: {
     ...mapActions('admin', ['listFCProactiveHelp']),
 
@@ -155,21 +159,24 @@ export default {
       return groupComponents;
     },
   },
+
   computed: {
     ...mapGetters('admin', ['fcProactiveHelp', 'fcProactiveHelpGroupList']),
     groupList() {
       return this.extractGroups();
     },
   },
+
   watch: {
     fcProactiveHelp() {
       this.listFCProactiveHelp();
     },
   },
+
   mounted() {
     this.listFCProactiveHelp();
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

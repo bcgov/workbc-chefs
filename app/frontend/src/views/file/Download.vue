@@ -27,25 +27,32 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { IdentityProviders } from '@/utils/constants';
-export default {
+export default defineComponent({
   name: 'Download',
+
   props: {
     id: String,
   },
+
   data() {
     return {
       showDownloadLink: false,
     };
   },
+
   computed: {
     ...mapGetters('form', ['downloadedFile', 'lang', 'isRTL']),
     IDP: () => IdentityProviders,
   },
+
   mounted() {
     this.getFile(this.id);
   },
+
   methods: {
     ...mapActions('form', ['downloadFile']),
     ...mapActions('notifications', ['addNotification']),
@@ -91,5 +98,5 @@ export default {
       }
     },
   },
-};
+});
 </script>

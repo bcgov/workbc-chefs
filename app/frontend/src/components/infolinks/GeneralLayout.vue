@@ -107,6 +107,8 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { mapActions, mapGetters } from 'vuex';
 import { faPenToSquare, faEye } from '@fortawesome/free-solid-svg-icons';
@@ -115,9 +117,10 @@ import ProactiveHelpPreviewDialog from '@/components/infolinks/ProactiveHelpPrev
 
 library.add(faPenToSquare, faEye);
 
-export default {
+export default defineComponent({
   name: 'GeneralLayout',
   components: { ProactiveHelpDialog, ProactiveHelpPreviewDialog },
+
   data() {
     return {
       loading: false,
@@ -130,6 +133,7 @@ export default {
       listLength: this.componentsList.length,
     };
   },
+
   computed: {
     headers() {
       return [
@@ -152,6 +156,7 @@ export default {
     ...mapGetters('admin', ['fcProactiveHelpImageUrl']),
     ...mapGetters('form', ['lang']),
   },
+
   props: {
     layoutList: {
       type: Array,
@@ -163,6 +168,7 @@ export default {
     },
     groupName: String,
   },
+
   methods: {
     ...mapActions('admin', [
       'updateFCProactiveHelpStatus',
@@ -223,7 +229,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 <style lang="scss" scoped>
 .submissions-table >>> tbody tr {

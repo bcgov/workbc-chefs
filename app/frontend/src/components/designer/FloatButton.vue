@@ -177,10 +177,13 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapGetters } from 'vuex';
 
-export default {
+export default defineComponent({
   name: 'FloatButton',
+
   data() {
     return {
       fabItemsDirection: 'column-reverse',
@@ -205,6 +208,7 @@ export default {
       savedMsg: this.$t('trans.floatButton.save'),
     };
   },
+
   computed: {
     ...mapGetters('form', ['lang', 'isRTL']),
     computedStyles() {
@@ -230,6 +234,7 @@ export default {
       return [baseStyles, fabItemsPosition, conditionalStyles];
     },
   },
+
   props: {
     formId: String,
     draftId: String,
@@ -277,6 +282,7 @@ export default {
       },
     },
   },
+
   methods: {
     toParent(name) {
       this.$emit(name);
@@ -433,6 +439,7 @@ export default {
       this.scrollName = this.$t('trans.floatButton.top');
     },
   },
+
   watch: {
     size() {
       this.setSizes();
@@ -469,18 +476,21 @@ export default {
       }
     },
   },
+
   mounted() {
     window.scrollTo(0, 0);
     this.setPosition();
     this.setSizes();
   },
+
   created() {
     window.addEventListener('scroll', this.handleScroll);
   },
-  destroyed() {
+
+  unmounted() {
     window.removeEventListener('scroll', this.handleScroll);
   },
-};
+});
 </script>
 
 <style scoped>

@@ -44,15 +44,19 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import PrintLogo from '@/assets/images/bc_logo_print.svg';
 
-export default {
+export default defineComponent({
   name: 'BCGovHeader',
+
   data() {
     return {
       PrintLogo: PrintLogo,
     };
   },
+
   computed: {
     appTitle() {
       return this.$route && this.$route.meta && this.$route.meta.title
@@ -64,7 +68,7 @@ export default {
       return this.$route && this.$route.meta && this.$route.meta.formSubmitMode;
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

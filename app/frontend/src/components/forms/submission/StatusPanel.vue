@@ -201,13 +201,17 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { FormPermissions } from '@/utils/constants';
 import { formService, rbacService } from '@/services';
 import StatusTable from '@/components/forms/submission/StatusTable';
 
-export default {
+export default defineComponent({
+  emits: ['draft-enabled', 'note-updated'],
   name: 'StatusPanel',
+
   props: {
     formId: {
       type: String,
@@ -218,9 +222,11 @@ export default {
       required: true,
     },
   },
+
   components: {
     StatusTable,
   },
+
   data() {
     return {
       // TODO: use a better name than "on" if possible, check multiple usage in template though...
@@ -242,6 +248,7 @@ export default {
       showSendConfirmEmail: false,
     };
   },
+
   computed: {
     ...mapGetters('auth', ['identityProviderIdentity']),
     ...mapGetters('form', [
@@ -305,6 +312,7 @@ export default {
       return actionStatus;
     },
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     ...mapActions('form', ['fetchSubmissionUsers']),
@@ -488,10 +496,11 @@ export default {
       }
     },
   },
+
   created() {
     this.getStatus();
   },
-};
+});
 </script>
 
 <style>

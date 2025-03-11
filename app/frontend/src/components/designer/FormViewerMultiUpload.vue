@@ -146,13 +146,17 @@
   </div>
 </template>
 <script>
+import { defineComponent, nextTick } from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 import { Formio, Utils } from 'vue-formio';
 // import { nextTick } from 'process';
 import _ from 'lodash';
-export default {
+export default defineComponent({
+  emits: ['toggleBlock', 'set-error', 'save-bulk-data', 'reset-message'],
   name: 'FormViewerDownloadButton',
   components: {},
+
   props: {
     formElement: undefined,
     form: {},
@@ -172,6 +176,7 @@ export default {
       file_name: String,
     },
   },
+
   data() {
     return {
       vForm: {},
@@ -189,6 +194,7 @@ export default {
       max_file_size: 5,
     };
   },
+
   computed: {
     ...mapGetters('form', ['isRTL', 'lang']),
     txt_color() {
@@ -210,6 +216,7 @@ export default {
       }
     },
   },
+
   methods: {
     ...mapActions('notifications', ['addNotification']),
     addFile(e, type) {
@@ -380,7 +387,7 @@ export default {
             submit: true,
           },
         });
-        this.$nextTick(() => {
+        nextTick(() => {
           this.validate(this.Json[this.index], []);
         });
       } catch (error) {
@@ -475,16 +482,16 @@ export default {
           Number(this.index) < Number(this.Json.length - 1), //Need to compare with JSON length - 1 because we only need to perform validation upto the last instance/object of Json array.
       };
       if (check.shouldContinueValidation) {
-        this.$nextTick(() => {
+        nextTick(() => {
           this.index++;
           this.value = this.percentage(this.index);
         });
         delete check.shouldContinueValidation;
-        this.$nextTick(() => {
+        nextTick(() => {
           this.validate(this.Json[this.index], errors);
         });
       } else {
-        this.$nextTick(() => {
+        nextTick(() => {
           this.index++;
           this.value = this.percentage(this.index);
         });
@@ -558,7 +565,7 @@ export default {
       this.$emit('reset-message');
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

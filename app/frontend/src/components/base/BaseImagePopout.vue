@@ -21,7 +21,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   props: {
     alt: {
       type: String,
@@ -35,12 +37,13 @@ export default {
       type: String,
     },
   },
+
   data() {
     return {
       dialog: false,
     };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
