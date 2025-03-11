@@ -203,13 +203,13 @@
 import Vue, { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import { Form } from 'vue-formio';
-import templateExtensions from '@/plugins/templateExtensions';
-import { formService, rbacService } from '@/services';
-import FormViewerActions from '@/components/designer/FormViewerActions.vue';
-import FormViewerMultiUpload from '@/components/designer/FormViewerMultiUpload.vue';
-import { isFormPublic } from '@/utils/permissionUtils';
-import { attachAttributesToLinks } from '@/utils/transformUtils';
-import { FormPermissions, NotificationTypes } from '@/utils/constants';
+import templateExtensions from '~/plugins/templateExtensions';
+import { formService, rbacService } from '~/services';
+import FormViewerActions from '~/components/designer/FormViewerActions.vue';
+import FormViewerMultiUpload from '~/components/designer/FormViewerMultiUpload.vue';
+import { isFormPublic } from '~/utils/permissionUtils';
+import { attachAttributesToLinks } from '~/utils/transformUtils';
+import { FormPermissions, NotificationTypes } from '~/utils/constants';
 import _ from 'lodash';
 import moment from 'moment';
 

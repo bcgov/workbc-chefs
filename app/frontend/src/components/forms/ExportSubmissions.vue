@@ -343,8 +343,8 @@ import { defineComponent } from 'vue';
 
 import moment from 'moment';
 import { mapActions, mapGetters } from 'vuex';
-import formService from '@/services/formService.js';
-import { NotificationTypes, ExportLargeData } from '@/utils/constants';
+import formService from '~/services/formService.js';
+import { NotificationTypes, ExportLargeData } from '~/utils/constants';
 
 import {
   faXmark,

@@ -167,8 +167,8 @@ import { defineComponent } from 'vue';
 
 import { mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
-import { FormRoleCodes, IdentityProviders, Regex } from '@/utils/constants';
-import { userService } from '@/services';
+import { FormRoleCodes, IdentityProviders, Regex } from '~/utils/constants';
+import { userService } from '~/services';
 
 export default defineComponent({
   emits: ['new-users', 'adding-users'],

@@ -88,8 +88,8 @@ import { defineComponent } from 'vue';
 
 import { mapGetters, mapActions } from 'vuex';
 
-import { FormPermissions } from '@/utils/constants';
-import ShareForm from '@/components/forms/manage/ShareForm.vue';
+import { FormPermissions } from '~/utils/constants';
+import ShareForm from '~/components/forms/manage/ShareForm.vue';
 
 export default defineComponent({
   name: 'ManageFormActions',

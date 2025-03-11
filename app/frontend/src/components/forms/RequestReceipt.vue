@@ -65,8 +65,8 @@ import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
 
-import { NotificationTypes } from '@/utils/constants';
-import { formService } from '@/services';
+import { NotificationTypes } from '~/utils/constants';
+import { formService } from '~/services';
 
 export default defineComponent({
   name: 'RequestReceipt',

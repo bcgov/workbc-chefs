@@ -30,7 +30,7 @@
 import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
-import { IdentityProviders } from '@/utils/constants';
+import { IdentityProviders } from '~/utils/constants';
 export default defineComponent({
   name: 'Download',
 

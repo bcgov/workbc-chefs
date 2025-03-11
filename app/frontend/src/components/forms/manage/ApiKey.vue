@@ -163,7 +163,7 @@
 import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
-import { FormPermissions } from '@/utils/constants';
+import { FormPermissions } from '~/utils/constants';
 
 export default defineComponent({
   name: 'ApiKey',

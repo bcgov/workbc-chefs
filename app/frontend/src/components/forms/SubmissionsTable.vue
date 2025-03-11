@@ -327,7 +327,7 @@
 import { defineComponent } from 'vue';
 
 import { mapGetters, mapActions } from 'vuex';
-import { FormManagePermissions } from '@/utils/constants';
+import { FormManagePermissions } from '~/utils/constants';
 import moment from 'moment';
 
 import { faTrash } from '@fortawesome/free-solid-svg-icons';

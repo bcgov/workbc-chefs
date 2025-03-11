@@ -129,13 +129,13 @@ import { mapActions, mapGetters } from 'vuex';
 import { FormBuilder } from 'vue-formio';
 import { mapFields } from 'vuex-map-fields';
 import { compare, applyPatch, deepClone } from 'fast-json-patch';
-import templateExtensions from '@/plugins/templateExtensions';
-import { formService } from '@/services';
-import { IdentityMode } from '@/utils/constants';
-import ProactiveHelpPreviewDialog from '@/components/infolinks/ProactiveHelpPreviewDialog.vue';
-import { generateIdps } from '@/utils/transformUtils';
-import FloatButton from '@/components/designer/FloatButton.vue';
-import formioIl8next from '@/internationalization/trans/formio/formio.json';
+import templateExtensions from '~/plugins/templateExtensions';
+import { formService } from '~/services';
+import { IdentityMode } from '~/utils/constants';
+import ProactiveHelpPreviewDialog from '~/components/infolinks/ProactiveHelpPreviewDialog.vue';
+import { generateIdps } from '~/utils/transformUtils';
+import FloatButton from '~/components/designer/FloatButton.vue';
+import formioIl8next from '~/internationalization/trans/formio/formio.json';
 
 export default defineComponent({
   name: 'FormDesigner',

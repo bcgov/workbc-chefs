@@ -25,8 +25,8 @@
 import { mapActions } from 'vuex';
 import Vue, { defineComponent } from 'vue';
 import VueClipboard from 'vue-clipboard2';
-import { NotificationTypes } from '@/utils/constants';
-import i18n from '@/internationalization';
+import { NotificationTypes } from '~/utils/constants';
+import i18n from '~/internationalization';
 
 VueClipboard.config.autoSetContainer = true;
 Vue.use(VueClipboard);

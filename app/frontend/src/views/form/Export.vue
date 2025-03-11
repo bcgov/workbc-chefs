@@ -7,8 +7,8 @@
 <script>
 import { defineComponent } from 'vue';
 
-import ExportSubmissions from '@/components/forms/ExportSubmissions.vue';
-import { IdentityProviders } from '@/utils/constants';
+import ExportSubmissions from '~/components/forms/ExportSubmissions.vue';
+import { IdentityProviders } from '~/utils/constants';
 export default defineComponent({
   name: 'Export',
 

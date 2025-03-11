@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex, { createStore } from 'vuex';
 
-import form from '@/store/modules/form.js';
-import notifications from '@/store/modules/notifications.js';
+import form from '~/store/modules/form.js';
+import notifications from '~/store/modules/notifications.js';
 
 Vue.use(Vuex);
 

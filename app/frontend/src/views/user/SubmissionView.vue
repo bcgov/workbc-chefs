@@ -5,7 +5,7 @@
 <script>
 import { defineComponent } from 'vue';
 
-import FormSubmission from '@/components/forms/submission/UserSubmission.vue';
+import FormSubmission from '~/components/forms/submission/UserSubmission.vue';
 
 export default defineComponent({
   name: 'UserSubmissionView',

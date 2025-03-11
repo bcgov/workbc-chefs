@@ -1,8 +1,9 @@
-import Vue from 'vue';
-import Vuetify from 'vuetify/lib';
-import hi from '@/internationalization/trans/vuetify/locale/hi';
-import pa from '@/internationalization/trans/vuetify/locale/pa';
-import tl from '@/internationalization/trans/vuetify/locale/tl';
+import { createVuetify } from 'vuetify';
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
+import hi from '~/internationalization/trans/vuetify/locale/hi';
+import pa from '~/internationalization/trans/vuetify/locale/pa';
+import tl from '~/internationalization/trans/vuetify/locale/tl';
 import zhHans from 'vuetify/lib/locale/zh-Hans';
 import zhHant from 'vuetify/lib/locale/zh-Hant';
 import vi from 'vuetify/lib/locale/vi';
@@ -19,13 +20,9 @@ import en from 'vuetify/lib/locale/en';
 import es from 'vuetify/lib/locale/es';
 import ar from 'vuetify/lib/locale/ar';
 
-Vue.use(Vuetify);
-
-export default new Vuetify({
-  defaultAssets: {
-    font: true,
-    icons: 'md',
-  },
+export default createVuetify({
+components,
+directives,
   lang: {
     locales: {
       zhHans,

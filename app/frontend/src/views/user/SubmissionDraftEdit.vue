@@ -10,7 +10,7 @@
 <script>
 import { defineComponent } from 'vue';
 
-import UserSubmission from '@/components/forms/submission/UserSubmission.vue';
+import UserSubmission from '~/components/forms/submission/UserSubmission.vue';
 
 export default defineComponent({
   name: 'SubmissionDraftEdit',

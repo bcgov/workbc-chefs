@@ -132,12 +132,12 @@
 import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
-import { IdentityProviders } from '@/utils/constants';
+import { IdentityProviders } from '~/utils/constants';
 import {
   checkFormManage,
   checkFormSubmit,
   checkSubmissionView,
-} from '@/utils/permissionUtils';
+} from '~/utils/permissionUtils';
 
 export default defineComponent({
   name: 'FormsTable',

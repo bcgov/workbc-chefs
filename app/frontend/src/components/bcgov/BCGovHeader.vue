@@ -25,7 +25,7 @@
           class="d-flex"
           contain
           height="3.5rem"
-          src="@/assets/images/bc_logo.svg"
+          src="~/assets/images/bc_logo.svg"
           width="10rem"
         />
       </a>
@@ -46,7 +46,7 @@
 <script>
 import { defineComponent } from 'vue';
 
-import PrintLogo from '@/assets/images/bc_logo_print.svg';
+import PrintLogo from '~/assets/images/bc_logo_print.svg';
 
 export default defineComponent({
   name: 'BCGovHeader',
@@ -72,7 +72,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/style.scss';
+@import '~/assets/scss/style.scss';
 
 .gov-header {
   .printHeader {
@@ -93,7 +93,7 @@ export default defineComponent({
     color: #ffffff;
     overflow: hidden;
     margin-bottom: 0;
-    @media #{map-get($display-breakpoints, 'sm-and-down')} {
+    @media (max-width: 960px) {
       font-size: 1rem !important;
     }
   }

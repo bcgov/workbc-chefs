@@ -103,8 +103,8 @@
 import { defineComponent } from 'vue';
 
 import { mapGetters } from 'vuex';
-import DeleteSubmission from '@/components/forms/submission/DeleteSubmission.vue';
-import { FormPermissions } from '@/utils/constants';
+import DeleteSubmission from '~/components/forms/submission/DeleteSubmission.vue';
+import { FormPermissions } from '~/utils/constants';
 
 export default defineComponent({
   emits: ['draft-deleted'],

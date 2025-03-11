@@ -65,7 +65,7 @@
 import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
-import { adminService } from '@/services';
+import { adminService } from '~/services';
 
 export default defineComponent({
   name: 'ManageVersions',

@@ -7,8 +7,8 @@
 <script>
 import { defineComponent } from 'vue';
 
-import FormSubmission from '@/components/forms/FormSubmission.vue';
-import { IdentityProviders } from '@/utils/constants';
+import FormSubmission from '~/components/forms/FormSubmission.vue';
+import { IdentityProviders } from '~/utils/constants';
 
 export default defineComponent({
   name: 'FormView',

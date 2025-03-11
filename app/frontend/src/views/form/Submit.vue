@@ -5,7 +5,7 @@
 <script>
 import { defineComponent } from 'vue';
 
-import FormViewer from '@/components/designer/FormViewer.vue';
+import FormViewer from '~/components/designer/FormViewer.vue';
 
 export default defineComponent({
   name: 'FormSubmit',

@@ -72,7 +72,7 @@
 import { defineComponent } from 'vue';
 
 import { mapGetters } from 'vuex';
-import i18n from '@/internationalization';
+import i18n from '~/internationalization';
 
 export default defineComponent({
   emits: ['saving-filter-data', 'cancel-filter-data'],

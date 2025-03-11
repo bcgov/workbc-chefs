@@ -1122,12 +1122,12 @@ import {
   IdentityProviders,
   Regex,
   ScheduleType,
-} from '@/utils/constants';
+} from '~/utils/constants';
 import {
   getAvailableDates,
   calculateCloseDate,
   isDateValidForMailNotification,
-} from '@/utils/transformUtils';
+} from '~/utils/transformUtils';
 import moment from 'moment';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {

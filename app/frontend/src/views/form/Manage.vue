@@ -7,8 +7,8 @@
 <script>
 import { defineComponent } from 'vue';
 
-import ManageLayout from '@/components/forms/manage/ManageLayout.vue';
-import { IdentityProviders } from '@/utils/constants';
+import ManageLayout from '~/components/forms/manage/ManageLayout.vue';
+import { IdentityProviders } from '~/utils/constants';
 
 export default defineComponent({
   name: 'FormManage',

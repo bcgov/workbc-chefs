@@ -13,8 +13,8 @@ import { defineComponent } from 'vue';
 
 import { mapGetters } from 'vuex';
 
-import admin from '@/store/modules/admin.js';
-import { IdentityProviders } from '@/utils/constants';
+import admin from '~/store/modules/admin.js';
+import { IdentityProviders } from '~/utils/constants';
 
 export default defineComponent({
   name: 'Admin',

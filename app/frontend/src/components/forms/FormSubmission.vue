@@ -177,13 +177,13 @@ import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
 
-import AuditHistory from '@/components/forms/submission/AuditHistory.vue';
-import DeleteSubmission from '@/components/forms/submission/DeleteSubmission.vue';
-import FormViewer from '@/components/designer/FormViewer.vue';
-import NotesPanel from '@/components/forms/submission/NotesPanel.vue';
-import StatusPanel from '@/components/forms/submission/StatusPanel.vue';
-import PrintOptions from '@/components/forms/PrintOptions.vue';
-import { NotificationTypes } from '@/utils/constants';
+import AuditHistory from '~/components/forms/submission/AuditHistory.vue';
+import DeleteSubmission from '~/components/forms/submission/DeleteSubmission.vue';
+import FormViewer from '~/components/designer/FormViewer.vue';
+import NotesPanel from '~/components/forms/submission/NotesPanel.vue';
+import StatusPanel from '~/components/forms/submission/StatusPanel.vue';
+import PrintOptions from '~/components/forms/PrintOptions.vue';
+import { NotificationTypes } from '~/utils/constants';
 
 export default defineComponent({
   name: 'FormSubmission',

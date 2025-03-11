@@ -1,14 +1,14 @@
 import { getField, updateField } from 'vuex-map-fields';
-import { IdentityMode, NotificationTypes } from '@/utils/constants';
+import { IdentityMode, NotificationTypes } from '~/utils/constants';
 import {
   apiKeyService,
   formService,
   fileService,
   rbacService,
   userService,
-} from '@/services';
-import { generateIdps, parseIdps } from '@/utils/transformUtils';
-import i18n from '@/internationalization';
+} from '~/services';
+import { generateIdps, parseIdps } from '~/utils/transformUtils';
+import i18n from '~/internationalization';
 
 const genInitialSchedule = () => ({
   enabled: null,

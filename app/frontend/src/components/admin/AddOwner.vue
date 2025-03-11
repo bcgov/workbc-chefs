@@ -28,7 +28,7 @@ import { defineComponent } from 'vue';
 
 import { mapActions } from 'vuex';
 
-import { FormRoleCodes } from '@/utils/constants';
+import { FormRoleCodes } from '~/utils/constants';
 import { version as uuidVersion, validate as uuidValidate } from 'uuid';
 
 export default defineComponent({

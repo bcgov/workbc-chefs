@@ -13,7 +13,7 @@
 import { defineComponent } from 'vue';
 
 import { mapGetters, mapActions } from 'vuex';
-import i18n from '@/internationalization';
+import i18n from '~/internationalization';
 export default defineComponent({
   name: 'Error',
 

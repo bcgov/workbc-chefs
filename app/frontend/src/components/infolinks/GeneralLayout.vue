@@ -112,8 +112,8 @@ import { defineComponent } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { mapActions, mapGetters } from 'vuex';
 import { faPenToSquare, faEye } from '@fortawesome/free-solid-svg-icons';
-import ProactiveHelpDialog from '@/components/infolinks/ProactiveHelpDialog.vue';
-import ProactiveHelpPreviewDialog from '@/components/infolinks/ProactiveHelpPreviewDialog.vue';
+import ProactiveHelpDialog from '~/components/infolinks/ProactiveHelpDialog.vue';
+import ProactiveHelpPreviewDialog from '~/components/infolinks/ProactiveHelpPreviewDialog.vue';
 
 library.add(faPenToSquare, faEye);
 

@@ -10,7 +10,7 @@
 <script>
 import { defineComponent } from 'vue';
 
-import AdministerForm from '@/components/admin/AdministerForm.vue';
+import AdministerForm from '~/components/admin/AdministerForm.vue';
 import { mapGetters } from 'vuex';
 
 export default defineComponent({

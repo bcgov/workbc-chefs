@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import getRouter from '@/router';
+import getRouter from '~/router';
 
 /**
  * @function hasRoles

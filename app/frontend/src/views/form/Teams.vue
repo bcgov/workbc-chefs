@@ -7,8 +7,8 @@
 <script>
 import { defineComponent } from 'vue';
 
-import TeamManagement from '@/components/forms/manage/TeamManagement.vue';
-import { IdentityProviders } from '@/utils/constants';
+import TeamManagement from '~/components/forms/manage/TeamManagement.vue';
+import { IdentityProviders } from '~/utils/constants';
 
 export default defineComponent({
   name: 'FormTeams',

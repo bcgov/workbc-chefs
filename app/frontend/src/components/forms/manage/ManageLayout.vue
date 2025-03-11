@@ -27,9 +27,9 @@ import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
 
-import ManageForm from '@/components/forms/manage/ManageForm.vue';
-import ManageFormActions from '@/components/forms/manage/ManageFormActions.vue';
-import { FormPermissions, IdentityProviders } from '@/utils/constants';
+import ManageForm from '~/components/forms/manage/ManageForm.vue';
+import ManageFormActions from '~/components/forms/manage/ManageFormActions.vue';
+import { FormPermissions, IdentityProviders } from '~/utils/constants';
 
 export default defineComponent({
   name: 'ManageLayout',

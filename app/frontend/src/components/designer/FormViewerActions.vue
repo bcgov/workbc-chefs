@@ -93,9 +93,9 @@
 <script>
 import { defineComponent } from 'vue';
 
-import { FormPermissions } from '@/utils/constants';
-import ManageSubmissionUsers from '@/components/forms/submission/ManageSubmissionUsers.vue';
-import PrintOptions from '@/components/forms/PrintOptions.vue';
+import { FormPermissions } from '~/utils/constants';
+import ManageSubmissionUsers from '~/components/forms/submission/ManageSubmissionUsers.vue';
+import PrintOptions from '~/components/forms/PrintOptions.vue';
 import { mapGetters } from 'vuex';
 export default defineComponent({
   emits: ['switchView', 'save-draft', 'showdoYouWantToSaveTheDraftModal'],

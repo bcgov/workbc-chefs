@@ -1,6 +1,6 @@
-import { NotificationTypes } from '@/utils/constants';
-import { adminService } from '@/services';
-import i18n from '@/internationalization';
+import { NotificationTypes } from '~/utils/constants';
+import { adminService } from '~/services';
+import i18n from '~/internationalization';
 
 /**
  * Admin Module

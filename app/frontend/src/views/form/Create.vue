@@ -68,10 +68,10 @@ import { defineComponent, nextTick } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
-import FormDesigner from '@/components/designer/FormDesigner.vue';
-import FormSettings from '@/components/designer/FormSettings.vue';
-import FormDisclaimer from '@/components/designer/FormDisclaimer.vue';
-import { IdentityMode, IdentityProviders } from '@/utils/constants';
+import FormDesigner from '~/components/designer/FormDesigner.vue';
+import FormSettings from '~/components/designer/FormSettings.vue';
+import FormDisclaimer from '~/components/designer/FormDisclaimer.vue';
+import { IdentityMode, IdentityProviders } from '~/utils/constants';
 
 export default defineComponent({
   name: 'FormCreate',

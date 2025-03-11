@@ -10,7 +10,7 @@
 <script>
 import { defineComponent } from 'vue';
 
-import UserDuplicateSubmission from '@/components/forms/submission/UserDuplicateSubmission.vue';
+import UserDuplicateSubmission from '~/components/forms/submission/UserDuplicateSubmission.vue';
 export default defineComponent({
   name: 'SubmissionDuplicate',
 

@@ -14,8 +14,8 @@ import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
 
-import FormViewer from '@/components/designer/FormViewer.vue';
-import { NotificationTypes } from '@/utils/constants';
+import FormViewer from '~/components/designer/FormViewer.vue';
+import { NotificationTypes } from '~/utils/constants';
 
 export default defineComponent({
   name: 'UserSubmission',

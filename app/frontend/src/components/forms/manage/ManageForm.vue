@@ -164,11 +164,11 @@ import { defineComponent } from 'vue';
 
 import { mapGetters, mapActions } from 'vuex';
 
-import { FormPermissions, NotificationTypes } from '@/utils/constants';
-import ApiKey from '@/components/forms/manage/ApiKey.vue';
-import FormSettings from '@/components/designer/FormSettings.vue';
-import ManageVersions from '@/components/forms/manage/ManageVersions.vue';
-import Subscription from '@/components/forms/manage/Subscription.vue';
+import { FormPermissions, NotificationTypes } from '~/utils/constants';
+import ApiKey from '~/components/forms/manage/ApiKey.vue';
+import FormSettings from '~/components/designer/FormSettings.vue';
+import ManageVersions from '~/components/forms/manage/ManageVersions.vue';
+import Subscription from '~/components/forms/manage/Subscription.vue';
 
 export default defineComponent({
   name: 'ManageForm',

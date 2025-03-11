@@ -204,9 +204,9 @@
 import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
-import { FormPermissions } from '@/utils/constants';
-import { formService, rbacService } from '@/services';
-import StatusTable from '@/components/forms/submission/StatusTable';
+import { FormPermissions } from '~/utils/constants';
+import { formService, rbacService } from '~/services';
+import StatusTable from '~/components/forms/submission/StatusTable.vue';
 
 export default defineComponent({
   emits: ['draft-enabled', 'note-updated'],

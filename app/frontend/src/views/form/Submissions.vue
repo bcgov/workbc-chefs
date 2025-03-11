@@ -7,8 +7,8 @@
 <script>
 import { defineComponent } from 'vue';
 
-import SubmissionsTable from '@/components/forms/SubmissionsTable.vue';
-import { IdentityProviders } from '@/utils/constants';
+import SubmissionsTable from '~/components/forms/SubmissionsTable.vue';
+import { IdentityProviders } from '~/utils/constants';
 
 export default defineComponent({
   name: 'Submissions',

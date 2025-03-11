@@ -35,7 +35,7 @@
 <script>
 import { defineComponent } from 'vue';
 
-import GeneralLayout from '@/components/infolinks/GeneralLayout.vue';
+import GeneralLayout from '~/components/infolinks/GeneralLayout.vue';
 import { mapActions, mapGetters } from 'vuex';
 
 export default defineComponent({

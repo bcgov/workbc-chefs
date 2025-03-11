@@ -26,12 +26,12 @@ export default defineComponent({
   name: 'AdminPage',
 
   components: {
-    AdminFormsTable: () => import('@/components/admin/AdminFormsTable.vue'),
-    AdminUsersTable: () => import('@/components/admin/AdminUsersTable.vue'),
-    Dashboard: () => import('@/components/admin/Dashboard.vue'),
-    Developer: () => import('@/components/admin/Developer.vue'),
+    AdminFormsTable: () => import('~/components/admin/AdminFormsTable.vue'),
+    AdminUsersTable: () => import('~/components/admin/AdminUsersTable.vue'),
+    Dashboard: () => import('~/components/admin/Dashboard.vue'),
+    Developer: () => import('~/components/admin/Developer.vue'),
     FormComponentsProactiveHelp: () =>
-      import('@/components/admin/FormComponentsProactiveHelp.vue'),
+      import('~/components/admin/FormComponentsProactiveHelp.vue'),
   },
 
   data() {

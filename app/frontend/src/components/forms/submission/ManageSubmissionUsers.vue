@@ -221,8 +221,8 @@ import {
   IdentityProviders,
   NotificationTypes,
   Regex,
-} from '@/utils/constants';
-import { rbacService, userService } from '@/services';
+} from '~/utils/constants';
+import { rbacService, userService } from '~/services';
 
 export default defineComponent({
   name: 'ManageSubmissionUsers',

@@ -63,7 +63,7 @@ import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
 
-import formService from '@/services/formService.js';
+import formService from '~/services/formService.js';
 
 export default defineComponent({
   name: 'AuditHistory',

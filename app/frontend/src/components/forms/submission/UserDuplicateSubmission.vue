@@ -16,7 +16,7 @@ import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
 
-import FormViewer from '@/components/designer/FormViewer.vue';
+import FormViewer from '~/components/designer/FormViewer.vue';
 
 export default defineComponent({
   name: 'UserDuplicateSubmission',

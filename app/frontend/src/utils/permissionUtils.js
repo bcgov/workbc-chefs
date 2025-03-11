@@ -1,12 +1,12 @@
-import { formService } from '@/services';
-import store from '@/store';
+import { formService } from '~/services';
+import store from '~/store';
 import {
   FormPermissions,
   FormManagePermissions,
   IdentityMode,
   IdentityProviders,
-} from '@/utils/constants';
-import i18n from '@/internationalization';
+} from '~/utils/constants';
+import i18n from '~/internationalization';
 
 //
 // Utility Functions for determining permissions

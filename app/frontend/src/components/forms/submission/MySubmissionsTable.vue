@@ -140,7 +140,7 @@ import { defineComponent } from 'vue';
 
 import { mapGetters, mapActions } from 'vuex';
 
-import MySubmissionsActions from '@/components/forms/submission/MySubmissionsActions.vue';
+import MySubmissionsActions from '~/components/forms/submission/MySubmissionsActions.vue';
 
 export default defineComponent({
   name: 'MySubmissionsTable',

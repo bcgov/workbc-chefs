@@ -107,8 +107,8 @@
 import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
-import { formService, utilsService } from '@/services';
-import { NotificationTypes } from '@/utils/constants';
+import { formService, utilsService } from '~/services';
+import { NotificationTypes } from '~/utils/constants';
 
 export default defineComponent({
   data() {

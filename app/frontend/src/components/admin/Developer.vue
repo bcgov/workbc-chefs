@@ -55,7 +55,7 @@
 import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
-import { rbacService } from '@/services';
+import { rbacService } from '~/services';
 
 import VueJsonPretty from 'vue-json-pretty';
 

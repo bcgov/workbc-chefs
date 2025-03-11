@@ -200,15 +200,15 @@ import { defineComponent } from 'vue';
 
 import { mapActions, mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
-import { rbacService, roleService } from '@/services';
+import { rbacService, roleService } from '~/services';
 import {
   IdentityMode,
   FormPermissions,
   FormRoleCodes,
   IdentityProviders,
-} from '@/utils/constants';
+} from '~/utils/constants';
 
-import AddTeamMember from '@/components/forms/manage/AddTeamMember.vue';
+import AddTeamMember from '~/components/forms/manage/AddTeamMember.vue';
 
 export default defineComponent({
   name: 'TeamManagement',

@@ -133,7 +133,7 @@
 import { defineComponent } from 'vue';
 
 import QrcodeVue from 'qrcode.vue';
-import { NotificationTypes } from '@/utils/constants';
+import { NotificationTypes } from '~/utils/constants';
 import { mapGetters } from 'vuex';
 export default defineComponent({
   components: {
@@ -184,7 +184,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import '~vuetify/src/styles/settings/_variables';
+@import '~vuetify/lib/styles/settings/_variables.scss';
 
 .qrCodeContainer {
   @media #{map-get($display-breakpoints, 'sm-and-up')} {

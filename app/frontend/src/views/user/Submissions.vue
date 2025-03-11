@@ -7,7 +7,7 @@
 <script>
 import { defineComponent } from 'vue';
 
-import MySubmissionsTable from '@/components/forms/submission/MySubmissionsTable.vue';
+import MySubmissionsTable from '~/components/forms/submission/MySubmissionsTable.vue';
 
 export default defineComponent({
   name: 'Submissions',

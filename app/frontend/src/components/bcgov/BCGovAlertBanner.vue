@@ -9,8 +9,8 @@
 <script>
 import { defineComponent } from 'vue';
 
-import { NotificationTypes } from '@/utils/constants';
-import i18n from '@/internationalization';
+import { NotificationTypes } from '~/utils/constants';
+import i18n from '~/internationalization';
 
 export default defineComponent({
   computed: {

@@ -24,9 +24,9 @@
 <script>
 import { defineComponent } from 'vue';
 
-import FormViewer from '@/components/designer/FormViewer.vue';
+import FormViewer from '~/components/designer/FormViewer.vue';
 import { mapGetters } from 'vuex';
-import { IdentityProviders } from '@/utils/constants';
+import { IdentityProviders } from '~/utils/constants';
 
 export default defineComponent({
   name: 'FormPreview',
