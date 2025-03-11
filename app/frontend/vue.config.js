@@ -9,6 +9,13 @@ const proxyObject = {
 module.exports = {
   publicPath: process.env.VUE_APP_FRONTEND_BASEPATH ? process.env.VUE_APP_FRONTEND_BASEPATH : '/app',
   transpileDependencies: ['vuetify'],
+  // css: {
+  //   loaderOptions: {
+  //     sass: {
+  //       data: `@import "~@/src/assets/scss/style.scss"`
+  //     }
+  //   }
+  // },
   devServer: {
     compress: true,
     proxy: {
