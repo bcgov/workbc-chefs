@@ -598,9 +598,8 @@ a,
   left: auto !important;
 }
 
-
 .label span {
-  margin-right:30px;
+  margin-right: 30px;
 }
 
 .flex-xs-column-reverse {
@@ -616,8 +615,17 @@ a,
   text-align: right;
 }
 
-
 .dir-ltl {
   direction: ltr !important;
   text-align: left;
+}
+
+// Custom padding for tables on mobile devices //
+@media all and (max-width: 1024px) {
+  .table th,
+  .table td {
+    padding: 0.1rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+  }
 }
