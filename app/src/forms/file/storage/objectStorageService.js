@@ -34,7 +34,7 @@ class ObjectStorageService {
         Bucket: this._bucket,
       },
       maxRetries: 3,
-      retryDelayOptions: { base: 300 }
+      retryDelayOptions: { base: 300 },
     });
   }
 
@@ -85,23 +85,24 @@ class ObjectStorageService {
         // eslint-disable-next-line no-unused-vars
         try {
           this._s3.upload(params, (err, data) => {
-            if (err) { // retry once
-              console.log("error uploading: ", err)
-              console.log("retrying...")
+            if (err) {
+              // retry once
+              console.log('error uploading: ', err);
+              console.log('retrying...');
               this._s3.upload(params, (err, data) => {
                 if (err) {
-                  console.log("second error uploading: ", err)
+                  console.log('second error uploading: ', err);
                   reject(err);
                 } else {
-                  console.log("second upload successful")
+                  console.log('second upload successful');
                   resolve({
                     path: data.Key,
                     storage: StorageTypes.OBJECT_STORAGE,
-                  });         
+                  });
                 }
-              })
+              });
             } else {
-              console.log("upload successful")
+              console.log('upload successful');
               resolve({
                 path: data.Key,
                 storage: StorageTypes.OBJECT_STORAGE,
@@ -109,8 +110,8 @@ class ObjectStorageService {
             }
           });
         } catch (e) {
-          console.log("upload error: ", e)
-          reject(e)
+          console.log('upload error: ', e);
+          reject(e);
         }
       });
     } catch (e) {

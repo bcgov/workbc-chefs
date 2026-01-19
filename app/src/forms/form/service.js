@@ -397,23 +397,23 @@ const service = {
 
       await FormSubmission.query(trx).insert(obj);
 
-      console.log('===== CFMS Logic =====');
-      console.log('Form Version ID: ', formVersionId);
-      //TODO: version ID check
-      try {
-        const xml = await cfmsService.prepareSubmission(currentUser, data.submission.data);
-        try {
-          const { response } = await cfmsService.submitApplication(xml);
-          const { statusCode } = response;
-          console.log('CFMS Response Status Code: ', statusCode);
-          console.log('CFMS Response: ', response);
-        } catch (err) {
-          console.log('CFMS Error: ', err);
-        }
-      } catch (e) {
-        console.log('ERROR: ', e);
-      }
-      console.log('===== End CFMS Logic =====');
+      // console.log('===== CFMS Logic =====');
+      // console.log('Form Version ID: ', formVersionId);
+      // //TODO: version ID check
+      // try {
+      //   const xml = await cfmsService.prepareSubmission(currentUser, data.submission.data);
+      //   try {
+      //     const { response } = await cfmsService.submitApplication(xml);
+      //     const { statusCode } = response;
+      //     console.log('CFMS Response Status Code: ', statusCode);
+      //     console.log('CFMS Response: ', response);
+      //   } catch (err) {
+      //     console.log('CFMS Error: ', err);
+      //   }
+      // } catch (e) {
+      //   console.log('ERROR: ', e);
+      // }
+      // console.log('===== End CFMS Logic =====');
 
       if (!isPublicForm && !currentUser.public) {
         // Provide the submission creator appropriate CRUD permissions if this is a non-public form
