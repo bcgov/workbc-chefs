@@ -70,6 +70,7 @@
     "gulp": "^4.0.2",
     "js-yaml": "^4.1.0",
     "json2csv": "^6.0.0-alpha.2",
+    "json2html": "^0.0.8",
     "jsonwebtoken": "^9.0.0",
     "keycloak-connect": "^21.1.1",
     "knex": "^2.4.2",
@@ -81,6 +82,7 @@
     "objection": "^3.0.1",
     "pg": "^8.10.0",
     "randexp": "^0.5.3",
+    "stream-to-blob": "^2.0.1",
     "uuid": "^8.3.2",
     "winston": "^3.8.2"
   },

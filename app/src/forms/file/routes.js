@@ -1,5 +1,6 @@
 const routes = require('express').Router();
 const controller = require('./controller');
+const apiAccess = require('../auth/middleware/apiAccess');
 
 const P = require('../common/constants').Permissions;
 const { currentFileRecord, hasFileCreate, hasFilePermissions } = require('./middleware/filePermissions');
@@ -19,6 +20,14 @@ routes.get('/:id', currentFileRecord, hasFilePermissions(P.SUBMISSION_READ), asy
 
 routes.delete('/:id', currentFileRecord, hasFilePermissions(P.SUBMISSION_UPDATE), async (req, res, next) => {
   await controller.delete(req, res, next);
+});
+
+routes.get('/AttachmentsList/:submissionId', apiAccess, async (req, res, next) => {
+  await controller.getAttachmentsList(req, res, next);
+});
+
+routes.get('/ApplicationSummary/:submissionId', apiAccess, async (req, res, next) => {
+  await controller.getApplicationSummary(req, res, next);
 });
 
 module.exports = routes;

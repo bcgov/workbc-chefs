@@ -151,6 +151,7 @@ class ObjectStorageService {
         // eslint-disable-next-line
         _local_s3.headObject(params, function (err, data) {
           if (err) {
+            console.log(err);
             if (404 === err.statusCode) {
               reject(new Problem(404, 'File not found'));
             } else {
