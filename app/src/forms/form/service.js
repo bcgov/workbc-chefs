@@ -411,7 +411,7 @@ const service = {
 
       console.log('Form Version ID: ', formVersionId);
       //TODO: version ID check
-      if (formVersionId === 'fa349507-f9cd-42e2-b57a-da7fa8e77802') {
+      if (formVersionId === 'ac6f9fe0-51b0-41fb-8ed7-5b78dec4eece') {
         // TODO: use .env
         console.log('===== CFMS Logic =====');
         const getRandomInt = (min, max) => {
