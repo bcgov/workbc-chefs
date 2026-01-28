@@ -409,10 +409,11 @@ const service = {
 
       await FormSubmission.query(trx).insert(obj);
 
-      console.log('===== CFMS Logic =====');
       console.log('Form Version ID: ', formVersionId);
       //TODO: version ID check
-      try {
+      if (formVersionId === 'fa349507-f9cd-42e2-b57a-da7fa8e77802') {
+        // TODO: use .env
+        console.log('===== CFMS Logic =====');
         const getRandomInt = (min, max) => {
           min = Math.ceil(min);
           max = Math.floor(max);
@@ -437,10 +438,8 @@ const service = {
         } catch (err) {
           console.log('CFMS Error: ', err);
         }
-      } catch (e) {
-        console.log('ERROR: ', e);
+        console.log('===== End CFMS Logic =====');
       }
-      console.log('===== End CFMS Logic =====');
 
       if (!isPublicForm && !currentUser.public) {
         // Provide the submission creator appropriate CRUD permissions if this is a non-public form
