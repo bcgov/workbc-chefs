@@ -135,14 +135,14 @@ class CFMSService {
           : ''
       }
       ${submissionData.worksafeCoverageHiddenLabel?.CEPWorkSafeRate ? `<CEPWorkSafeRate>${submissionData.worksafeCoverageHiddenLabel.CEPWorkSafeRate}</CEPWorkSafeRate>` : ''}
-      <CEPDisplacementExplanation>${submissionData.CEPDisplacementExplanation}</CEPDisplacementExplanation>
-      <CEPEPBCDeliveryOther>${submissionData.CEPEPBCDeliveryOther}</CEPEPBCDeliveryOther>
-      <CEPOtherGovtFundingExplanation>${submissionData.CEPOtherGovtFundingExplanation}</CEPOtherGovtFundingExplanation>
+      ${submissionData.CEPDisplacementExplanation ? `<CEPDisplacementExplanation>${submissionData.CEPDisplacementExplanation}</CEPDisplacementExplanation>` : ''}
+      ${submissionData.CEPEPBCDeliveryOther ? `<CEPEPBCDeliveryOther>${submissionData.CEPEPBCDeliveryOther}</CEPEPBCDeliveryOther>` : ''}
+      ${submissionData.CEPOtherGovtFundingExplanation ? `<CEPOtherGovtFundingExplanation>${submissionData.CEPOtherGovtFundingExplanation}</CEPOtherGovtFundingExplanation>` : ''}
       <CEPOrgMandate>${submissionData.CEPOrgMandate}</CEPOrgMandate>
-      <CEPEPBCConflict>${submissionData.CEPEPBCConflict}</CEPEPBCConflict>
+      ${submissionData.CEPEPBCConflict ? `<CEPEPBCConflict>${submissionData.CEPEPBCConflict}</CEPEPBCConflict>` : ''}
       <CEPUnfairCompPBLMT>${submissionData.CEPUnfairCompPBLMT}</CEPUnfairCompPBLMT>
-      <CEPWorksiteUnions>${submissionData.CEPWorksiteUnions}</CEPWorksiteUnions>
-      <CEPDisputeExplanation>${submissionData.CEPDisputeExplanation}</CEPDisputeExplanation>
+      ${submissionData.CEPWorksiteUnions ? `<CEPWorksiteUnions>${submissionData.CEPWorksiteUnions}</CEPWorksiteUnions>` : ''}
+      ${submissionData.CEPDisputeExplanation ? `<CEPDisputeExplanation>${submissionData.CEPDisputeExplanation}</CEPDisputeExplanation>` : ''}
       <CEPOweGovt>${submissionData.CEPOweGovt}</CEPOweGovt>
       <CEPLiabilityInsurance>${submissionData.CEPLiabilityInsurance}</CEPLiabilityInsurance>
       <CEPExistingPolicy>${submissionData.CEPExistingPolicy}</CEPExistingPolicy>

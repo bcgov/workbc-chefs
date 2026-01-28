@@ -4,6 +4,7 @@ const { validate: uuidValidate } = require('uuid');
 
 const formService = require('../../form/service');
 const submissionService = require('../../submission/service');
+const FormSubmissionCFMSLookup = require('../../common/models/tables/formSubmissionCFMSLookup');
 
 module.exports = async (req, res, next) => {
   try {
@@ -20,6 +21,12 @@ module.exports = async (req, res, next) => {
         formId = params.formId;
       } else if (params.formSubmissionId && uuidValidate(params.formSubmissionId)) {
         const result = await submissionService.read(params.formSubmissionId);
+        formId = result?.form?.id;
+      } else if (params.cfmsId) {
+        // Special case for CFMS endpoints
+        const lookup = await FormSubmissionCFMSLookup.query().where('cfmsId', params.cfmsId).select('formSubmissionId').throwIfNotFound();
+        const submissionId = lookup[0].formSubmissionId;
+        const result = await submissionService.read(submissionId);
         formId = result?.form?.id;
       }
 

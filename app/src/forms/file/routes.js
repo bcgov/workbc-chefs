@@ -6,7 +6,7 @@ const P = require('../common/constants').Permissions;
 const { currentFileRecord, hasFileCreate, hasFilePermissions } = require('./middleware/filePermissions');
 const middleware = require('../common/middleware');
 const fileUpload = require('./middleware/upload').fileUpload;
-const { currentUser } = require('../auth/middleware/userAccess');
+const { currentUser, hasFormPermissions } = require('../auth/middleware/userAccess');
 
 routes.use(currentUser);
 
@@ -22,11 +22,11 @@ routes.delete('/:id', currentFileRecord, hasFilePermissions(P.SUBMISSION_UPDATE)
   await controller.delete(req, res, next);
 });
 
-routes.get('/AttachmentsList/:cfmsId', apiAccess, async (req, res, next) => {
+routes.get('/AttachmentsList/:cfmsId', apiAccess, hasFormPermissions(P.FORM_READ), async (req, res, next) => {
   await controller.getAttachmentsList(req, res, next);
 });
 
-routes.get('/ApplicationSummary/:cfmsId', apiAccess, async (req, res, next) => {
+routes.get('/ApplicationSummary/:cfmsId', apiAccess, hasFormPermissions(P.FORM_READ), async (req, res, next) => {
   await controller.getApplicationSummary(req, res, next);
 });
 
