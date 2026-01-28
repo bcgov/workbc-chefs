@@ -22,11 +22,11 @@ routes.delete('/:id', currentFileRecord, hasFilePermissions(P.SUBMISSION_UPDATE)
   await controller.delete(req, res, next);
 });
 
-routes.get('/AttachmentsList/:submissionId', apiAccess, async (req, res, next) => {
+routes.get('/AttachmentsList/:cfmsId', apiAccess, async (req, res, next) => {
   await controller.getAttachmentsList(req, res, next);
 });
 
-routes.get('/ApplicationSummary/:submissionId', apiAccess, async (req, res, next) => {
+routes.get('/ApplicationSummary/:cfmsId', apiAccess, async (req, res, next) => {
   await controller.getApplicationSummary(req, res, next);
 });
 

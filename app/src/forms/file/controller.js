@@ -4,6 +4,7 @@ const json2html = require('json2html');
 const { encodeURI } = require('../common/utils');
 const submissionService = require('../submission/service');
 const { FileStorage } = require('../common/models');
+const FormSubmissionCFMSLookup = require('../common/models/tables/formSubmissionCFMSLookup');
 
 const _trim = (r) => {
   if (r) {
@@ -66,9 +67,9 @@ module.exports = {
 
   getAttachmentsList: async (req, res, next) => {
     try {
-      const attachments = await FileStorage.query().where('formSubmissionId', req.params.submissionId).throwIfNotFound();
-      // SELECT taapat_id, file_nam, mime_type_cd, attach_size_num, question_nam, file_ext_nam "
-      console.log('attachments: ', attachments);
+      const lookup = await FormSubmissionCFMSLookup.query().where('cfmsId', req.params.cfmsId).select('formSubmissionId').throwIfNotFound();
+      const submissionId = lookup[0].formSubmissionId;
+      const attachments = await FileStorage.query().where('formSubmissionId', submissionId).throwIfNotFound();
       const response = attachments.map((a) => {
         return {
           TAAPAT_ID: a.id,
@@ -118,8 +119,9 @@ module.exports = {
 
   getApplicationSummary: async (req, res, next) => {
     try {
-      // HTML attempt //
-      const submission = await (await submissionService._fetchSubmissionData(req.params.submissionId)).submission.submission.data;
+      const lookup = await FormSubmissionCFMSLookup.query().where('cfmsId', req.params.cfmsId).select('formSubmissionId').throwIfNotFound();
+      const submissionId = lookup[0].formSubmissionId;
+      const submission = await (await submissionService._fetchSubmissionData(submissionId)).submission.submission.data;
       const applicationJSON = {
         'Community and Employer Partnerships Application': {
           Organization: {

@@ -51,7 +51,7 @@ class CFMSService {
     }
   }
 
-  async prepareSubmission(currentUser, submissionData) {
+  async prepareSubmission(cfmsId, currentUser, submissionData) {
     delete submissionData.lateEntry;
     delete submissionData.submit;
     delete submissionData.emailAddress1;
@@ -71,11 +71,12 @@ class CFMSService {
         <soap:Body>
           <tem:ReceiveApplication>
               <!--Optional:-->
-              <tem:id>9999996</tem:id>
+              <tem:id>${cfmsId}</tem:id>
               <!--Optional:-->
               <tem:payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
       <Results>
-      <AopApplicationID>9999996</AopApplicationID>
+      <AopApplicationID>${cfmsId}</AopApplicationID>
+      <Source>CHEFS</Source>
       <StorefrontId>103</StorefrontId>
       <AopBCEIDGUID>${currentUser.idpUserId}</AopBCEIDGUID>
       <AopStreamType>Community and Employer Partnership</AopStreamType>

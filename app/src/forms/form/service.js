@@ -26,6 +26,7 @@ const {
 } = require('../common/models');
 const { falsey, queryUtils, checkIsFormExpired } = require('../common/utils');
 const { Permissions, Roles, Statuses } = require('../common/constants');
+const FormSubmissionCFMSLookup = require('../common/models/tables/formSubmissionCFMSLookup');
 const Rolenames = [Roles.OWNER, Roles.TEAM_MANAGER, Roles.FORM_DESIGNER, Roles.SUBMISSION_REVIEWER, Roles.FORM_SUBMITTER];
 
 const service = {
@@ -408,23 +409,38 @@ const service = {
 
       await FormSubmission.query(trx).insert(obj);
 
-      // console.log('===== CFMS Logic =====');
-      // console.log('Form Version ID: ', formVersionId);
-      // //TODO: version ID check
-      // try {
-      //   const xml = await cfmsService.prepareSubmission(currentUser, data.submission.data);
-      //   try {
-      //     const { response } = await cfmsService.submitApplication(xml);
-      //     const { statusCode } = response;
-      //     console.log('CFMS Response Status Code: ', statusCode);
-      //     console.log('CFMS Response: ', response);
-      //   } catch (err) {
-      //     console.log('CFMS Error: ', err);
-      //   }
-      // } catch (e) {
-      //   console.log('ERROR: ', e);
-      // }
-      // console.log('===== End CFMS Logic =====');
+      console.log('===== CFMS Logic =====');
+      console.log('Form Version ID: ', formVersionId);
+      //TODO: version ID check
+      try {
+        const getRandomInt = (min, max) => {
+          min = Math.ceil(min);
+          max = Math.floor(max);
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
+        const cfmsId = getRandomInt(90000000, 100000000); // TODO: confirm ranges/stategy with Christine
+        const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
+        try {
+          const { response } = await cfmsService.submitApplication(xml);
+          const { statusCode } = response;
+          console.log('CFMS Response Status Code: ', statusCode);
+          console.log('CFMS Response: ', response);
+          if (statusCode == 200) {
+            const referenceToInsert = {
+              id: uuidv4(),
+              formSubmissionId: submissionId,
+              cfmsId: cfmsId,
+              createdBy: createdBy,
+            };
+            await FormSubmissionCFMSLookup.query(trx).insert(referenceToInsert, 'formSubmissionId');
+          }
+        } catch (err) {
+          console.log('CFMS Error: ', err);
+        }
+      } catch (e) {
+        console.log('ERROR: ', e);
+      }
+      console.log('===== End CFMS Logic =====');
 
       if (!isPublicForm && !currentUser.public) {
         // Provide the submission creator appropriate CRUD permissions if this is a non-public form
