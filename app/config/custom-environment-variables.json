@@ -74,6 +74,11 @@
         "password": "SAM_PASSWORD",
         "apiUrl": "SAM_API_URL",
         "catchmentFormsReleaseDate": "CATCHMENT_FORMS_RELEASE_DATE"
+      },
+      "cfms": {
+        "username": "CFMS_USERNAME",
+        "password": "CFMS_PASSWORD",
+        "apiUrl": "CFMS_API_URL"
       }
     }
   }
