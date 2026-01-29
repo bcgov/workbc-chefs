@@ -26,7 +26,7 @@ class CFMSService {
           url: this.apiUrl,
           headers,
           data: xml,
-          timeout: 10000,
+          timeout: 60000,
         })
           .then((response) => {
             resolve({
