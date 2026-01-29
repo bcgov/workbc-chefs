@@ -1,6 +1,11 @@
 FROM docker.io/node:16.15.0-alpine
 
 ENV NO_UPDATE_NOTIFIER=true
+
+RUN apk update \
+    && apk add openssl \
+    && apk add curl
+
 WORKDIR /opt/app-root/src/app
 COPY . /opt/app-root/src
 RUN npm run all:ci \
