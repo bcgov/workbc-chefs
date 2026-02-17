@@ -422,19 +422,17 @@ const service = {
         const cfmsId = getRandomInt(90000000, 100000000); // TODO: confirm ranges/stategy with Christine
         const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
         try {
+          const referenceToInsert = {
+            id: uuidv4(),
+            formSubmissionId: submissionId,
+            cfmsId: cfmsId,
+            createdBy: createdBy,
+          };
+          await FormSubmissionCFMSLookup.query(trx).insert(referenceToInsert, 'formSubmissionId');
           const { response } = await cfmsService.submitApplication(xml);
           const { statusCode } = response;
           console.log('CFMS Response Status Code: ', statusCode);
           console.log('CFMS Response: ', response);
-          if (statusCode == 200) {
-            const referenceToInsert = {
-              id: uuidv4(),
-              formSubmissionId: submissionId,
-              cfmsId: cfmsId,
-              createdBy: createdBy,
-            };
-            await FormSubmissionCFMSLookup.query(trx).insert(referenceToInsert, 'formSubmissionId');
-          }
         } catch (err) {
           console.log('CFMS Error: ', err);
         }
