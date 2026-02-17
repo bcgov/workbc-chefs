@@ -428,7 +428,7 @@ const service = {
             cfmsId: cfmsId,
             createdBy: createdBy,
           };
-          await FormSubmissionCFMSLookup.insert(referenceToInsert, 'formSubmissionId');
+          await FormSubmissionCFMSLookup.query().insert(referenceToInsert, 'formSubmissionId');
           const { response } = await cfmsService.submitApplication(xml);
           const { statusCode } = response;
           console.log('CFMS Response Status Code: ', statusCode);
