@@ -135,7 +135,10 @@ module.exports = {
         },
       };
 
-      res.status(200).send(json2html.render(applicationJSON));
+      const htmlString = json2html.render(applicationJSON, { plainHtml: true });
+      console.log('htmlString: ', htmlString);
+      const utf16EncodedBuffer = Buffer.from(htmlString, 'utf16le');
+      res.status(200).send(utf16EncodedBuffer);
     } catch (error) {
       next(error);
     }
