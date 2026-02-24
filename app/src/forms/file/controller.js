@@ -5,6 +5,7 @@ const { encodeURI } = require('../common/utils');
 const submissionService = require('../submission/service');
 const { FileStorage } = require('../common/models');
 const FormSubmissionCFMSLookup = require('../common/models/tables/formSubmissionCFMSLookup');
+const moment = require('moment');
 
 const _trim = (r) => {
   if (r) {
@@ -132,11 +133,66 @@ module.exports = {
             'Applicant (Organization) Legal Name': submission.CEPOrgLegalName,
             'Applicant (Organization) Email Address': submission.CEPOrgEmail,
           },
+          'Primary Contact / Accounting': {
+            'Primary Contact': submission.CEPContactName,
+            'Primary Telephone': submission.CEPContactPhone,
+            Email: submission.CEPContactEmail,
+            'Bookkeeper Name': submission.CEPBookkeeperName,
+            'Bookkeeper Email': submission.CEPAccountingContactEmail,
+            'Can Provide Bookkeeper Qualifications': submission.CEPBookkeeperQualifications,
+            'Business Number': submission.CEPBusinessNumber,
+            'GST Account, RT': submission.CEPTaxAccountSuffix,
+            'GST Tax Rebate %': submission.CEPTaxRebate,
+            'Owe to Government': submission.CEPOweGovt,
+            'Liability Insurance': submission.CEPLiabilityInsurance,
+            'Existing Policy Covers Project Activities': submission.CEPExistingPolicy,
+            'WorkSafe Coverage': submission.CEPWorkSafeCoverage,
+            Displacement: submission.CEPDisplacement,
+            'EPBC Delivery': submission.CEPEPBCDelivery,
+            'Other Government Funding': submission.CEPOtherGovtFunding,
+            'Organization Mandate': submission.CEPOrgMandate,
+            'Project Activities Unfair Competition': submission.CEPUnfairCompPBLMT,
+            'Unionized Worksite': submission.CEPUnionized,
+            'Stoppage or Dispute in Progress': submission.CEPDisputeInProgress,
+            'Project Includes Participants': submission.CEPHasParticipants,
+          },
+          'Project Information': {
+            Project: submission.CEPProjectTitle,
+            'Start Date': submission.CEPProjectStartDate ? moment(submission.CEPProjectStartDate).format('MM/DD/YYYY') : '',
+            'End Date': submission.CEPProjectEndDate ? moment(submission.CEPProjectEndDate).format('MM/DD/YYYY') : '',
+            'Alternative Location': submission.CEPAlternateLocations,
+            'Project Objectives': submission.CEPObj_PBLMT_Objectives,
+          },
+          'Project Activities': {
+            'Key Activities': submission.CEPPTimelinesActivities_PBLMT,
+            Training: submission.CEPPBLMTTraining,
+            'Classroom Percentage': submission.CEPPBLMTClassPercent,
+            'Work Percentage': submission.CEPPBLMTWorkPercent,
+            'Intake Dates': submission.CEPObj_PBLMT_Sessions,
+            'Number of Sessions': submission.CEPObj_PBLMT_SessionCount,
+            'Participants Per Intake': submission.CEPObj_PBLMT_PartPerSessionCount,
+            'Weeks of Skills': submission.CEPObj_PBLMT_TrainingWeeks,
+            'Weeks of Work': submission.CEPObj_PBLMT_JobWeeks,
+            'Weeks of Support': submission.CEPObj_PBLMT_FollowupWeeks,
+            'Participant Benefit': submission.CEPPBLMT_PartBenefit,
+            'Job Types': submission.CEPObj_PBLMT_JobTypes,
+            'Expected Results': submission.CEPExpectedResults_PBLMT,
+            'Location 1': submission.CEPESC1,
+            'Participant Oversight': submission.CEPParticipantOversight ?? '', //TODO : question missing from form?
+            'Follow-up Explanation': submission.CEPFollowUpExplanation,
+            'Can Provide Job Descriptions/Resumes': submission.CEPJobDescriptions,
+            'Stakeholder Partnerships': submission.CEPStakeholderPartnerships,
+          },
+          Budget: {
+            Budget: submission.CEPRequestedBudget,
+          },
         },
       };
 
-      const htmlString = json2html.render(applicationJSON, { plainHtml: true });
-      console.log('htmlString: ', htmlString);
+      console.log('CEP applicationJSON: ', applicationJSON);
+
+      const htmlString = json2html.render(applicationJSON, { plainHtml: false });
+      //console.log('htmlString: ', htmlString);
       const utf16EncodedBuffer = Buffer.from(htmlString, 'utf16le');
       res.status(200).send(utf16EncodedBuffer);
     } catch (error) {
