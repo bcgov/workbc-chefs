@@ -27,6 +27,7 @@ const {
 const { falsey, queryUtils, checkIsFormExpired } = require('../common/utils');
 const { Permissions, Roles, Statuses } = require('../common/constants');
 const FormSubmissionCFMSLookup = require('../common/models/tables/formSubmissionCFMSLookup');
+const FileStorageCFMSLookup = require('../common/models/tables/fileStorageCFMSLookup');
 const Rolenames = [Roles.OWNER, Roles.TEAM_MANAGER, Roles.FORM_DESIGNER, Roles.SUBMISSION_REVIEWER, Roles.FORM_SUBMITTER];
 
 const service = {
@@ -461,6 +462,9 @@ const service = {
 
       console.log('Form Version ID: ', formVersionId);
       //TODO: version ID check
+      //if (formVersionId === '6a37475c-356f-4a75-8416-5a830da0506f') { // Quick CEP
+      // if (formVersionId === '50c52528-356f-4384-b3fe-21f122c0bfe4') {
+      // CEP
       if (formVersionId === 'ac6f9fe0-51b0-41fb-8ed7-5b78dec4eece') {
         // TODO: use .env
         console.log('===== CFMS Logic =====');
@@ -472,13 +476,23 @@ const service = {
         const cfmsId = getRandomInt(90000000, 100000000); // TODO: confirm ranges/stategy with Christine
         const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
         try {
-          const referenceToInsert = {
+          const newCFMSLookup = {
             id: uuidv4(),
             formSubmissionId: submissionId,
             cfmsId: cfmsId,
             createdBy: createdBy,
           };
-          await FormSubmissionCFMSLookup.query().insert(referenceToInsert, 'formSubmissionId');
+          await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
+          const attachments = await FileStorage.query().where('formSubmissionId', submissionId).throwIfNotFound();
+          attachments.forEach(async (a) => {
+            const newCFMSFileLookup = {
+              id: uuidv4(),
+              fileId: a.id,
+              cfmsFileId: getRandomInt(10000000, 100000000),
+              createdBy: createdBy,
+            };
+            await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
+          });
           const { response } = await cfmsService.submitApplication(xml);
           const { statusCode } = response;
           console.log('CFMS Response Status Code: ', statusCode);

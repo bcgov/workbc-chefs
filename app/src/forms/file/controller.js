@@ -5,6 +5,7 @@ const { encodeURI } = require('../common/utils');
 const submissionService = require('../submission/service');
 const { FileStorage } = require('../common/models');
 const FormSubmissionCFMSLookup = require('../common/models/tables/formSubmissionCFMSLookup');
+const FileStorageCFMSLookup = require('../common/models/tables/fileStorageCFMSLookup');
 const moment = require('moment');
 
 const _trim = (r) => {
@@ -71,16 +72,23 @@ module.exports = {
       const lookup = await FormSubmissionCFMSLookup.query().where('cfmsId', req.params.cfmsId).select('formSubmissionId').throwIfNotFound();
       const submissionId = lookup[0].formSubmissionId;
       const attachments = await FileStorage.query().where('formSubmissionId', submissionId).throwIfNotFound();
-      const response = attachments.map((a) => {
-        return {
-          TAAPAT_ID: a.id,
+      let response = [];
+      for (const a of attachments) {
+        const cfms_file_row = await FileStorageCFMSLookup.query().where('fileId', a.id).select('cfmsFileId').throwIfNotFound();
+        console.log('FOUND: ', cfms_file_row);
+        console.log(cfms_file_row[0]);
+        console.log(cfms_file_row.length);
+        console.log(cfms_file_row[0].cfmsFileId);
+        response.push({
+          TAAPAT_ID: cfms_file_row?.length > 0 ? cfms_file_row[0].cfmsFileId : null,
           FILE_NAME: a.originalName,
           MIME_TYPE_CD: a.mimeType,
           ATTACH_SIZE_NUM: a.size,
           QUESTION_NAM: 'CATBudget', //TODO
           FILE_EXT_NAM: '.pdf', //TODO
-        };
-      });
+        });
+      }
+      console.log('RESPONSE: ', response);
       res.status(200).send(response);
     } catch (error) {
       next(error);
