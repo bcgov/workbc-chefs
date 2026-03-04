@@ -81,7 +81,7 @@ module.exports = {
         console.log(cfms_file_row[0].cfmsFileId);
         response.push({
           TAAPAT_ID: cfms_file_row?.length > 0 ? cfms_file_row[0].cfmsFileId : null,
-          FILE_NAME: a.originalName,
+          FILE_NAM: a.originalName,
           MIME_TYPE_CD: a.mimeType,
           ATTACH_SIZE_NUM: a.size,
           QUESTION_NAM: 'CATBudget', //TODO
