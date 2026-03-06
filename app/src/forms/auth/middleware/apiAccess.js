@@ -5,6 +5,8 @@ const { validate: uuidValidate } = require('uuid');
 const formService = require('../../form/service');
 const submissionService = require('../../submission/service');
 const FormSubmissionCFMSLookup = require('../../common/models/tables/formSubmissionCFMSLookup');
+const FileStorageCFMSLookup = require('../../common/models/tables/fileStorageCFMSLookup');
+const { FileStorage } = require('../../common/models');
 
 module.exports = async (req, res, next) => {
   try {
@@ -23,9 +25,16 @@ module.exports = async (req, res, next) => {
         const result = await submissionService.read(params.formSubmissionId);
         formId = result?.form?.id;
       } else if (params.cfmsId) {
-        // Special case for CFMS endpoints
+        // Special case for CFMS submission endpoints
         const lookup = await FormSubmissionCFMSLookup.query().where('cfmsId', params.cfmsId).select('formSubmissionId').throwIfNotFound();
         const submissionId = lookup[0].formSubmissionId;
+        const result = await submissionService.read(submissionId);
+        formId = result?.form?.id;
+      } else if (params.cfmsFileId) {
+        // Special case for CFMS file endpoints
+        const cfmsLookup = await FileStorageCFMSLookup.query().where('cfmsFileId', req.params.cfmsFileId).select('fileId').throwIfNotFound();
+        const fileStorageLookup = await FileStorage.query().where('id', cfmsLookup[0].fileId).select('formSubmissionId').throwIfNotFound();
+        const submissionId = fileStorageLookup[0].formSubmissionId;
         const result = await submissionService.read(submissionId);
         formId = result?.form?.id;
       }

@@ -30,4 +30,8 @@ routes.get('/ApplicationSummary/:cfmsId', apiAccess, hasFormPermissions(P.FORM_R
   await controller.getApplicationSummary(req, res, next);
 });
 
+routes.get('/Attachment/:cfmsFileId', apiAccess, hasFormPermissions(P.FORM_READ), async (req, res, next) => {
+  await controller.getAttachment(req, res, next);
+});
+
 module.exports = routes;

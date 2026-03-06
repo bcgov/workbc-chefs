@@ -67,6 +67,29 @@ module.exports = {
     }
   },
 
+  getAttachment: async (req, res, next) => {
+    try {
+      const storageLookupCFMS = await FileStorageCFMSLookup.query().where('cfmsFileId', req.params.cfmsFileId).select('fileId').throwIfNotFound();
+      const fileId = storageLookupCFMS[0].fileId;
+      const fileStorageLookup = await FileStorage.query().where('id', fileId).select('*').throwIfNotFound();
+      const fileStorage = fileStorageLookup[0];
+      const stream = await storageService.read(fileStorage);
+
+      stream.on('error', function error(err) {
+        throw err;
+      });
+
+      res.setHeader('Content-Disposition', `attachment; filename=${encodeURI(fileStorage.originalName)}`);
+      res.set('Content-Type', fileStorage.mimeType);
+      res.set('Content-Length', fileStorage.size);
+      res.set('Last-Modified', fileStorage.updatedAt);
+
+      stream.pipe(res);
+    } catch (error) {
+      next(error);
+    }
+  },
+
   getAttachmentsList: async (req, res, next) => {
     try {
       const lookup = await FormSubmissionCFMSLookup.query().where('cfmsId', req.params.cfmsId).select('formSubmissionId').throwIfNotFound();
