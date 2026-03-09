@@ -1,7 +1,8 @@
 const config = require('config');
 const axios = require('axios');
 const errorToProblem = require('./errorToProblem');
-const SERVICE = 'GeoAddressService';
+const SERVICE = 'SAMService';
+import https from 'https';
 
 class SAMService {
   constructor({ username, password, apiUrl }) {
@@ -15,17 +16,18 @@ class SAMService {
 
   async getUserPermissions(guid) {
     try {
-      const { data } = await axios.get(
-        this.apiUrl, 
-        { 
-          params: { "userGUID": guid, "isIDIR": false },
-          auth: {
-            username: this.username,
-            password: this.password
-          }
-        }
-      );
-      return data
+      const agent = new https.Agent({
+        rejectUnauthorized: false,
+      });
+      const { data } = await axios.get(this.apiUrl, {
+        params: { userGUID: guid, isIDIR: false },
+        auth: {
+          username: this.username,
+          password: this.password,
+        },
+        httpsAgent: agent,
+      });
+      return data;
     } catch (e) {
       errorToProblem(SERVICE, e);
     }
@@ -36,5 +38,5 @@ const username = config.get('serviceClient.oes.sam.username');
 const password = config.get('serviceClient.oes.sam.password');
 const apiUrl = config.get('serviceClient.oes.sam.apiUrl');
 
-let samService = new SAMService({ username: username, password: password, apiUrl: apiUrl});
+let samService = new SAMService({ username: username, password: password, apiUrl: apiUrl });
 module.exports = samService;
