@@ -2,7 +2,7 @@ const config = require('config');
 const axios = require('axios');
 const errorToProblem = require('./errorToProblem');
 const SERVICE = 'SAMService';
-import https from 'https';
+const https = require('https');
 
 class SAMService {
   constructor({ username, password, apiUrl }) {
