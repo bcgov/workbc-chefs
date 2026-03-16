@@ -8,7 +8,7 @@ const storageService = require('./storage/storageService');
 const PERMANENT_STORAGE = config.get('files.permanent');
 
 const service = {
-  create: async (data, currentUser, folder = 'uploads') => {
+  create: async (data, currentUser, questionName, folder = 'uploads') => {
     let trx;
     try {
       trx = await FileStorage.startTransaction();
@@ -21,6 +21,7 @@ const service = {
       obj.size = data.size;
       obj.path = data.path;
       obj.createdBy = currentUser.usernameIdp;
+      obj.questionName = questionName;
 
       const uploadResult = await storageService.upload(obj);
       obj.path = uploadResult.path;

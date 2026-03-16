@@ -25,7 +25,7 @@ const _trim = (r) => {
 module.exports = {
   create: async (req, res, next) => {
     try {
-      const response = await service.create(req.file, req.currentUser);
+      const response = await service.create(req.file, req.currentUser, req.body.questionName);
       res.status(201).json(_trim(response));
     } catch (error) {
       next(error);
@@ -107,8 +107,8 @@ module.exports = {
           FILE_NAM: a.originalName,
           MIME_TYPE_CD: a.mimeType,
           ATTACH_SIZE_NUM: a.size,
-          QUESTION_NAM: 'CATBudget', //TODO
-          FILE_EXT_NAM: '.pdf', //TODO
+          QUESTION_NAM: a.questionName,
+          FILE_EXT_NAM: a.originalName.split('.').pop(),
         });
       }
       console.log('RESPONSE: ', response);
