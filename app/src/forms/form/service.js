@@ -460,48 +460,48 @@ const service = {
       await trx.commit();
       const result = await service.readSubmission(obj.id);
 
-      console.log('Form Version ID: ', formVersionId);
-      //TODO: version ID check
-      //if (formVersionId === '6a37475c-356f-4a75-8416-5a830da0506f') { // Quick CEP
-      // if (formVersionId === '50c52528-356f-4384-b3fe-21f122c0bfe4') {
-      // CEP
-      if (formVersionId === 'ac6f9fe0-51b0-41fb-8ed7-5b78dec4eece') {
-        // TODO: use .env
-        console.log('===== CFMS Logic =====');
-        const getRandomInt = (min, max) => {
-          min = Math.ceil(min);
-          max = Math.floor(max);
-          return Math.floor(Math.random() * (max - min + 1)) + min;
-        };
-        const cfmsId = getRandomInt(90000000, 100000000); // TODO: confirm ranges/stategy with Christine
-        const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
-        try {
-          const newCFMSLookup = {
-            id: uuidv4(),
-            formSubmissionId: submissionId,
-            cfmsId: cfmsId,
-            createdBy: createdBy,
-          };
-          await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
-          const attachments = await FileStorage.query().where('formSubmissionId', submissionId).throwIfNotFound();
-          attachments.forEach(async (a) => {
-            const newCFMSFileLookup = {
-              id: uuidv4(),
-              fileId: a.id,
-              cfmsFileId: getRandomInt(10000000, 100000000),
-              createdBy: createdBy,
-            };
-            await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
-          });
-          const { response } = await cfmsService.submitApplication(xml);
-          const { statusCode } = response;
-          console.log('CFMS Response Status Code: ', statusCode);
-          console.log('CFMS Response: ', response);
-        } catch (err) {
-          console.log('CFMS Error: ', err);
-        }
-        console.log('===== End CFMS Logic =====');
-      }
+      // console.log('Form Version ID: ', formVersionId);
+      // //TODO: version ID check
+      // //if (formVersionId === '6a37475c-356f-4a75-8416-5a830da0506f') { // Quick CEP
+      // // if (formVersionId === '50c52528-356f-4384-b3fe-21f122c0bfe4') {
+      // // CEP
+      // if (formVersionId === 'ac6f9fe0-51b0-41fb-8ed7-5b78dec4eece') {
+      //   // TODO: use .env
+      //   console.log('===== CFMS Logic =====');
+      //   const getRandomInt = (min, max) => {
+      //     min = Math.ceil(min);
+      //     max = Math.floor(max);
+      //     return Math.floor(Math.random() * (max - min + 1)) + min;
+      //   };
+      //   const cfmsId = getRandomInt(90000000, 100000000); // TODO: confirm ranges/stategy with Christine
+      //   const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
+      //   try {
+      //     const newCFMSLookup = {
+      //       id: uuidv4(),
+      //       formSubmissionId: submissionId,
+      //       cfmsId: cfmsId,
+      //       createdBy: createdBy,
+      //     };
+      //     await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
+      //     const attachments = await FileStorage.query().where('formSubmissionId', submissionId).throwIfNotFound();
+      //     attachments.forEach(async (a) => {
+      //       const newCFMSFileLookup = {
+      //         id: uuidv4(),
+      //         fileId: a.id,
+      //         cfmsFileId: getRandomInt(10000000, 100000000),
+      //         createdBy: createdBy,
+      //       };
+      //       await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
+      //     });
+      //     const { response } = await cfmsService.submitApplication(xml);
+      //     const { statusCode } = response;
+      //     console.log('CFMS Response Status Code: ', statusCode);
+      //     console.log('CFMS Response: ', response);
+      //   } catch (err) {
+      //     console.log('CFMS Error: ', err);
+      //   }
+      //   console.log('===== End CFMS Logic =====');
+      // }
 
       return result;
     } catch (err) {

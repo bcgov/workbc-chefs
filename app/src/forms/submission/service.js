@@ -1,11 +1,14 @@
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
 const { Statuses, SubscriptionEvent } = require('../common/constants');
-const { Form, FormVersion, FormSubmission, FormSubmissionStatus, Note, SubmissionAudit, SubmissionMetadata, FormSubscription, } = require('../common/models');
+const { Form, FormVersion, FormSubmission, FormSubmissionStatus, Note, SubmissionAudit, SubmissionMetadata, FormSubscription, FileStorage } = require('../common/models');
 const log = require('../../components/log')(module.filename);
 const emailService = require('../email/emailService');
 const formService = require('../form/service');
 const permissionService = require('../permission/service');
+const cfmsService = require('../../components/cfmsService');
+const FormSubmissionCFMSLookup = require('../common/models/tables/formSubmissionCFMSLookup');
+const FileStorageCFMSLookup = require('../common/models/tables/fileStorageCFMSLookup');
 
 const service = {
   // -------------------------------------------------------------------------------------------------------
@@ -93,7 +96,7 @@ const service = {
   update: async (formSubmissionId, data, currentUser, referrer, etrx = undefined) => {
     let trx;
     try {
-      const formObj = await service.read(formSubmissionId)
+      const formObj = await service.read(formSubmissionId);
       const { subscribe } = formObj.form;
       trx = etrx ? etrx : await FormSubmission.startTransaction();
 
@@ -125,6 +128,52 @@ const service = {
       }
 
       if (!etrx) await trx.commit();
+
+      //console.log('DATA: ', formObj);
+      const formVersionId = formObj.version.id;
+      console.log('Form Version ID: ', formVersionId);
+      // //TODO: version ID check
+      // //if (formVersionId === '6a37475c-356f-4a75-8416-5a830da0506f') { // Quick CEP
+      // if (formVersionId === '50c52528-356f-4384-b3fe-21f122c0bfe4') {
+      // CEP
+      if (formVersionId === 'b94b79ae-34ab-466c-a24e-0100c50fa869') {
+        // TODO: use .env
+        console.log('===== CFMS Logic =====');
+        const getRandomInt = (min, max) => {
+          min = Math.ceil(min);
+          max = Math.floor(max);
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
+        const cfmsId = getRandomInt(90000000, 100000000); // TODO: confirm ranges/stategy with Christine
+        const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
+        const createdBy = currentUser.usernameIdp;
+        try {
+          const newCFMSLookup = {
+            id: uuidv4(),
+            formSubmissionId: formSubmissionId,
+            cfmsId: cfmsId,
+            createdBy: createdBy,
+          };
+          await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
+          const attachments = await FileStorage.query().where('formSubmissionId', formSubmissionId).throwIfNotFound();
+          attachments.forEach(async (a) => {
+            const newCFMSFileLookup = {
+              id: uuidv4(),
+              fileId: a.id,
+              cfmsFileId: getRandomInt(10000000, 100000000),
+              createdBy: createdBy,
+            };
+            await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
+          });
+          const { response } = await cfmsService.submitApplication(xml);
+          const { statusCode } = response;
+          console.log('CFMS Response Status Code: ', statusCode);
+          console.log('CFMS Response: ', response);
+        } catch (err) {
+          console.log('CFMS Error: ', err);
+        }
+        console.log('===== End CFMS Logic =====');
+      }
 
       if (subscribe && subscribe.enabled) {
         const subscribeConfig = await service.readFormSubscriptionDetails(formObj.form?.id);
