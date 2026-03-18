@@ -127,6 +127,12 @@ const service = {
         });
       }
 
+      const formVersion = await service.readVersion(formVersionId);
+      const fileIds = service._findFileIds(formVersion.schema, data);
+      for (const fileId of fileIds) {
+        await FileStorage.query(trx).patchAndFetchById(fileId, { formSubmissionId: formSubmissionId, updatedBy: currentUser.usernameIdp });
+      }
+
       if (!etrx) await trx.commit();
 
       //console.log('DATA: ', formObj);
