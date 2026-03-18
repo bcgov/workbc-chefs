@@ -30,6 +30,30 @@ const service = {
     });
   },
 
+  _findFileIds: (schema, data) => {
+    let fileComponents = [];
+    const getFileComponents = (components) => {
+      if (!components || components?.length === 0) {
+        return;
+      }
+      components.forEach((component) => {
+        if (component.type === 'simplefile') {
+          fileComponents.push(component);
+        } else if (component.components) {
+          getFileComponents(component.components);
+        }
+      });
+    };
+    getFileComponents(schema.components);
+    const ids = fileComponents
+      // for the file controls, get their respective data element (skip if it's not in data)
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#for_adding_and_removing_items_during_a_map
+      .flatMap((x) => (data.submission.data[x.key] ? data.submission.data[x.key] : []))
+      // get the id from the data
+      .map((x) => x.data.id);
+    return ids;
+  },
+
   // -------------------------------------------------------------------------------------------------------
   // Submissions
   // -------------------------------------------------------------------------------------------------------
@@ -127,7 +151,7 @@ const service = {
         });
       }
       const formVersionId = formObj.version.id;
-      const formVersion = await service.readVersion(formVersionId);
+      const formVersion = await FormVersion.query().findById(formVersionId).throwIfNotFound();
       const fileIds = service._findFileIds(formVersion.schema, data);
       for (const fileId of fileIds) {
         await FileStorage.query(trx).patchAndFetchById(fileId, { formSubmissionId: formSubmissionId, updatedBy: currentUser.usernameIdp });
