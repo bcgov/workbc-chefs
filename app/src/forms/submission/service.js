@@ -126,7 +126,7 @@ const service = {
           updatedBy: currentUser.usernameIdp,
         });
       }
-
+      const formVersionId = formObj.version.id;
       const formVersion = await service.readVersion(formVersionId);
       const fileIds = service._findFileIds(formVersion.schema, data);
       for (const fileId of fileIds) {
@@ -136,7 +136,7 @@ const service = {
       if (!etrx) await trx.commit();
 
       //console.log('DATA: ', formObj);
-      const formVersionId = formObj.version.id;
+
       console.log('Form Version ID: ', formVersionId);
       // //TODO: version ID check
       // //if (formVersionId === '6a37475c-356f-4a75-8416-5a830da0506f') { // Quick CEP
