@@ -136,7 +136,7 @@ const service = {
       // //if (formVersionId === '6a37475c-356f-4a75-8416-5a830da0506f') { // Quick CEP
       // if (formVersionId === '50c52528-356f-4384-b3fe-21f122c0bfe4') {
       // CEP
-      if (formVersionId === 'b94b79ae-34ab-466c-a24e-0100c50fa869') {
+      if (formVersionId === 'ac6f9fe0-51b0-41fb-8ed7-5b78dec4eece') {
         // TODO: use .env
         console.log('===== CFMS Logic =====');
         const getRandomInt = (min, max) => {
