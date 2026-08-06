@@ -37,6 +37,9 @@ export default {
       if (!roles.length) return true; // No roles to check against
 
       if (getters.resourceAccess && getters.resourceAccess[resource]) {
+        if (roles == 'user'){
+          return true
+        }
         return hasRoles(getters.resourceAccess[resource].roles, roles);
       }
       return false; // There are roles to check, but nothing in token to check against
@@ -46,7 +49,7 @@ export default {
         ? Vue.prototype.$keycloak.tokenParsed.identity_provider
         : null,
     isAdmin: (_state, getters) => getters.hasResourceRoles('chefs', ['admin']),
-    isUser: (_state, getters) => { return true },
+    isUser: (_state, getters) => getters.hasResourceRoles('chefs', ['user']),
     keycloakReady: () => Vue.prototype.$keycloak.ready,
     keycloakSubject: () => Vue.prototype.$keycloak.subject,
     identityProviderIdentity: () =>
