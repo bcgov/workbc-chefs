@@ -14,7 +14,6 @@ module.exports = async (req, res, next) => {
     if (req.headers && req.headers.authorization && req.headers.authorization.startsWith('Basic ')) {
       // URL params should override query string params of the same attribute
       const params = { ...req.query, ...req.params };
-      console.log('here8', params);
       // Basic auth is currently only used for form and submission endpoints. Use
       // the formId if it exists, otherwise fetch the formId from the submission's
       // form.
@@ -25,22 +24,18 @@ module.exports = async (req, res, next) => {
         const result = await submissionService.read(params.formSubmissionId);
         formId = result?.form?.id;
       } else if (params.cfmsId) {
-        console.log('here5');
         // Special case for CFMS submission endpoints
         const lookup = await FormSubmissionCFMSLookup.query().where('cfmsId', params.cfmsId).select('formSubmissionId').throwIfNotFound();
         const submissionId = lookup[0].formSubmissionId;
         const result = await submissionService.read(submissionId);
         formId = result?.form?.id;
-        console.log('here6', formId);
       } else if (params.cfmsFileId) {
-        console.log('here1', params.cfmsFileId);
         // Special case for CFMS file endpoints
         const cfmsLookup = await FileStorageCFMSLookup.query().where('cfmsFileId', req.params.cfmsFileId).select('fileId').throwIfNotFound();
         const fileStorageLookup = await FileStorage.query().where('id', cfmsLookup[0].fileId).select('formSubmissionId').throwIfNotFound();
         const submissionId = fileStorageLookup[0].formSubmissionId;
         const result = await submissionService.read(submissionId);
         formId = result?.form?.id;
-        console.log('here2', formId);
       }
 
       let secret = ''; // Must be initialized as a string
@@ -66,7 +61,6 @@ module.exports = async (req, res, next) => {
 
       return checkCredentials(req, res, next);
     } else {
-      console.log('here7');
       next();
     }
   } catch (error) {
