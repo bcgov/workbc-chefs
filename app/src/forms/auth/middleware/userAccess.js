@@ -53,7 +53,9 @@ const hasFormPermissions = (permissions) => {
     }
     // If we invoke this middleware and the caller is acting on a specific formId, whether in a param or query (precedence to param)
     const formId = req.params.formId || req.query.formId;
+    console.log('here3', formId);
     if (!formId) {
+      console.log('here4');
       // No form provided to this route that secures based on form... that's a problem!
       return new Problem(401, { detail: 'Form Id not found on request.' }).send(res);
     }
