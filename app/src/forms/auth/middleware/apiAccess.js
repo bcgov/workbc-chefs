@@ -25,11 +25,13 @@ module.exports = async (req, res, next) => {
         const result = await submissionService.read(params.formSubmissionId);
         formId = result?.form?.id;
       } else if (params.cfmsId) {
+        console.log('here5');
         // Special case for CFMS submission endpoints
         const lookup = await FormSubmissionCFMSLookup.query().where('cfmsId', params.cfmsId).select('formSubmissionId').throwIfNotFound();
         const submissionId = lookup[0].formSubmissionId;
         const result = await submissionService.read(submissionId);
         formId = result?.form?.id;
+        console.log('here6', formId);
       } else if (params.cfmsFileId) {
         console.log('here1', params.cfmsFileId);
         // Special case for CFMS file endpoints
