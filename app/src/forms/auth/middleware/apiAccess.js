@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
     if (req.headers && req.headers.authorization && req.headers.authorization.startsWith('Basic ')) {
       // URL params should override query string params of the same attribute
       const params = { ...req.query, ...req.params };
-
+      console.log('here8', params);
       // Basic auth is currently only used for form and submission endpoints. Use
       // the formId if it exists, otherwise fetch the formId from the submission's
       // form.
@@ -66,6 +66,7 @@ module.exports = async (req, res, next) => {
 
       return checkCredentials(req, res, next);
     } else {
+      console.log('here7');
       next();
     }
   } catch (error) {
