@@ -92,10 +92,8 @@ class CFMSService {
       <CEPOrgWebSite>${submissionData.CEPOrgWebSite}</CEPOrgWebSite>
       <CEPBookkeeperName>${submissionData.CEPBookkeeperName}</CEPBookkeeperName>
       <CEPOrgMailingAddress/>
-      <CEPSelfAssessmentCompleted>${submissionData.CEPSelfAssessmentCompleted}</CEPSelfAssessmentCompleted>
       <CEPProjectType>${submissionData.CEPProjectType}</CEPProjectType>
       <CEPOrgEligibleType>${submissionData.CEPOrgEligibleType}</CEPOrgEligibleType>
-      <CEPPastProjects>${submissionData.CEPPastProjects}</CEPPastProjects>
       ${submissionData.pastAgreementsContainer?.CEPPPContract1 ? `<CEPPPContract1>${submissionData.pastAgreementsContainer.CEPPPContract1}</CEPPPContract1>` : ''}
       ${submissionData.pastAgreementsContainer?.CEPPPEndDate1 ? `<CEPPPEndDate1>${submissionData.pastAgreementsContainer.CEPPPEndDate1}</CEPPPEndDate1>` : ''}
       ${submissionData.pastAgreementsContainer?.CEPPPContract2 ? `<CEPPPContract2>${submissionData.pastAgreementsContainer.CEPPPContract2}</CEPPPContract2>` : ''}
@@ -149,7 +147,6 @@ class CFMSService {
       <CEPDisplacement>${submissionData.CEPDisplacement}</CEPDisplacement>
       <CEPEPBCDelivery>${submissionData.CEPEPBCDelivery}</CEPEPBCDelivery>
       <CEPOtherGovtFunding>${submissionData.CEPOtherGovtFunding}</CEPOtherGovtFunding>
-      <CEPUnionized>${submissionData.CEPUnionized}</CEPUnionized>
       <CEPDisputeInProgress>${submissionData.CEPDisputeInProgress}</CEPDisputeInProgress>
       <CEPProjectDateRange/>
       <CEPObj_PBLMT_Objectives>${submissionData.CEPObj_PBLMT_Objectives}</CEPObj_PBLMT_Objectives>
@@ -167,7 +164,6 @@ class CFMSService {
       <CEPTargetYouthCount/>
       <CEPTargetLayoffCount/>
       <CATPartnerLetters/>
-      <CEPPTimelinesActivities_PBLMT>${submissionData.CEPPTimelinesActivities_PBLMT}</CEPPTimelinesActivities_PBLMT>
       <CEPExpectedResults_PBLMT>${submissionData.CEPExpectedResults_PBLMT}</CEPExpectedResults_PBLMT>
       <CEPPBLMTClassPercent>${submissionData.CEPPBLMTClassPercent}</CEPPBLMTClassPercent>
       <CEPPBLMTWorkPercent>${submissionData.CEPPBLMTWorkPercent}</CEPPBLMTWorkPercent>
@@ -177,8 +173,6 @@ class CFMSService {
       <CEPObj_PBLMT_PartPerSessionCount>${submissionData.CEPObj_PBLMT_PartPerSessionCount}</CEPObj_PBLMT_PartPerSessionCount>
       <CEPObj_PBLMT_TrainingWeeks>${submissionData.CEPObj_PBLMT_TrainingWeeks}</CEPObj_PBLMT_TrainingWeeks>
       <CEPObj_PBLMT_FollowupWeeks>${submissionData.CEPObj_PBLMT_FollowupWeeks}</CEPObj_PBLMT_FollowupWeeks>
-      <CEPPBLMT_PartBenefit>${submissionData.CEPPBLMT_PartBenefit}</CEPPBLMT_PartBenefit>
-      <CEPObj_PBLMT_JobTypes>${submissionData.CEPObj_PBLMT_JobTypes}</CEPObj_PBLMT_JobTypes>
       <CEPObj_PBLMT_JobWeeks>${submissionData.CEPObj_PBLMT_JobWeeks}</CEPObj_PBLMT_JobWeeks>
       <CEPTaxRebate>${submissionData.CEPTaxRebate}</CEPTaxRebate>
       <CEPPBLMT_LabourMarket>${submissionData.CEPPBLMT_LabourMarket}</CEPPBLMT_LabourMarket>
@@ -189,8 +183,6 @@ class CFMSService {
       <CEPAttESC_Letters/>
       <CEPAttSupportLetters_PBLMT/>
       <CEPProgressExplanation>${submissionData.CEPProgressExplanation}</CEPProgressExplanation>
-      <CEPFollowUpExplanation>${submissionData.CEPFollowUpExplanation}</CEPFollowUpExplanation>
-      <CEPStakeholderPartnerships>${submissionData.CEPStakeholderPartnerships}</CEPStakeholderPartnerships>
       <CATBudget/>
       <CEPRequestedBudget>${submissionData.CEPRequestedBudget}</CEPRequestedBudget>
       <CATAdditionalDocs/>
