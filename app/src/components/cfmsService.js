@@ -65,6 +65,13 @@ class CFMSService {
       submissionData.pastAgreementsContainer.CEPPPEndDate3 = moment(submissionData.pastAgreementsContainer.CEPPPEndDate3).format('MM/DD/YYYY');
     if (submissionData.CEPProjectStartDate) submissionData.CEPProjectStartDate = moment(submissionData.CEPProjectStartDate).format('MM/DD/YYYY');
     if (submissionData.CEPProjectEndDate) submissionData.CEPProjectEndDate = moment(submissionData.CEPProjectEndDate).format('MM/DD/YYYY');
+    if (submissionData.CEPOrgMailingAddress) {
+      console.log('CEPOrgMailingAddress: ', submissionData.CEPOrgMailingAddress);
+    }
+    if (submissionData.CEPOrgAdrPostalCode_Mail_alt) {
+      console.log('CEPOrgAdrPostalCode_Mail_alt: ', submissionData.CEPOrgAdrPostalCode_Mail_alt);
+      submissionData.CEPOrgAdrPostalCode_Mail = submissionData.CEPOrgAdrPostalCode_Mail_alt;
+    }
 
     const xml = `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tem="http://tempuri.org/">
         <soap:Header xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsrm="http://docs.oasis-open.org/ws-rx/wsrm/200702"><wsrm:Sequence><wsrm:Identifier>Server Error</wsrm:Identifier><wsrm:MessageNumber>1</wsrm:MessageNumber></wsrm:Sequence><wsa:Action>http://tempuri.org/ICFM_Data_Services/ReceiveApplication</wsa:Action><wsa:MessageID>uuid:d02aec5a-7d6d-44c7-b235-86e6cd5cc871</wsa:MessageID><wsa:To>https://dev1-cfms.services.sd.gov.bc.ca/CFM_Data_Services.svc</wsa:To></soap:Header>
@@ -82,12 +89,12 @@ class CFMSService {
       <AopStreamType>Community and Employer Partnership</AopStreamType>
       <AopBCEID>${currentUser.username}</AopBCEID>
       <CEPOrgLegalName>${submissionData.CEPOrgLegalName}</CEPOrgLegalName>
-      <CEPOrgAdrUnit_Mail>111</CEPOrgAdrUnit_Mail>
-      <CEPOrgAdrAddress1_Mail>369 Tyee Rd</CEPOrgAdrAddress1_Mail>
-      <CEPOrgAdrAddress2_Mail>Bottom Floor</CEPOrgAdrAddress2_Mail>
-      <CEPOrgAdrCity_Mail>Victoria</CEPOrgAdrCity_Mail>
-      <CEPOrgAdrProvince_Mail>BC</CEPOrgAdrProvince_Mail>
-      <CEPOrgAdrPostalCode_Mail>V9A0B6</CEPOrgAdrPostalCode_Mail>
+      <CEPOrgAdrUnit_Mail>${submissionData.CEPOrgAdrUnit_Mail}</CEPOrgAdrUnit_Mail>
+      <CEPOrgAdrAddress1_Mail>${submissionData.CEPOrgAdrAddress1_Mail}</CEPOrgAdrAddress1_Mail>
+      <CEPOrgAdrAddress2_Mail>${submissionData.CEPOrgAdrAddress2_Mail}</CEPOrgAdrAddress2_Mail>
+      <CEPOrgAdrCity_Mail>${submissionData.CEPOrgAdrCity_Mail}</CEPOrgAdrCity_Mail>
+      <CEPOrgAdrProvince_Mail>${submissionData.CEPOrgAdrProvince_Mail}</CEPOrgAdrProvince_Mail>
+      <CEPOrgAdrPostalCode_Mail>${submissionData.CEPOrgAdrPostalCode_Mail}</CEPOrgAdrPostalCode_Mail>
       <CEPOrgEmail>${submissionData.CEPOrgEmail}</CEPOrgEmail>
       <CEPOrgWebSite>${submissionData.CEPOrgWebSite}</CEPOrgWebSite>
       <CEPBookkeeperName>${submissionData.CEPBookkeeperName}</CEPBookkeeperName>
