@@ -208,7 +208,7 @@ class CFMSService {
           </tem:ReceiveApplication>
         </soap:Body>
     </soap:Envelope>`;
-    console.log('Prepared XML: ', xml);
+    // console.log('Prepared XML: ', xml);
     return xml;
   }
 }
