@@ -157,10 +157,8 @@ module.exports = {
       const applicationJSON = {
         'Community and Employer Partnerships Application': {
           Organization: {
-            'Completed Self-Assessment Questionnaire': submission.CEPSelfAssessmentCompleted,
             'Funding Stream': submission.CEPProjectType,
             'Organization Category': submission.CEPOrgEligibleType,
-            'Past CEP Agreement': submission.CEPPastProjects,
             'Applicant (Organization) Legal Name': submission.CEPOrgLegalName,
             'Applicant (Organization) Email Address': submission.CEPOrgEmail,
           },
@@ -183,7 +181,6 @@ module.exports = {
             'Other Government Funding': submission.CEPOtherGovtFunding,
             'Organization Mandate': submission.CEPOrgMandate,
             'Project Activities Unfair Competition': submission.CEPUnfairCompPBLMT,
-            'Unionized Worksite': submission.CEPUnionized,
             'Stoppage or Dispute in Progress': submission.CEPDisputeInProgress,
             'Project Includes Participants': submission.CEPHasParticipants,
           },
@@ -195,7 +192,6 @@ module.exports = {
             'Project Objectives': submission.CEPObj_PBLMT_Objectives,
           },
           'Project Activities': {
-            'Key Activities': submission.CEPPTimelinesActivities_PBLMT,
             Training: submission.CEPPBLMTTraining,
             'Classroom Percentage': submission.CEPPBLMTClassPercent,
             'Work Percentage': submission.CEPPBLMTWorkPercent,
@@ -205,14 +201,10 @@ module.exports = {
             'Weeks of Skills': submission.CEPObj_PBLMT_TrainingWeeks,
             'Weeks of Work': submission.CEPObj_PBLMT_JobWeeks,
             'Weeks of Support': submission.CEPObj_PBLMT_FollowupWeeks,
-            'Participant Benefit': submission.CEPPBLMT_PartBenefit,
-            'Job Types': submission.CEPObj_PBLMT_JobTypes,
             'Expected Results': submission.CEPExpectedResults_PBLMT,
             'Location 1': submission.CEPESC1,
             'Participant Oversight': submission.CEPParticipantOversight ?? '', //TODO : question missing from form?
-            'Follow-up Explanation': submission.CEPFollowUpExplanation,
             'Can Provide Job Descriptions/Resumes': submission.CEPJobDescriptions,
-            'Stakeholder Partnerships': submission.CEPStakeholderPartnerships,
           },
           Budget: {
             Budget: submission.CEPRequestedBudget,

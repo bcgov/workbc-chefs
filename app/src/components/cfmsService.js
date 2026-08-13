@@ -68,9 +68,9 @@ class CFMSService {
     if (submissionData.CEPOrgMailingAddress) {
       console.log('CEPOrgMailingAddress: ', submissionData.CEPOrgMailingAddress);
     }
-    if (submissionData.CEPOrgAdrPostalCode_Mail_alt) {
-      console.log('CEPOrgAdrPostalCode_Mail_alt: ', submissionData.CEPOrgAdrPostalCode_Mail_alt);
-      submissionData.CEPOrgAdrPostalCode_Mail = submissionData.CEPOrgAdrPostalCode_Mail_alt;
+    if (submissionData.address_container.CEPOrgAdrPostalCode_Mail_alt) {
+      console.log('CEPOrgAdrPostalCode_Mail_alt: ', submissionData.address_container.CEPOrgAdrPostalCode_Mail_alt);
+      submissionData.address_container.CEPOrgAdrPostalCode_Mail = submissionData.address_container.CEPOrgAdrPostalCode_Mail_alt;
     }
 
     const xml = `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tem="http://tempuri.org/">
@@ -89,12 +89,12 @@ class CFMSService {
       <AopStreamType>Community and Employer Partnership</AopStreamType>
       <AopBCEID>${currentUser.username}</AopBCEID>
       <CEPOrgLegalName>${submissionData.CEPOrgLegalName}</CEPOrgLegalName>
-      <CEPOrgAdrUnit_Mail>${submissionData.CEPOrgAdrUnit_Mail}</CEPOrgAdrUnit_Mail>
-      <CEPOrgAdrAddress1_Mail>${submissionData.CEPOrgAdrAddress1_Mail}</CEPOrgAdrAddress1_Mail>
-      <CEPOrgAdrAddress2_Mail>${submissionData.CEPOrgAdrAddress2_Mail}</CEPOrgAdrAddress2_Mail>
-      <CEPOrgAdrCity_Mail>${submissionData.CEPOrgAdrCity_Mail}</CEPOrgAdrCity_Mail>
-      <CEPOrgAdrProvince_Mail>${submissionData.CEPOrgAdrProvince_Mail}</CEPOrgAdrProvince_Mail>
-      <CEPOrgAdrPostalCode_Mail>${submissionData.CEPOrgAdrPostalCode_Mail}</CEPOrgAdrPostalCode_Mail>
+      <CEPOrgAdrUnit_Mail>${submissionData.address_container.CEPOrgAdrUnit_Mail}</CEPOrgAdrUnit_Mail>
+      <CEPOrgAdrAddress1_Mail>${submissionData.address_container.CEPOrgAdrAddress1_Mail}</CEPOrgAdrAddress1_Mail>
+      <CEPOrgAdrAddress2_Mail>${submissionData.address_container.CEPOrgAdrAddress2_Mail}</CEPOrgAdrAddress2_Mail>
+      <CEPOrgAdrCity_Mail>${submissionData.address_container.CEPOrgAdrCity_Mail}</CEPOrgAdrCity_Mail>
+      <CEPOrgAdrProvince_Mail>${submissionData.address_container.CEPOrgAdrProvince_Mail}</CEPOrgAdrProvince_Mail>
+      <CEPOrgAdrPostalCode_Mail>${submissionData.address_container.CEPOrgAdrPostalCode_Mail}</CEPOrgAdrPostalCode_Mail>
       <CEPOrgEmail>${submissionData.CEPOrgEmail}</CEPOrgEmail>
       <CEPOrgWebSite>${submissionData.CEPOrgWebSite}</CEPOrgWebSite>
       <CEPBookkeeperName>${submissionData.CEPBookkeeperName}</CEPBookkeeperName>
