@@ -8,8 +8,9 @@ const formService = require('../form/service');
 const moment = require('moment');
 /** Helper function used to build the email template based on email type and contents */
 const buildEmailTemplate = async (formId, formSubmissionId, emailType, referer, additionalProperties = 0) => {
+  console.log('formService: ', formService);
   const form = await formService.readForm(formId);
-  const submission = await formService.readSubmission(formSubmissionId);
+  const submission = formService.readSubmission(formSubmissionId);
   let configData = {};
   let contextToVal = [];
   let userTypePath = '';
@@ -112,6 +113,36 @@ const buildEmailTemplate = async (formId, formSubmissionId, emailType, referer, 
           emailContent: additionalProperties.emailContent,
           title: configData.title,
           messageLinkTextFR: configData.messageLinkTextFR || '',
+        },
+        to: contextToVal,
+      },
+    ],
+  };
+};
+
+/** Helper function used to build the CEP email template **/
+const buildCEPEmailTemplate = async (CEPID, userEmail) => {
+  const contextToVal = [userEmail];
+  const bodyTemplate = 'submission-received-CEP.html';
+  const configData = {
+    bodyTemplate: bodyTemplate,
+    title: 'CEP Submission Confirmation',
+    subject: 'CEP Submission Confirmation',
+    priority: 'normal',
+    CEPID: CEPID,
+  };
+
+  return {
+    configData,
+    contexts: [
+      {
+        context: {
+          allFormSubmissionUrl: '',
+          confirmationNumber: '',
+          form: configData.form,
+          emailContent: '',
+          title: configData.title,
+          CEPID: configData.CEPID,
         },
         to: contextToVal,
       },
@@ -419,6 +450,32 @@ const service = {
         submissionId: submissionId,
         body: body,
         referer: referer,
+      });
+      throw e;
+    }
+  },
+  /**
+   * @function CEPSubmissionConfirmation
+   * Manual CEP email confirmation after form has been submitted
+   * @param {string} formId
+   * @param {string} submissionId
+   * @param {string} body
+   * @param {string} referer
+   * @returns The result of the email merge operation
+   */
+  CEPSubmissionConfirmation: async (CEPID, userEmail) => {
+    try {
+      const { configData, contexts } = await buildCEPEmailTemplate(CEPID, userEmail);
+      // console.log('configData: ', configData);
+      // console.log('contexts: ', contexts);
+      return service._sendEmailTemplate(configData, contexts);
+    } catch (e) {
+      log.error(e.message, {
+        function: 'CEPSubmissionConfirmation',
+        formId: '',
+        submissionId: '',
+        body: {},
+        referer: '',
       });
       throw e;
     }

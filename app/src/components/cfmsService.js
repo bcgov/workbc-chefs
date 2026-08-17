@@ -65,23 +65,20 @@ class CFMSService {
       submissionData.pastAgreementsContainer.CEPPPEndDate3 = moment(submissionData.pastAgreementsContainer.CEPPPEndDate3).format('MM/DD/YYYY');
     if (submissionData.CEPProjectStartDate) submissionData.CEPProjectStartDate = moment(submissionData.CEPProjectStartDate).format('MM/DD/YYYY');
     if (submissionData.CEPProjectEndDate) submissionData.CEPProjectEndDate = moment(submissionData.CEPProjectEndDate).format('MM/DD/YYYY');
-    if (submissionData.CEPOrgMailingAddress) {
-      console.log('CEPOrgMailingAddress: ', submissionData.CEPOrgMailingAddress);
-    }
-    if (submissionData.address_container.CEPOrgAdrPostalCode_Mail_alt) {
+    if (submissionData.address_container?.CEPOrgAdrPostalCode_Mail_alt) {
       console.log('CEPOrgAdrPostalCode_Mail_alt: ', submissionData.address_container.CEPOrgAdrPostalCode_Mail_alt);
       submissionData.address_container.CEPOrgAdrPostalCode_Mail = submissionData.address_container.CEPOrgAdrPostalCode_Mail_alt;
     }
 
-    console.log(
-      'ADDR FIELDS: ',
-      submissionData.address_container.CEPOrgAdrUnit_Mail,
-      submissionData.address_container.CEPOrgAdrAddress1_Mail,
-      submissionData.address_container.CEPOrgAdrAddress2_Mail,
-      submissionData.address_container.CEPOrgAdrCity_Mail,
-      submissionData.address_container.CEPOrgAdrProvince_Mail,
-      submissionData.address_container.CEPOrgAdrPostalCode_Mail
-    );
+    // console.log(
+    //   'ADDR FIELDS: ',
+    //   submissionData.address_container.CEPOrgAdrUnit_Mail,
+    //   submissionData.address_container.CEPOrgAdrAddress1_Mail,
+    //   submissionData.address_container.CEPOrgAdrAddress2_Mail,
+    //   submissionData.address_container.CEPOrgAdrCity_Mail,
+    //   submissionData.address_container.CEPOrgAdrProvince_Mail,
+    //   submissionData.address_container.CEPOrgAdrPostalCode_Mail
+    // );
 
     const xml = `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tem="http://tempuri.org/">
         <soap:Header xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsrm="http://docs.oasis-open.org/ws-rx/wsrm/200702"><wsrm:Sequence><wsrm:Identifier>Server Error</wsrm:Identifier><wsrm:MessageNumber>1</wsrm:MessageNumber></wsrm:Sequence><wsa:Action>http://tempuri.org/ICFM_Data_Services/ReceiveApplication</wsa:Action><wsa:MessageID>uuid:d02aec5a-7d6d-44c7-b235-86e6cd5cc871</wsa:MessageID><wsa:To>https://dev1-cfms.services.sd.gov.bc.ca/CFM_Data_Services.svc</wsa:To></soap:Header>
@@ -99,12 +96,12 @@ class CFMSService {
       <AopStreamType>Community and Employer Partnership</AopStreamType>
       <AopBCEID>${currentUser.username}</AopBCEID>
       <CEPOrgLegalName>${submissionData.CEPOrgLegalName}</CEPOrgLegalName>
-      <CEPOrgAdrUnit_Mail>${submissionData.address_container.CEPOrgAdrUnit_Mail}</CEPOrgAdrUnit_Mail>
-      <CEPOrgAdrAddress1_Mail>${submissionData.address_container.CEPOrgAdrAddress1_Mail}</CEPOrgAdrAddress1_Mail>
-      <CEPOrgAdrAddress2_Mail>${submissionData.address_container.CEPOrgAdrAddress2_Mail}</CEPOrgAdrAddress2_Mail>
-      <CEPOrgAdrCity_Mail>${submissionData.address_container.CEPOrgAdrCity_Mail}</CEPOrgAdrCity_Mail>
-      <CEPOrgAdrProvince_Mail>${submissionData.address_container.CEPOrgAdrProvince_Mail}</CEPOrgAdrProvince_Mail>
-      <CEPOrgAdrPostalCode_Mail>${submissionData.address_container.CEPOrgAdrPostalCode_Mail}</CEPOrgAdrPostalCode_Mail>
+      <CEPOrgAdrUnit_Mail>${submissionData.address_container?.CEPOrgAdrUnit_Mail}</CEPOrgAdrUnit_Mail>
+      <CEPOrgAdrAddress1_Mail>${submissionData.address_container?.CEPOrgAdrAddress1_Mail}</CEPOrgAdrAddress1_Mail>
+      <CEPOrgAdrAddress2_Mail>${submissionData.address_container?.CEPOrgAdrAddress2_Mail}</CEPOrgAdrAddress2_Mail>
+      <CEPOrgAdrCity_Mail>${submissionData.address_container?.CEPOrgAdrCity_Mail}</CEPOrgAdrCity_Mail>
+      <CEPOrgAdrProvince_Mail>${submissionData.address_container?.CEPOrgAdrProvince_Mail}</CEPOrgAdrProvince_Mail>
+      <CEPOrgAdrPostalCode_Mail>${submissionData.address_container?.CEPOrgAdrPostalCode_Mail}</CEPOrgAdrPostalCode_Mail>
       <CEPOrgEmail>${submissionData.CEPOrgEmail}</CEPOrgEmail>
       <CEPOrgWebSite>${submissionData.CEPOrgWebSite}</CEPOrgWebSite>
       <CEPBookkeeperName>${submissionData.CEPBookkeeperName}</CEPBookkeeperName>
@@ -151,7 +148,7 @@ class CFMSService {
       }
       ${submissionData.worksafeCoverageHiddenLabel?.CEPWorkSafeRate ? `<CEPWorkSafeRate>${submissionData.worksafeCoverageHiddenLabel.CEPWorkSafeRate}</CEPWorkSafeRate>` : ''}
       ${submissionData.CEPDisplacementExplanation ? `<CEPDisplacementExplanation>${submissionData.CEPDisplacementExplanation}</CEPDisplacementExplanation>` : ''}
-      ${submissionData.CEPEPBCDeliveryOther ? `<CEPEPBCDeliveryOther>${submissionData.CEPEPBCDeliveryOther}</CEPEPBCDeliveryOther>` : ''}
+      ${submissionData.CEPWORKBCDeliveryOther ? `<CEPWORKBCDeliveryOther>${submissionData.CEPWORKBCDeliveryOther}</CEPWORKBCDeliveryOther>` : ''}
       ${submissionData.CEPOtherGovtFundingExplanation ? `<CEPOtherGovtFundingExplanation>${submissionData.CEPOtherGovtFundingExplanation}</CEPOtherGovtFundingExplanation>` : ''}
       <CEPOrgMandate>${submissionData.CEPOrgMandate}</CEPOrgMandate>
       ${submissionData.CEPEPBCConflict ? `<CEPEPBCConflict>${submissionData.CEPEPBCConflict}</CEPEPBCConflict>` : ''}
@@ -173,12 +170,15 @@ class CFMSService {
       <CEPHasParticipants>${submissionData.CEPHasParticipants}</CEPHasParticipants>
       <CEPParticipantCount>${submissionData.CEPParticipantCount}</CEPParticipantCount>
       <CEPAlternateLocations>${submissionData.CEPAlternateLocations}</CEPAlternateLocations>
-      <CEPTargetAboriginalCount/>
-      <CEPTargetFrancophoneCount/>
-      <CEPTargetImmigrantCount/>
-      <CEPTargetBarrieredCount/>
-      <CEPTargetDisabilitiesCount/>
-      <CEPTargetYouthCount/>
+      <CEPTargetAboriginalCount>${submissionData.CEPTargetAboriginalCount}</CEPTargetAboriginalCount>
+      <CEPTargetFrancophoneCount>${submissionData.CEPTargetFrancophoneCount}</CEPTargetFrancophoneCount>
+      <CEPTargetImmigrantCount>${submissionData.CEPTargetImmigrantCount}</CEPTargetImmigrantCount>
+      <CEPTargetBarrieredCount>${submissionData.CEPTargetBarrieredCount}</CEPTargetBarrieredCount>
+      <CEPTargetDisabilitiesCount>${submissionData.CEPTargetDisabilitiesCount}</CEPTargetDisabilitiesCount>
+      <CEPTargetYouthCount>${submissionData.CEPTargetYouthCount}</CEPTargetYouthCount>
+      <CEPTargetSurvivorsOfViolenceCount>${submissionData.CEPTargetSurvivorsOfViolenceCount}</CEPTargetSurvivorsOfViolenceCount>
+      <CEPTargetYouthAtRiskCount>${submissionData.CEPTargetYouthAtRiskCount}</CEPTargetYouthAtRiskCount>
+      <CEPTargetOtherCount>${submissionData.CEPTargetOtherCount}</CEPTargetOtherCount>
       <CEPTargetLayoffCount/>
       <CATPartnerLetters/>
       <CEPExpectedResults_PBLMT>${submissionData.CEPExpectedResults_PBLMT}</CEPExpectedResults_PBLMT>

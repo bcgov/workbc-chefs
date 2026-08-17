@@ -29,6 +29,7 @@ const { falsey, queryUtils, checkIsFormExpired } = require('../common/utils');
 const { Permissions, Roles, Statuses } = require('../common/constants');
 const FormSubmissionCFMSLookup = require('../common/models/tables/formSubmissionCFMSLookup');
 const FileStorageCFMSLookup = require('../common/models/tables/fileStorageCFMSLookup');
+const { CEPSubmissionConfirmation } = require('../email/emailService');
 const Rolenames = [Roles.OWNER, Roles.TEAM_MANAGER, Roles.FORM_DESIGNER, Roles.SUBMISSION_REVIEWER, Roles.FORM_SUBMITTER];
 
 const service = {
@@ -488,10 +489,19 @@ const service = {
             };
             await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
           });
+          // console.log('currentUser email: ', currentUser.email);
+          // await CFMSSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
+          //   console.log('email error: ', err);
+          // });
           const { response } = await cfmsService.submitApplication(xml);
           const { statusCode } = response;
           console.log('CFMS Response Status Code: ', statusCode);
           console.log('CFMS Response: ', response);
+          if (statusCode === 200) {
+            await CEPSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
+              console.log('CEP Email Error: ', err);
+            });
+          }
         } catch (err) {
           console.log('CFMS Error: ', err);
         }
