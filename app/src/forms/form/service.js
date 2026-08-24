@@ -481,6 +481,8 @@ const service = {
           console.log('submissionID: ', submissionId);
           await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
           console.log('CFMS submission lookup inserted');
+          const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+          await wait(5000);
           const attachments = await FileStorage.query().where('formSubmissionId', submissionId).throwIfNotFound();
           console.log('attachments: ', attachments);
           attachments.forEach(async (a) => {
