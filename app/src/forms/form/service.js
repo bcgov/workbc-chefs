@@ -471,6 +471,7 @@ const service = {
           const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 30000; // cfmsId incrementing starts at 30,000
           console.log('CFMS ID: ', cfmsId);
           const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
+          console.log('XML Prepared');
           const newCFMSLookup = {
             id: uuidv4(),
             formSubmissionId: submissionId,
@@ -478,6 +479,7 @@ const service = {
             createdBy: createdBy,
           };
           await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
+          console.log('CFMS submission lookup inserted');
           const attachments = await FileStorage.query().where('formSubmissionId', submissionId).throwIfNotFound();
           attachments.forEach(async (a) => {
             const result = await FileStorageCFMSLookup.query().max('cfmsFileId as max_value').first();
@@ -489,6 +491,7 @@ const service = {
             };
             await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
           });
+          console.log('CFMS attachments inserted');
           // console.log('currentUser email: ', currentUser.email);
           // await CFMSSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
           //   console.log('email error: ', err);
