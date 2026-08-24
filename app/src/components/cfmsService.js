@@ -65,10 +65,6 @@ class CFMSService {
       submissionData.pastAgreementsContainer.CEPPPEndDate3 = moment(submissionData.pastAgreementsContainer.CEPPPEndDate3).format('MM/DD/YYYY');
     if (submissionData.CEPProjectStartDate) submissionData.CEPProjectStartDate = moment(submissionData.CEPProjectStartDate).format('MM/DD/YYYY');
     if (submissionData.CEPProjectEndDate) submissionData.CEPProjectEndDate = moment(submissionData.CEPProjectEndDate).format('MM/DD/YYYY');
-    if (submissionData.address_container?.CEPOrgAdrPostalCode_Mail_alt) {
-      console.log('CEPOrgAdrPostalCode_Mail_alt: ', submissionData.address_container.CEPOrgAdrPostalCode_Mail_alt);
-      submissionData.address_container.CEPOrgAdrPostalCode_Mail = submissionData.address_container.CEPOrgAdrPostalCode_Mail_alt;
-    }
 
     // console.log(
     //   'ADDR FIELDS: ',
