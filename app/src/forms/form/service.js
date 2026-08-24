@@ -462,60 +462,60 @@ const service = {
       await trx.commit();
       const result = await service.readSubmission(obj.id);
 
-      console.log('Form Version ID: ', formVersionId);
-      console.log('.env version ID: ', config.get('serviceClient.oes.cfms.PBLMTFormVersionId'));
-      if (formVersionId === config.get('serviceClient.oes.cfms.PBLMTFormVersionId')) {
-        console.log('===== CFMS Logic =====');
-        try {
-          const result = await FormSubmissionCFMSLookup.query().max('cfmsId as max_value').first();
-          const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 30000; // cfmsId incrementing starts at 30,000
-          console.log('CFMS ID: ', cfmsId);
-          const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
-          console.log('XML Prepared');
-          const newCFMSLookup = {
-            id: uuidv4(),
-            formSubmissionId: submissionId,
-            cfmsId: cfmsId,
-            createdBy: createdBy,
-          };
-          console.log('submissionID: ', submissionId);
-          await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
-          console.log('CFMS submission lookup inserted');
-          const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-          await wait(5000);
-          const attachments = await FileStorage.query().where('formSubmissionId', submissionId).throwIfNotFound();
-          console.log('attachments: ', attachments);
-          attachments.forEach(async (a) => {
-            const result = await FileStorageCFMSLookup.query().max('cfmsFileId as max_value').first();
-            console.log('max id result: ', result);
-            const newCFMSFileLookup = {
-              id: uuidv4(),
-              fileId: a.id,
-              cfmsFileId: result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 1, // cfmsFileId incrementing starts at 1
-              createdBy: createdBy,
-            };
-            console.log('newCFMSFileLookup: ', newCFMSFileLookup);
-            await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
-          });
-          console.log('CFMS attachments inserted');
-          // console.log('currentUser email: ', currentUser.email);
-          // await CFMSSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
-          //   console.log('email error: ', err);
-          // });
-          const { response } = await cfmsService.submitApplication(xml);
-          const { statusCode } = response;
-          console.log('CFMS Response Status Code: ', statusCode);
-          console.log('CFMS Response: ', response);
-          if (statusCode === 200) {
-            await CEPSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
-              console.log('CEP Email Error: ', err);
-            });
-          }
-        } catch (err) {
-          console.log('CFMS Error: ', err);
-        }
-        console.log('===== End CFMS Logic =====');
-      }
+      // console.log('(form service) Form Version ID: ', formVersionId);
+      // console.log('.env version ID: ', config.get('serviceClient.oes.cfms.PBLMTFormVersionId'));
+      // if (formVersionId === config.get('serviceClient.oes.cfms.PBLMTFormVersionId')) {
+      //   console.log('===== CFMS Logic =====');
+      //   try {
+      //     const result = await FormSubmissionCFMSLookup.query().max('cfmsId as max_value').first();
+      //     const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 30000; // cfmsId incrementing starts at 30,000
+      //     console.log('CFMS ID: ', cfmsId);
+      //     const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
+      //     console.log('XML Prepared');
+      //     const newCFMSLookup = {
+      //       id: uuidv4(),
+      //       formSubmissionId: submissionId,
+      //       cfmsId: cfmsId,
+      //       createdBy: createdBy,
+      //     };
+      //     console.log('submissionID: ', submissionId);
+      //     await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
+      //     console.log('CFMS submission lookup inserted');
+      //     const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+      //     await wait(5000);
+      //     const attachments = await FileStorage.query().where('formSubmissionId', submissionId).throwIfNotFound();
+      //     console.log('attachments: ', attachments);
+      //     attachments.forEach(async (a) => {
+      //       const result = await FileStorageCFMSLookup.query().max('cfmsFileId as max_value').first();
+      //       console.log('max id result: ', result);
+      //       const newCFMSFileLookup = {
+      //         id: uuidv4(),
+      //         fileId: a.id,
+      //         cfmsFileId: result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 1, // cfmsFileId incrementing starts at 1
+      //         createdBy: createdBy,
+      //       };
+      //       console.log('newCFMSFileLookup: ', newCFMSFileLookup);
+      //       await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
+      //     });
+      //     console.log('CFMS attachments inserted');
+      //     // console.log('currentUser email: ', currentUser.email);
+      //     // await CFMSSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
+      //     //   console.log('email error: ', err);
+      //     // });
+      //     const { response } = await cfmsService.submitApplication(xml);
+      //     const { statusCode } = response;
+      //     console.log('CFMS Response Status Code: ', statusCode);
+      //     console.log('CFMS Response: ', response);
+      //     if (statusCode === 200) {
+      //       await CEPSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
+      //         console.log('CEP Email Error: ', err);
+      //       });
+      //     }
+      //   } catch (err) {
+      //     console.log('CFMS Error: ', err);
+      //   }
+      //   console.log('===== End CFMS Logic =====');
+      //}
 
       return result;
     } catch (err) {
