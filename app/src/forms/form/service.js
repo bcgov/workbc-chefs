@@ -478,17 +478,21 @@ const service = {
             cfmsId: cfmsId,
             createdBy: createdBy,
           };
+          console.log('submissionID: ', submissionId);
           await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
           console.log('CFMS submission lookup inserted');
           const attachments = await FileStorage.query().where('formSubmissionId', submissionId).throwIfNotFound();
+          console.log('attachments: ', attachments);
           attachments.forEach(async (a) => {
             const result = await FileStorageCFMSLookup.query().max('cfmsFileId as max_value').first();
+            console.log('max id result: ', result);
             const newCFMSFileLookup = {
               id: uuidv4(),
               fileId: a.id,
               cfmsFileId: result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 1, // cfmsFileId incrementing starts at 1
               createdBy: createdBy,
             };
+            console.log('newCFMSFileLookup: ', newCFMSFileLookup);
             await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
           });
           console.log('CFMS attachments inserted');
