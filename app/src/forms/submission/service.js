@@ -160,10 +160,12 @@ const service = {
 
       if (!etrx) await trx.commit();
 
-      console.log('(submission service) Form Version ID: ', formVersionId);
-      console.log('PBLMT .env version ID: ', config.get('serviceClient.oes.cfms.PBLMTFormVersionId'));
-      console.log('LMP .env version ID: ', config.get('serviceClient.oes.cfms.LMPFormVersionId'));
-      if (formVersionId === config.get('serviceClient.oes.cfms.PBLMTFormVersionId' || formVersionId === config.get('serviceClient.oes.cfms.LMPFormVersionId'))) {
+      console.log('(submission service) Submitted Form Version ID: ', formVersionId);
+      const PBLMTVersion = config.get('serviceClient.oes.cfms.PBLMTFormVersionId');
+      const LMPVersion = config.get('serviceClient.oes.cfms.LMPFormVersionId');
+      console.log('PBLMT .env version ID: ', PBLMTVersion);
+      console.log('LMP .env version ID: ', LMPVersion);
+      if (formVersionId == PBLMTVersion || formVersionId == LMPVersion) {
         console.log('===== CFMS Logic =====');
         try {
           const createdBy = currentUser.usernameIdp;
