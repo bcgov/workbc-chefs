@@ -81,7 +81,8 @@
         "apiUrl": "CFMS_API_URL",
         "PBLMTFormVersionId": "PBLMT_FORM_VERSION_ID",
         "PBLMTFormPass": "PBLMT_FORM_PASS",
-        "LMPFormId": "LMP_FORM_ID"
+        "LMPFormId": "LMP_FORM_ID",
+        "LMPFormVersionId": "LMP_FORM_VERSION_ID"
       }
     }
   }
