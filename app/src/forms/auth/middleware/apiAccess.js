@@ -7,6 +7,7 @@ const submissionService = require('../../submission/service');
 const FormSubmissionCFMSLookup = require('../../common/models/tables/formSubmissionCFMSLookup');
 const FileStorageCFMSLookup = require('../../common/models/tables/fileStorageCFMSLookup');
 const { FileStorage } = require('../../common/models');
+const config = require('config');
 
 module.exports = async (req, res, next) => {
   try {
@@ -48,6 +49,12 @@ module.exports = async (req, res, next) => {
       const checkCredentials = basicAuth({
         // Must be a synchronous function
         authorizer: (username, password) => {
+          // Special case for CFMS endpoints for forms aside from PBLMT (CFMS only has the PBLMT creds) //
+          if (formId == config.get('serviceClient.oes.cfms.LMPFormId') && password == config.get('serviceClient.oes.cfms.PBLMTFormPass')) {
+            req.apiUser = true;
+            return req.apiUser;
+          }
+
           const userMatch = formId && basicAuth.safeCompare(username, formId);
           const pwMatch = secret && basicAuth.safeCompare(password, secret);
 

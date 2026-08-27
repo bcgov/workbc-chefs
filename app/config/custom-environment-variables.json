@@ -79,7 +79,9 @@
         "username": "CFMS_USERNAME",
         "password": "CFMS_PASSWORD",
         "apiUrl": "CFMS_API_URL",
-        "PBLMTFormVersionId": "PBLMT_FORM_VERSION_ID"
+        "PBLMTFormVersionId": "PBLMT_FORM_VERSION_ID",
+        "PBLMTFormPass": "PBLMT_FORM_PASS",
+        "LMPFormId": "LMP_FORM_ID"
       }
     }
   }

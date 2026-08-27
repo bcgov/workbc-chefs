@@ -76,6 +76,8 @@ class CFMSService {
     //   submissionData.address_container.CEPOrgAdrPostalCode_Mail
     // );
 
+    // ${submissionData. ? `` : ''}
+
     const xml = `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tem="http://tempuri.org/">
         <soap:Header xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsrm="http://docs.oasis-open.org/ws-rx/wsrm/200702"><wsrm:Sequence><wsrm:Identifier>Server Error</wsrm:Identifier><wsrm:MessageNumber>1</wsrm:MessageNumber></wsrm:Sequence><wsa:Action>http://tempuri.org/ICFM_Data_Services/ReceiveApplication</wsa:Action><wsa:MessageID>uuid:d02aec5a-7d6d-44c7-b235-86e6cd5cc871</wsa:MessageID><wsa:To>https://dev1-cfms.services.sd.gov.bc.ca/CFM_Data_Services.svc</wsa:To></soap:Header>
         <soap:Body>
@@ -135,7 +137,7 @@ class CFMSService {
           ? `<CEPOweGovtAmount1>${submissionData.amountOwingContainer.amountOwing1.CEPOweGovtAmount1}</CEPOweGovtAmount1>`
           : ''
       }
-      <CEPPBLMTTraining>${submissionData.CEPPBLMTTraining}</CEPPBLMTTraining>
+      ${submissionData.CEPPBLMTTraining ? `<CEPPBLMTTraining>${submissionData.CEPPBLMTTraining}</CEPPBLMTTraining>` : ''}
       <CEPWorkSafeCoverage>${submissionData.CEPWorkSafeCoverage}</CEPWorkSafeCoverage>
       ${
         submissionData.worksafeCoverageHiddenLabel?.CEPWorkSafeNumber
@@ -146,9 +148,9 @@ class CFMSService {
       ${submissionData.CEPDisplacementExplanation ? `<CEPDisplacementExplanation>${submissionData.CEPDisplacementExplanation}</CEPDisplacementExplanation>` : ''}
       ${submissionData.CEPWORKBCDeliveryOther ? `<CEPWORKBCDeliveryOther>${submissionData.CEPWORKBCDeliveryOther}</CEPWORKBCDeliveryOther>` : ''}
       ${submissionData.CEPOtherGovtFundingExplanation ? `<CEPOtherGovtFundingExplanation>${submissionData.CEPOtherGovtFundingExplanation}</CEPOtherGovtFundingExplanation>` : ''}
-      <CEPOrgMandate>${submissionData.CEPOrgMandate}</CEPOrgMandate>
+      ${submissionData.CEPOrgMandate ? `<CEPOrgMandate>${submissionData.CEPOrgMandate}</CEPOrgMandate>` : ''}
       ${submissionData.CEPEPBCConflict ? `<CEPEPBCConflict>${submissionData.CEPEPBCConflict}</CEPEPBCConflict>` : ''}
-      <CEPUnfairCompPBLMT>${submissionData.CEPUnfairCompPBLMT}</CEPUnfairCompPBLMT>
+      ${submissionData.CEPUnfairCompPBLMT ? `<CEPUnfairCompPBLMT>${submissionData.CEPUnfairCompPBLMT}</CEPUnfairCompPBLMT>` : ''}
       ${submissionData.CEPWorksiteUnions ? `<CEPWorksiteUnions>${submissionData.CEPWorksiteUnions}</CEPWorksiteUnions>` : ''}
       ${submissionData.CEPDisputeExplanation ? `<CEPDisputeExplanation>${submissionData.CEPDisputeExplanation}</CEPDisputeExplanation>` : ''}
       <CEPOweGovt>${submissionData.CEPOweGovt}</CEPOweGovt>
@@ -159,43 +161,57 @@ class CFMSService {
       <CEPOtherGovtFunding>${submissionData.CEPOtherGovtFunding}</CEPOtherGovtFunding>
       <CEPDisputeInProgress>${submissionData.CEPDisputeInProgress}</CEPDisputeInProgress>
       <CEPProjectDateRange/>
-      <CEPObj_PBLMT_Objectives>${submissionData.CEPObj_PBLMT_Objectives}</CEPObj_PBLMT_Objectives>
+      ${submissionData.CEPObj_PBLMT_Objectives ? `<CEPObj_PBLMT_Objectives>${submissionData.CEPObj_PBLMT_Objectives}</CEPObj_PBLMT_Objectives>` : ''}
+      ${submissionData.CEPObj_LMP_Objectives ? `<CEPObj_LMP_Objectives>${submissionData.CEPObj_LMP_Objectives}</CEPObj_LMP_Objectives>` : ''}
       <CEPProjectTitle>${submissionData.CEPProjectTitle}</CEPProjectTitle>
       <CEPProjectStartDate>${submissionData.CEPProjectStartDate}</CEPProjectStartDate>
       <CEPProjectEndDate>${submissionData.CEPProjectEndDate}</CEPProjectEndDate>
-      <CEPHasParticipants>${submissionData.CEPHasParticipants}</CEPHasParticipants>
-      <CEPParticipantCount>${submissionData.CEPParticipantCount}</CEPParticipantCount>
-      <CEPAlternateLocations>${submissionData.CEPAlternateLocations}</CEPAlternateLocations>
-      <CEPTargetAboriginalCount>${submissionData.CEPTargetAboriginalCount}</CEPTargetAboriginalCount>
-      <CEPTargetFrancophoneCount>${submissionData.CEPTargetFrancophoneCount}</CEPTargetFrancophoneCount>
-      <CEPTargetImmigrantCount>${submissionData.CEPTargetImmigrantCount}</CEPTargetImmigrantCount>
-      <CEPTargetBarrieredCount>${submissionData.CEPTargetBarrieredCount}</CEPTargetBarrieredCount>
-      <CEPTargetDisabilitiesCount>${submissionData.CEPTargetDisabilitiesCount}</CEPTargetDisabilitiesCount>
-      <CEPTargetYouthCount>${submissionData.CEPTargetYouthCount}</CEPTargetYouthCount>
-      <CEPTargetSurvivorsOfViolenceCount>${submissionData.CEPTargetSurvivorsOfViolenceCount}</CEPTargetSurvivorsOfViolenceCount>
-      <CEPTargetYouthAtRiskCount>${submissionData.CEPTargetYouthAtRiskCount}</CEPTargetYouthAtRiskCount>
-      <CEPTargetOtherCount>${submissionData.CEPTargetOtherCount}</CEPTargetOtherCount>
-      <CEPTargetLayoffCount/>
+      ${submissionData.CEPHasParticipants ? `<CEPHasParticipants>${submissionData.CEPHasParticipants}</CEPHasParticipants>` : ''}
+      ${submissionData.CEPParticipantCount ? `<CEPParticipantCount>${submissionData.CEPParticipantCount}</CEPParticipantCount>` : ''}
+      ${submissionData.CEPAlternateLocations ? `<CEPAlternateLocations>${submissionData.CEPAlternateLocations}</CEPAlternateLocations>` : ''}
+      ${submissionData.CEPTargetAboriginalCount ? `<CEPTargetAboriginalCount>${submissionData.CEPTargetAboriginalCount}</CEPTargetAboriginalCount>` : ''}
+      ${submissionData.CEPTargetFrancophoneCount ? `<CEPTargetFrancophoneCount>${submissionData.CEPTargetFrancophoneCount}</CEPTargetFrancophoneCount>` : ''}
+      ${submissionData.CEPTargetImmigrantCount ? `<CEPTargetImmigrantCount>${submissionData.CEPTargetImmigrantCount}</CEPTargetImmigrantCount>` : ''}
+      ${submissionData.CEPTargetBarrieredCount ? `<CEPTargetBarrieredCount>${submissionData.CEPTargetBarrieredCount}</CEPTargetBarrieredCount>` : ''}
+      ${submissionData.CEPTargetDisabilitiesCount ? `<CEPTargetDisabilitiesCount>${submissionData.CEPTargetDisabilitiesCount}</CEPTargetDisabilitiesCount>` : ''}
+      ${submissionData.CEPTargetYouthCount ? `<CEPTargetYouthCount>${submissionData.CEPTargetYouthCount}</CEPTargetYouthCount>` : ''}
+      ${
+        submissionData.CEPTargetSurvivorsOfViolenceCount
+          ? `<CEPTargetSurvivorsOfViolenceCount>${submissionData.CEPTargetSurvivorsOfViolenceCount}</CEPTargetSurvivorsOfViolenceCount>`
+          : ''
+      }
+      ${submissionData.CEPTargetYouthAtRiskCount ? `<CEPTargetYouthAtRiskCount>${submissionData.CEPTargetYouthAtRiskCount}</CEPTargetYouthAtRiskCount>` : ''}
+      ${submissionData.CEPTargetOtherCount ? `<CEPTargetOtherCount>${submissionData.CEPTargetOtherCount}</CEPTargetOtherCount>` : ''}
+      ${submissionData.CEPTargetLayoffCount ? `<CEPTargetLayoffCount/>` : ''}
       <CATPartnerLetters/>
-      <CEPExpectedResults_PBLMT>${submissionData.CEPExpectedResults_PBLMT}</CEPExpectedResults_PBLMT>
-      <CEPPBLMTClassPercent>${submissionData.CEPPBLMTClassPercent}</CEPPBLMTClassPercent>
-      <CEPPBLMTWorkPercent>${submissionData.CEPPBLMTWorkPercent}</CEPPBLMTWorkPercent>
-      <CEPJobDescriptions>${submissionData.CEPJobDescriptions}</CEPJobDescriptions>
-      <CEPObj_PBLMT_Sessions>${submissionData.CEPObj_PBLMT_Sessions}</CEPObj_PBLMT_Sessions>
-      <CEPObj_PBLMT_SessionCount>${submissionData.CEPObj_PBLMT_SessionCount}</CEPObj_PBLMT_SessionCount>
-      <CEPObj_PBLMT_PartPerSessionCount>${submissionData.CEPObj_PBLMT_PartPerSessionCount}</CEPObj_PBLMT_PartPerSessionCount>
-      <CEPObj_PBLMT_TrainingWeeks>${submissionData.CEPObj_PBLMT_TrainingWeeks}</CEPObj_PBLMT_TrainingWeeks>
-      <CEPObj_PBLMT_FollowupWeeks>${submissionData.CEPObj_PBLMT_FollowupWeeks}</CEPObj_PBLMT_FollowupWeeks>
-      <CEPObj_PBLMT_JobWeeks>${submissionData.CEPObj_PBLMT_JobWeeks}</CEPObj_PBLMT_JobWeeks>
-      <CEPTaxRebate>${submissionData.CEPTaxRebate}</CEPTaxRebate>
-      <CEPPBLMT_LabourMarket>${submissionData.CEPPBLMT_LabourMarket}</CEPPBLMT_LabourMarket>
-      <CEPESC1>${submissionData.CEPESC1}</CEPESC1>
+      ${submissionData.CEPExpectedResults_PBLMT ? `<CEPExpectedResults_PBLMT>${submissionData.CEPExpectedResults_PBLMT}</CEPExpectedResults_PBLMT>` : ''}
+      ${submissionData.CEPPBLMTClassPercent ? `<CEPPBLMTClassPercent>${submissionData.CEPPBLMTClassPercent}</CEPPBLMTClassPercent>` : ''}
+      ${submissionData.CEPPBLMTWorkPercent ? `<CEPPBLMTWorkPercent>${submissionData.CEPPBLMTWorkPercent}</CEPPBLMTWorkPercent>` : ''}
+      ${submissionData.CEPJobDescriptions ? `<CEPJobDescriptions>${submissionData.CEPJobDescriptions}</CEPJobDescriptions>` : ''}
+      ${submissionData.CEPObj_PBLMT_Sessions ? `<CEPObj_PBLMT_Sessions>${submissionData.CEPObj_PBLMT_Sessions}</CEPObj_PBLMT_Sessions>` : ''}
+      ${submissionData.CEPObj_PBLMT_SessionCount ? `<CEPObj_PBLMT_SessionCount>${submissionData.CEPObj_PBLMT_SessionCount}</CEPObj_PBLMT_SessionCount>` : ''}
+      ${
+        submissionData.CEPObj_PBLMT_PartPerSessionCount
+          ? `<CEPObj_PBLMT_PartPerSessionCount>${submissionData.CEPObj_PBLMT_PartPerSessionCount}</CEPObj_PBLMT_PartPerSessionCount>`
+          : ''
+      }
+      ${submissionData.CEPObj_PBLMT_TrainingWeeks ? `<CEPObj_PBLMT_TrainingWeeks>${submissionData.CEPObj_PBLMT_TrainingWeeks}</CEPObj_PBLMT_TrainingWeeks>` : ''}
+      ${submissionData.CEPObj_PBLMT_FollowupWeeks ? `<CEPObj_PBLMT_FollowupWeeks>${submissionData.CEPObj_PBLMT_FollowupWeeks}</CEPObj_PBLMT_FollowupWeeks>` : ''}
+      ${submissionData.CEPObj_PBLMT_JobWeeks ? `<CEPObj_PBLMT_JobWeeks>${submissionData.CEPObj_PBLMT_JobWeeks}</CEPObj_PBLMT_JobWeeks>` : ''}
+      ${submissionData.CEPTaxRebate ? `<CEPTaxRebate>${submissionData.CEPTaxRebate}</CEPTaxRebate>` : ''}
+      ${submissionData.CEPPBLMT_LabourMarket ? `<CEPPBLMT_LabourMarket>${submissionData.CEPPBLMT_LabourMarket}</CEPPBLMT_LabourMarket>` : ''}
+      ${submissionData.CEPESC1 ? `<CEPESC1>${submissionData.CEPESC1}</CEPESC1>` : ''}
       ${submissionData.CEPESC2 ? `<CEPESC2>${submissionData.CEPESC2}</CEPESC2>` : ''}
       ${submissionData.CEPESC3 ? `<CEPESC3>${submissionData.CEPESC3}</CEPESC3>` : ''}
       ${submissionData.CEPESC4 ? `<CEPESC4>${submissionData.CEPESC4}</CEPESC4>` : ''}
-      <CEPAttESC_Letters/>
-      <CEPAttSupportLetters_PBLMT/>
-      <CEPProgressExplanation>${submissionData.CEPProgressExplanation}</CEPProgressExplanation>
+      ${submissionData.CEPAttESC_Letters ? `<CEPAttESC_Letters/>` : ''}
+      ${submissionData.CEPAttSupportLetters_PBLMT ? `<CEPAttSupportLetters_PBLMT/>` : ''}
+      ${submissionData.CEPProgressExplanation ? `<CEPProgressExplanation>${submissionData.CEPProgressExplanation}</CEPProgressExplanation>` : ''}
+      ${submissionData.CEPPTimelinesActivities_LMP ? `<CEPPTimelinesActivities_LMP>${submissionData.CEPPTimelinesActivities_LMP}</CEPPTimelinesActivities_LMP>` : ''}
+      ${submissionData.CEPExpectedResults_LMP ? `<CEPExpectedResults_LMP>${submissionData.CEPExpectedResults_LMP}</CEPExpectedResults_LMP>` : ''}
+      ${submissionData.CEPIPRights ? `<CEPIPRights>${submissionData.CEPIPRights}</CEPIPRights>` : ''}
+      ${submissionData.CEPIPRightsExplanation ? `<CEPIPRightsExplanation>${submissionData.CEPIPRightsExplanation}</CEPIPRightsExplanation>` : ''}
+      ${submissionData.CEPObj_LMP_CommBenefit ? `<CEPObj_LMP_CommBenefit>${submissionData.CEPObj_LMP_CommBenefit}</CEPObj_LMP_CommBenefit>` : ''}
       <CATBudget/>
       <CEPRequestedBudget>${submissionData.CEPRequestedBudget}</CEPRequestedBudget>
       <CATAdditionalDocs/>
