@@ -66,15 +66,27 @@ class CFMSService {
     if (submissionData.CEPProjectStartDate) submissionData.CEPProjectStartDate = moment(submissionData.CEPProjectStartDate).format('MM/DD/YYYY');
     if (submissionData.CEPProjectEndDate) submissionData.CEPProjectEndDate = moment(submissionData.CEPProjectEndDate).format('MM/DD/YYYY');
 
-    // console.log(
-    //   'ADDR FIELDS: ',
-    //   submissionData.address_container.CEPOrgAdrUnit_Mail,
-    //   submissionData.address_container.CEPOrgAdrAddress1_Mail,
-    //   submissionData.address_container.CEPOrgAdrAddress2_Mail,
-    //   submissionData.address_container.CEPOrgAdrCity_Mail,
-    //   submissionData.address_container.CEPOrgAdrProvince_Mail,
-    //   submissionData.address_container.CEPOrgAdrPostalCode_Mail
-    // );
+    let stakeholderPartnerships = '';
+    if (submissionData.partner1 && submissionData.contribution1 && submissionData.involvement1) {
+      stakeholderPartnerships = stakeholderPartnerships + submissionData.partner1 + submissionData.involvement1 + 'In-kind: ' + submissionData.contribution1 + ' ';
+    }
+    if (submissionData.partner2 && submissionData.contribution2 && submissionData.involvement2) {
+      stakeholderPartnerships = stakeholderPartnerships + submissionData.partner2 + submissionData.involvement2 + 'In-kind: ' + submissionData.contribution2 + ' ';
+    }
+    if (submissionData.partner3 && submissionData.contribution3 && submissionData.involvement3) {
+      stakeholderPartnerships = stakeholderPartnerships + submissionData.partner3 + submissionData.involvement3 + 'In-kind: ' + submissionData.contribution3 + ' ';
+    }
+    if (submissionData.partner4 && submissionData.contribution4 && submissionData.involvement4) {
+      stakeholderPartnerships = stakeholderPartnerships + submissionData.partner4 + submissionData.involvement4 + 'In-kind: ' + submissionData.contribution4 + ' ';
+    }
+    if (submissionData.partner5 && submissionData.contribution5 && submissionData.involvement5) {
+      stakeholderPartnerships = stakeholderPartnerships + submissionData.partner5 + submissionData.involvement5 + 'In-kind: ' + submissionData.contribution5 + ' ';
+    }
+    if (submissionData.partner6 && submissionData.contribution6 && submissionData.involvement6) {
+      stakeholderPartnerships = stakeholderPartnerships + submissionData.partner6 + submissionData.involvement6 + 'In-kind: ' + submissionData.contribution6 + ' ';
+    }
+
+    console.log('STAKEHOLDER PARTNERSHIPS: ', stakeholderPartnerships);
 
     // ${submissionData. ? `` : ''}
 
@@ -135,6 +147,81 @@ class CFMSService {
       ${
         submissionData.amountOwingContainer?.amountOwing1?.CEPOweGovtAmount1
           ? `<CEPOweGovtAmount1>${submissionData.amountOwingContainer.amountOwing1.CEPOweGovtAmount1}</CEPOweGovtAmount1>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing2?.CEPOweGovtAgency2
+          ? `<CEPOweGovtAgency2>${submissionData.amountOwingContainer.amountOwing2.CEPOweGovtAgency2}</CEPOweGovtAgency2>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing2?.CEPOweGovtType2
+          ? `<CEPOweGovtType2>${submissionData.amountOwingContainer.amountOwing2.CEPOweGovtType2}</CEPOweGovtType2>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing2?.CEPOweGovtAmount2
+          ? `<CEPOweGovtAmount2>${submissionData.amountOwingContainer.amountOwing2.CEPOweGovtAmount2}</CEPOweGovtAmount2>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing3?.CEPOweGovtAgency3
+          ? `<CEPOweGovtAgency3>${submissionData.amountOwingContainer.amountOwing3.CEPOweGovtAgency3}</CEPOweGovtAgency3>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing3?.CEPOweGovtType3
+          ? `<CEPOweGovtType3>${submissionData.amountOwingContainer.amountOwing3.CEPOweGovtType3}</CEPOweGovtType3>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing3?.CEPOweGovtAmount3
+          ? `<CEPOweGovtAmount3>${submissionData.amountOwingContainer.amountOwing3.CEPOweGovtAmount3}</CEPOweGovtAmount3>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing4?.CEPOweGovtAgency4
+          ? `<CEPOweGovtAgency4>${submissionData.amountOwingContainer.amountOwing4.CEPOweGovtAgency4}</CEPOweGovtAgency4>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing4?.CEPOweGovtType4
+          ? `<CEPOweGovtType4>${submissionData.amountOwingContainer.amountOwing4.CEPOweGovtType4}</CEPOweGovtType4>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing4?.CEPOweGovtAmount4
+          ? `<CEPOweGovtAmount4>${submissionData.amountOwingContainer.amountOwing4.CEPOweGovtAmount4}</CEPOweGovtAmount4>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing5?.CEPOweGovtAgency5
+          ? `<CEPOweGovtAgency5>${submissionData.amountOwingContainer.amountOwing5.CEPOweGovtAgency5}</CEPOweGovtAgency5>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing5?.CEPOweGovtType5
+          ? `<CEPOweGovtType5>${submissionData.amountOwingContainer.amountOwing5.CEPOweGovtType5}</CEPOweGovtType5>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing5?.CEPOweGovtAmount5
+          ? `<CEPOweGovtAmount5>${submissionData.amountOwingContainer.amountOwing5.CEPOweGovtAmount5}</CEPOweGovtAmount5>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing6?.CEPOweGovtAgency6
+          ? `<CEPOweGovtAgency6>${submissionData.amountOwingContainer.amountOwing6.CEPOweGovtAgency6}</CEPOweGovtAgency6>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing6?.CEPOweGovtType6
+          ? `<CEPOweGovtType6>${submissionData.amountOwingContainer.amountOwing6.CEPOweGovtType6}</CEPOweGovtType6>`
+          : ''
+      }
+      ${
+        submissionData.amountOwingContainer?.amountOwing6?.CEPOweGovtAmount6
+          ? `<CEPOweGovtAmount6>${submissionData.amountOwingContainer.amountOwing6.CEPOweGovtAmount6}</CEPOweGovtAmount6>`
           : ''
       }
       ${submissionData.CEPPBLMTTraining ? `<CEPPBLMTTraining>${submissionData.CEPPBLMTTraining}</CEPPBLMTTraining>` : ''}
@@ -212,6 +299,7 @@ class CFMSService {
       ${submissionData.CEPIPRights ? `<CEPIPRights>${submissionData.CEPIPRights}</CEPIPRights>` : ''}
       ${submissionData.CEPIPRightsExplanation ? `<CEPIPRightsExplanation>${submissionData.CEPIPRightsExplanation}</CEPIPRightsExplanation>` : ''}
       ${submissionData.CEPObj_LMP_CommBenefit ? `<CEPObj_LMP_CommBenefit>${submissionData.CEPObj_LMP_CommBenefit}</CEPObj_LMP_CommBenefit>` : ''}
+      ${stakeholderPartnerships != '' ? `<CEPStakeholderPartnerships>${stakeholderPartnerships}</CEPStakeholderPartnerships>` : ''}
       <CATBudget/>
       <CEPRequestedBudget>${submissionData.CEPRequestedBudget}</CEPRequestedBudget>
       <CATAdditionalDocs/>

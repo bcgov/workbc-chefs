@@ -50,7 +50,11 @@ module.exports = async (req, res, next) => {
         // Must be a synchronous function
         authorizer: (username, password) => {
           // Special case for CFMS endpoints for forms aside from PBLMT (CFMS only has the PBLMT creds) //
-          if (formId == config.get('serviceClient.oes.cfms.LMPFormId') && password == config.get('serviceClient.oes.cfms.PBLMTFormPass')) {
+          if (
+            (formId == config.get('serviceClient.oes.cfms.LMPFormId') && password == config.get('serviceClient.oes.cfms.PBLMTFormPass')) ||
+            (formId == config.get('serviceClient.oes.cfms.JCPFormId') && password == config.get('serviceClient.oes.cfms.PBLMTFormPass')) ||
+            (formId == config.get('serviceClient.oes.cfms.RIFormId') && password == config.get('serviceClient.oes.cfms.PBLMTFormPass'))
+          ) {
             req.apiUser = true;
             return req.apiUser;
           }

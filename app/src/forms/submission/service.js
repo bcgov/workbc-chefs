@@ -163,9 +163,13 @@ const service = {
       console.log('(submission service) Submitted Form Version ID: ', formVersionId);
       const PBLMTVersion = config.get('serviceClient.oes.cfms.PBLMTFormVersionId');
       const LMPVersion = config.get('serviceClient.oes.cfms.LMPFormVersionId');
+      const JCPVersion = config.get('serviceClient.oes.cfms.JCPFormVersionId');
+      const RIVersion = config.get('serviceClient.oes.cfms.RIFormVersionId');
       console.log('PBLMT .env version ID: ', PBLMTVersion);
       console.log('LMP .env version ID: ', LMPVersion);
-      if (formVersionId == PBLMTVersion || formVersionId == LMPVersion) {
+      console.log('JCP .env version ID: ', JCPVersion);
+      console.log('RI .env version ID: ', RIVersion);
+      if (formVersionId == PBLMTVersion || formVersionId == LMPVersion || formVersionId == JCPVersion || formVersionId == RIVersion) {
         console.log('===== CFMS Logic =====');
         try {
           const createdBy = currentUser.usernameIdp;
@@ -173,7 +177,7 @@ const service = {
           const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 30000; // cfmsId incrementing starts at 30,000
           console.log('CFMS ID: ', cfmsId);
           const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
-          console.log('XML Prepared');
+          console.log('XML Prepared: ', xml);
           const newCFMSLookup = {
             id: uuidv4(),
             formSubmissionId: formSubmissionId,
@@ -183,8 +187,6 @@ const service = {
           console.log('submissionID: ', formSubmissionId);
           await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
           console.log('CFMS submission lookup inserted');
-          // const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-          // await wait(5000);
           const attachments = await FileStorage.query().where('formSubmissionId', formSubmissionId).throwIfNotFound();
           console.log('attachments: ', attachments);
           attachments.forEach(async (a) => {
