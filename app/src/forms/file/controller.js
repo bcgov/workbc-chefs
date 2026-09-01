@@ -213,6 +213,7 @@ module.exports = {
             ...(submission.CEP_RI_CommunityBenefits && { 'Community Benefits': submission.CEP_RI_CommunityBenefits }),
             ...(submission.CEP_RI_EthicalSafety && { 'Ethical Safety': submission.CEP_RI_EthicalSafety }),
             ...(submission.CEP_DescribeSupports && { 'Supports Description': submission.CEP_DescribeSupports }),
+            ...(submission.CEPSkilledTrainingExplanation && { 'Skilled Training': submission.CEPSkilledTrainingExplanation }),
           },
           Budget: {
             Budget: submission.CEPRequestedBudget,
