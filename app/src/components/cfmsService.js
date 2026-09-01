@@ -300,6 +300,33 @@ class CFMSService {
       ${submissionData.CEPIPRightsExplanation ? `<CEPIPRightsExplanation>${submissionData.CEPIPRightsExplanation}</CEPIPRightsExplanation>` : ''}
       ${submissionData.CEPObj_LMP_CommBenefit ? `<CEPObj_LMP_CommBenefit>${submissionData.CEPObj_LMP_CommBenefit}</CEPObj_LMP_CommBenefit>` : ''}
       ${stakeholderPartnerships != '' ? `<CEPStakeholderPartnerships>${stakeholderPartnerships}</CEPStakeholderPartnerships>` : ''}
+      ${submissionData.CEPUnfairCompJCP ? `<CEPUnfairCompJCP>${submissionData.CEPUnfairCompJCP}</CEPUnfairCompJCP>` : ''}
+      ${submissionData.CEPObj_JCP_Objectives ? `<CEPObj_JCP_Objectives>${submissionData.CEPObj_JCP_Objectives}</CEPObj_JCP_Objectives>` : ''}
+      ${submissionData.CEPObj_JCP_CommBenefit ? `<CEPObj_JCP_CommBenefit>${submissionData.CEPObj_JCP_CommBenefit}</CEPObj_JCP_CommBenefit>` : ''}
+      ${submissionData.CEPObj_JCP_PartBenefit ? `<CEPObj_JCP_PartBenefit>${submissionData.CEPObj_JCP_PartBenefit}</CEPObj_JCP_PartBenefit>` : ''}
+      ${submissionData.CEPPTimelinesActivities_JCP ? `<CEPPTimelinesActivities_JCP>${submissionData.CEPPTimelinesActivities_JCP}</CEPPTimelinesActivities_JCP>` : ''}
+      ${submissionData.CEPSupervisionExplanation ? `<CEPSupervisionExplanation>${submissionData.CEPSupervisionExplanation}</CEPSupervisionExplanation>` : ''}
+      ${submissionData.CEPFollowUpExplanation ? `<CEPFollowUpExplanation>${submissionData.CEPFollowUpExplanation}</CEPFollowUpExplanation>` : ''}
+      ${submissionData.CEPStakeholderPartnerships_RI ? `<CEPStakeholderPartnerships_RI>${submissionData.CEPStakeholderPartnerships_RI}</CEPStakeholderPartnerships_RI>` : ''}
+      ${submissionData.CEPObj_RI_Qualifications ? `<CEPObj_RI_Qualifications>${submissionData.CEPObj_RI_Qualifications}</CEPObj_RI_Qualifications>` : ''}
+      ${submissionData.CEPAttSupportLetters_RI ? `<CEPAttSupportLetters_RI/>` : ''}
+      ${submissionData.CEP_RI_CommunityBenefits ? `<CEP_RI_CommunityBenefits>${submissionData.CEP_RI_CommunityBenefits}</CEP_RI_CommunityBenefits>` : ''}
+      ${submissionData.CEPObj_RI_EthicsPolicy ? `<CEPObj_RI_EthicsPolicy>${submissionData.CEPObj_RI_EthicsPolicy}</CEPObj_RI_EthicsPolicy>` : ''}
+      ${submissionData.CEP_RI_EthicalSafety ? `<CEP_RI_EthicalSafety>${submissionData.CEP_RI_EthicalSafety}</CEP_RI_EthicalSafety>` : ''}
+      ${submissionData.CEPObj_RI_Governance ? `<CEPObj_RI_Governance>${submissionData.CEPObj_RI_Governance}</CEPObj_RI_Governance>` : ''}
+      ${submissionData.CEPObj_RI_Market ? `<CEPObj_RI_Market>${submissionData.CEPObj_RI_Market}</CEPObj_RI_Market>` : ''}
+      ${submissionData.CEPObj_RI_Background ? `<CEPObj_RI_Background>${submissionData.CEPObj_RI_Background}</CEPObj_RI_Background>` : ''}
+      ${submissionData.CEPObj_RI_TargetPop ? `<CEPObj_RI_TargetPop>${submissionData.CEPObj_RI_TargetPop}</CEPObj_RI_TargetPop>` : ''}
+      ${submissionData.CEPObj_RI_Objectives ? `<CEPObj_RI_Objectives>${submissionData.CEPObj_RI_Objectives}</CEPObj_RI_Objectives>` : ''}
+      ${submissionData.CEPObj_RI_Untested ? `<CEPObj_RI_Untested>${submissionData.CEPObj_RI_Untested}</CEPObj_RI_Untested>` : ''}
+      ${submissionData.CEPObj_RI_Hypothesis ? `<CEPObj_RI_Hypothesis>${submissionData.CEPObj_RI_Hypothesis}</CEPObj_RI_Hypothesis>` : ''}
+      ${submissionData.CEPObj_RI_Methodology ? `<CEPObj_RI_Methodology>${submissionData.CEPObj_RI_Methodology}</CEPObj_RI_Methodology>` : ''}
+      ${submissionData.CEPObj_RI_Subjects ? `<CEPObj_RI_Subjects>${submissionData.CEPObj_RI_Subjects}</CEPObj_RI_Subjects>` : ''}
+      ${submissionData.CEPObj_RI_Evaluation ? `<CEPObj_RI_Evaluation>${submissionData.CEPObj_RI_Evaluation}</CEPObj_RI_Evaluation>` : ''}
+      ${submissionData.CEPObj_RI_Reporting ? `<CEPObj_RI_Reporting>${submissionData.CEPObj_RI_Reporting}</CEPObj_RI_Reporting>` : ''}
+      ${submissionData.CEPObj_RI_Results ? `<CEPObj_RI_Results>${submissionData.CEPObj_RI_Results}</CEPObj_RI_Results>` : ''}
+      ${submissionData.CEPObj_RI_Exit ? `<CEPObj_RI_Exit>${submissionData.CEPObj_RI_Exit}</CEPObj_RI_Exit>` : ''}
+      ${submissionData.CEPObj_RI_Sustainment ? `<CEPObj_RI_Sustainment>${submissionData.CEPObj_RI_Sustainment}</CEPObj_RI_Sustainment>` : ''}
       <CATBudget/>
       <CEPRequestedBudget>${submissionData.CEPRequestedBudget}</CEPRequestedBudget>
       <CATAdditionalDocs/>
