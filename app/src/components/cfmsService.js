@@ -3,6 +3,7 @@ const axios = require('axios');
 const errorToProblem = require('./errorToProblem');
 const SERVICE = 'GeoAddressService';
 const moment = require('moment');
+const https = require('https');
 
 class CFMSService {
   constructor({ username, password, apiUrl }) {
@@ -19,6 +20,9 @@ class CFMSService {
       const headers = {
         'Content-Type': 'application/soap+xml',
       };
+      const agent = new https.Agent({
+        rejectUnauthorized: false,
+      });
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
@@ -27,6 +31,7 @@ class CFMSService {
           headers,
           data: xml,
           timeout: 60000,
+          httpsAgent: agent,
         })
           .then((response) => {
             resolve({
