@@ -99,9 +99,9 @@ module.exports = {
       for (const a of attachments) {
         const cfms_file_row = await FileStorageCFMSLookup.query().where('fileId', a.id).select('cfmsFileId').throwIfNotFound();
         console.log('FOUND: ', cfms_file_row);
-        console.log(cfms_file_row[0]);
-        console.log(cfms_file_row.length);
-        console.log(cfms_file_row[0].cfmsFileId);
+        // console.log(cfms_file_row[0]);
+        // console.log(cfms_file_row.length);
+        // console.log(cfms_file_row[0].cfmsFileId);
         response.push({
           TAAPAT_ID: cfms_file_row?.length > 0 ? cfms_file_row[0].cfmsFileId : null,
           FILE_NAM: a.originalName,
@@ -175,7 +175,6 @@ module.exports = {
             'Owe to Government': submission.CEPOweGovt,
             'Liability Insurance': submission.CEPLiabilityInsurance,
             'Existing Policy Covers Project Activities': submission.CEPExistingPolicy,
-            'WorkSafe Coverage': submission.CEPWorkSafeCoverage,
             ...(submission.CEPDisplacement && { Displacement: submission.CEPDisplacement }),
             ...(submission.CEPEPBCDelivery && { 'EPBC Delivery': submission.CEPEPBCDelivery }),
             ...(submission.CEPOtherGovtFunding && { 'Other Government Funding': submission.CEPOtherGovtFunding }),

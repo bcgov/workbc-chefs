@@ -225,13 +225,8 @@ class CFMSService {
           : ''
       }
       ${submissionData.CEPPBLMTTraining ? `<CEPPBLMTTraining>${submissionData.CEPPBLMTTraining}</CEPPBLMTTraining>` : ''}
-      <CEPWorkSafeCoverage>${submissionData.CEPWorkSafeCoverage}</CEPWorkSafeCoverage>
-      ${
-        submissionData.worksafeCoverageHiddenLabel?.CEPWorkSafeNumber
-          ? `<CEPWorkSafeNumber>${submissionData.worksafeCoverageHiddenLabel.CEPWorkSafeNumber}</CEPWorkSafeNumber>`
-          : ''
-      }
-      ${submissionData.worksafeCoverageHiddenLabel?.CEPWorkSafeRate ? `<CEPWorkSafeRate>${submissionData.worksafeCoverageHiddenLabel.CEPWorkSafeRate}</CEPWorkSafeRate>` : ''}
+      ${submissionData.CEPWorkSafeNumber ? `<CEPWorkSafeNumber>${submissionData.CEPWorkSafeNumber}</CEPWorkSafeNumber>` : ''}
+      ${submissionData.CEPWorkSafeRate ? `<CEPWorkSafeRate>${submissionData.CEPWorkSafeRate}</CEPWorkSafeRate>` : ''}
       ${submissionData.CEPDisplacementExplanation ? `<CEPDisplacementExplanation>${submissionData.CEPDisplacementExplanation}</CEPDisplacementExplanation>` : ''}
       ${submissionData.CEPWORKBCDeliveryOther ? `<CEPWORKBCDeliveryOther>${submissionData.CEPWORKBCDeliveryOther}</CEPWORKBCDeliveryOther>` : ''}
       ${submissionData.CEPOtherGovtFundingExplanation ? `<CEPOtherGovtFundingExplanation>${submissionData.CEPOtherGovtFundingExplanation}</CEPOtherGovtFundingExplanation>` : ''}
