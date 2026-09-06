@@ -174,7 +174,7 @@ const service = {
         try {
           const createdBy = currentUser.usernameIdp;
           const result = await FormSubmissionCFMSLookup.query().max('cfmsId as max_value').first();
-          const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 30000; // cfmsId incrementing starts at 30,000
+          const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 32000; // cfmsId incrementing starts at 32,000
           console.log('CFMS ID: ', cfmsId);
           const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
           console.log('XML Prepared: ', xml);
