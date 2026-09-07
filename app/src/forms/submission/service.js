@@ -3,13 +3,13 @@ const axios = require('axios');
 const { Statuses, SubscriptionEvent } = require('../common/constants');
 const { Form, FormVersion, FormSubmission, FormSubmissionStatus, Note, SubmissionAudit, SubmissionMetadata, FormSubscription, FileStorage } = require('../common/models');
 const log = require('../../components/log')(module.filename);
-const emailService = require('../email/emailService');
 const formService = require('../form/service');
 const permissionService = require('../permission/service');
 const cfmsService = require('../../components/cfmsService');
 const FormSubmissionCFMSLookup = require('../common/models/tables/formSubmissionCFMSLookup');
 const FileStorageCFMSLookup = require('../common/models/tables/fileStorageCFMSLookup');
 const config = require('config');
+const { CEPSubmissionConfirmation } = require('../email/emailService');
 
 const service = {
   // -------------------------------------------------------------------------------------------------------
@@ -202,19 +202,16 @@ const service = {
             await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
           });
           console.log('CFMS attachments inserted');
-          // console.log('currentUser email: ', currentUser.email);
-          // await CFMSSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
-          //   console.log('email error: ', err);
-          // });
+          console.log('currentUser email: ', currentUser.email);
           const { response } = await cfmsService.submitApplication(xml);
           const { statusCode } = response;
           console.log('CFMS Response Status Code: ', statusCode);
           console.log('CFMS Response: ', response);
-          // if (statusCode === 200) {
-          //   await CEPSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
-          //     console.log('CEP Email Error: ', err);
-          //   });
-          // }
+          if (statusCode === 200) {
+            await CEPSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
+              console.log('CEP Email Error: ', err);
+            });
+          }
         } catch (err) {
           console.log('CFMS Error: ', err);
         }

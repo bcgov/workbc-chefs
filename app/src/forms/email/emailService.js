@@ -457,10 +457,8 @@ const service = {
   /**
    * @function CEPSubmissionConfirmation
    * Manual CEP email confirmation after form has been submitted
-   * @param {string} formId
-   * @param {string} submissionId
-   * @param {string} body
-   * @param {string} referer
+   * @param {string} CEPID
+   * @param {string} userEmail
    * @returns The result of the email merge operation
    */
   CEPSubmissionConfirmation: async (CEPID, userEmail) => {
