@@ -72,23 +72,11 @@ class CFMSService {
     if (submissionData.CEPProjectEndDate) submissionData.CEPProjectEndDate = moment(submissionData.CEPProjectEndDate).format('MM/DD/YYYY');
 
     let stakeholderPartnerships = '';
-    if (submissionData.partner1 && submissionData.contribution1 && submissionData.involvement1) {
-      stakeholderPartnerships = stakeholderPartnerships + submissionData.partner1 + ' ' + submissionData.involvement1 + ' In-kind: ' + submissionData.contribution1 + ' ';
-    }
-    if (submissionData.partner2 && submissionData.contribution2 && submissionData.involvement2) {
-      stakeholderPartnerships = stakeholderPartnerships + submissionData.partner2 + ' ' + submissionData.involvement2 + ' In-kind: ' + submissionData.contribution2 + ' ';
-    }
-    if (submissionData.partner3 && submissionData.contribution3 && submissionData.involvement3) {
-      stakeholderPartnerships = stakeholderPartnerships + submissionData.partner3 + ' ' + submissionData.involvement3 + ' In-kind: ' + submissionData.contribution3 + ' ';
-    }
-    if (submissionData.partner4 && submissionData.contribution4 && submissionData.involvement4) {
-      stakeholderPartnerships = stakeholderPartnerships + submissionData.partner4 + ' ' + submissionData.involvement4 + ' In-kind: ' + submissionData.contribution4 + ' ';
-    }
-    if (submissionData.partner5 && submissionData.contribution5 && submissionData.involvement5) {
-      stakeholderPartnerships = stakeholderPartnerships + submissionData.partner5 + ' ' + submissionData.involvement5 + ' In-kind: ' + submissionData.contribution5 + ' ';
-    }
-    if (submissionData.partner6 && submissionData.contribution6 && submissionData.involvement6) {
-      stakeholderPartnerships = stakeholderPartnerships + submissionData.partner6 + ' ' + submissionData.involvement6 + ' In-kind: ' + submissionData.contribution6 + ' ';
+    console.log('PARTNERS GRID: ', submissionData.partnersGrid);
+    if (submissionData.partnersGrid && submissionData.partnersGrid.length > 0) {
+      submissionData.partnersGrid.forEach((partner) => {
+        stakeholderPartnerships = stakeholderPartnerships + partner.partner + ' ' + partner.involvement + ' In-kind: ' + partner.contribution + ' ';
+      });
     }
 
     console.log('STAKEHOLDER PARTNERSHIPS: ', stakeholderPartnerships);
