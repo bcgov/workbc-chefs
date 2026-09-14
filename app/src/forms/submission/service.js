@@ -177,7 +177,7 @@ const service = {
           const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 32000; // cfmsId incrementing starts at 32,000
           console.log('CFMS ID: ', cfmsId);
           const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
-          console.log('XML Prepared: ', xml);
+          //console.log('XML Prepared: ', xml);
           const newCFMSLookup = {
             id: uuidv4(),
             formSubmissionId: formSubmissionId,
@@ -189,17 +189,19 @@ const service = {
           console.log('CFMS submission lookup inserted');
           const attachments = await FileStorage.query().where('formSubmissionId', formSubmissionId).throwIfNotFound();
           console.log('attachments: ', attachments);
+          const maxFile = await FileStorageCFMSLookup.query().max('cfmsFileId as max_value').first();
+          let maxFileID = maxFile && maxFile.max_value ? Number.parseInt(maxFile.max_value, 10) + 1 : 1; // cfmsFileId incrementing starts at 1
+          console.log('max file id result: ', maxFileID);
           attachments.forEach(async (a) => {
-            const result = await FileStorageCFMSLookup.query().max('cfmsFileId as max_value').first();
-            console.log('max id result: ', result);
             const newCFMSFileLookup = {
               id: uuidv4(),
               fileId: a.id,
-              cfmsFileId: result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 1, // cfmsFileId incrementing starts at 1
+              cfmsFileId: maxFileID,
               createdBy: createdBy,
             };
-            console.log('newCFMSFileLookup: ', newCFMSFileLookup);
+            console.log('maxFileID: ', maxFileID);
             await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
+            maxFileID++;
           });
           console.log('CFMS attachments inserted');
           console.log('currentUser email: ', currentUser.email);
