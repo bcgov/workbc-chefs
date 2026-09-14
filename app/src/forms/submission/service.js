@@ -192,16 +192,15 @@ const service = {
           const maxFile = await FileStorageCFMSLookup.query().max('cfmsFileId as max_value').first();
           let maxFileID = maxFile && maxFile.max_value ? Number.parseInt(maxFile.max_value, 10) + 1 : 1; // cfmsFileId incrementing starts at 1
           console.log('max file id result: ', maxFileID);
-          attachments.forEach(async (a) => {
+          attachments.forEach(async (a, index) => {
             const newCFMSFileLookup = {
               id: uuidv4(),
               fileId: a.id,
-              cfmsFileId: maxFileID,
+              cfmsFileId: maxFileID + index,
               createdBy: createdBy,
             };
-            console.log('maxFileID: ', maxFileID);
+            console.log('maxFileID: ', maxFileID + index);
             await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
-            maxFileID++;
           });
           console.log('CFMS attachments inserted');
           console.log('currentUser email: ', currentUser.email);
