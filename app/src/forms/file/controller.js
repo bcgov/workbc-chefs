@@ -98,7 +98,7 @@ module.exports = {
       let response = [];
       for (const a of attachments) {
         const cfms_file_row = await FileStorageCFMSLookup.query().where('fileId', a.id).select('cfmsFileId').throwIfNotFound();
-        console.log('FOUND: ', cfms_file_row);
+        //console.log('FOUND: ', cfms_file_row);
         // console.log(cfms_file_row[0]);
         // console.log(cfms_file_row.length);
         // console.log(cfms_file_row[0].cfmsFileId);
@@ -111,7 +111,7 @@ module.exports = {
           FILE_EXT_NAM: a.originalName.split('.').pop(),
         });
       }
-      console.log('RESPONSE: ', response);
+      //console.log('RESPONSE: ', response);
       res.status(200).send(response);
     } catch (error) {
       next(error);
@@ -176,7 +176,7 @@ module.exports = {
             'Liability Insurance': submission.CEPLiabilityInsurance,
             'Existing Policy Covers Project Activities': submission.CEPExistingPolicy,
             ...(submission.CEPDisplacement && { Displacement: submission.CEPDisplacement }),
-            ...(submission.CEPEPBCDelivery && { 'EPBC Delivery': submission.CEPEPBCDelivery }),
+            ...(submission.CEPEPBCDelivery && { 'WorkBC Delivery': submission.CEPEPBCDelivery }),
             ...(submission.CEPOtherGovtFunding && { 'Other Government Funding': submission.CEPOtherGovtFunding }),
             ...(submission.CEPOrgMandate && { 'Organization Mandate': submission.CEPOrgMandate }),
             ...(submission.CEPUnfairCompPBLMT && { 'Project Activities Unfair Competition': submission.CEPUnfairCompPBLMT }),

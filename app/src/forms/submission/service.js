@@ -160,22 +160,22 @@ const service = {
 
       if (!etrx) await trx.commit();
 
-      console.log('(submission service) Submitted Form Version ID: ', formVersionId);
+      //console.log('(submission service) Submitted Form Version ID: ', formVersionId);
       const PBLMTVersion = config.get('serviceClient.oes.cfms.PBLMTFormVersionId');
       const LMPVersion = config.get('serviceClient.oes.cfms.LMPFormVersionId');
       const JCPVersion = config.get('serviceClient.oes.cfms.JCPFormVersionId');
       const RIVersion = config.get('serviceClient.oes.cfms.RIFormVersionId');
-      console.log('PBLMT .env version ID: ', PBLMTVersion);
-      console.log('LMP .env version ID: ', LMPVersion);
-      console.log('JCP .env version ID: ', JCPVersion);
-      console.log('RI .env version ID: ', RIVersion);
+      //console.log('PBLMT .env version ID: ', PBLMTVersion);
+      //console.log('LMP .env version ID: ', LMPVersion);
+      //console.log('JCP .env version ID: ', JCPVersion);
+      //console.log('RI .env version ID: ', RIVersion);
       if (formVersionId == PBLMTVersion || formVersionId == LMPVersion || formVersionId == JCPVersion || formVersionId == RIVersion) {
         console.log('===== CFMS Logic =====');
         try {
           const createdBy = currentUser.usernameIdp;
           const result = await FormSubmissionCFMSLookup.query().max('cfmsId as max_value').first();
           const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 32000; // cfmsId incrementing starts at 32,000
-          console.log('CFMS ID: ', cfmsId);
+          //console.log('CFMS ID: ', cfmsId);
           const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
           //console.log('XML Prepared: ', xml);
           const newCFMSLookup = {
@@ -184,14 +184,14 @@ const service = {
             cfmsId: cfmsId,
             createdBy: createdBy,
           };
-          console.log('submissionID: ', formSubmissionId);
+          //console.log('submissionID: ', formSubmissionId);
           await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
-          console.log('CFMS submission lookup inserted');
+          //console.log('CFMS submission lookup inserted');
           const attachments = await FileStorage.query().where('formSubmissionId', formSubmissionId).throwIfNotFound();
-          console.log('attachments: ', attachments);
+          //console.log('attachments: ', attachments);
           const maxFile = await FileStorageCFMSLookup.query().max('cfmsFileId as max_value').first();
           let maxFileID = maxFile && maxFile.max_value ? Number.parseInt(maxFile.max_value, 10) + 1 : 1; // cfmsFileId incrementing starts at 1
-          console.log('max file id result: ', maxFileID);
+          //console.log('max file id result: ', maxFileID);
           attachments.forEach(async (a, index) => {
             const newCFMSFileLookup = {
               id: uuidv4(),
@@ -199,14 +199,14 @@ const service = {
               cfmsFileId: maxFileID + index,
               createdBy: createdBy,
             };
-            console.log('maxFileID: ', maxFileID + index);
+            //console.log('maxFileID: ', maxFileID + index);
             await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
           });
-          console.log('CFMS attachments inserted');
-          console.log('currentUser email: ', currentUser.email);
+          //console.log('CFMS attachments inserted');
+          //console.log('currentUser email: ', currentUser.email);
           const { response } = await cfmsService.submitApplication(xml);
           const { statusCode } = response;
-          console.log('CFMS Response Status Code: ', statusCode);
+          //console.log('CFMS Response Status Code: ', statusCode);
           console.log('CFMS Response: ', response);
           if (statusCode === 200) {
             await CEPSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {

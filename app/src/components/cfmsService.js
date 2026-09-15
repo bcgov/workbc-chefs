@@ -72,10 +72,18 @@ class CFMSService {
     if (submissionData.CEPProjectEndDate) submissionData.CEPProjectEndDate = moment(submissionData.CEPProjectEndDate).format('MM/DD/YYYY');
 
     let stakeholderPartnerships = '';
-    console.log('PARTNERS GRID: ', submissionData.partnersGrid);
+    //console.log('PARTNERS GRID: ', submissionData.partnersGrid);
     if (submissionData.partnersGrid && submissionData.partnersGrid.length > 0) {
       submissionData.partnersGrid.forEach((partner) => {
-        stakeholderPartnerships = stakeholderPartnerships + partner.partner + ' ' + partner.involvement + ' In-kind: ' + partner.contribution + ' ';
+        if (partner.partner && partner.partner != '') {
+          stakeholderPartnerships = stakeholderPartnerships + partner.partner + ' ';
+        }
+        if (partner.involvement && partner.involvement != '') {
+          stakeholderPartnerships = stakeholderPartnerships + partner.involvement + ' ';
+        }
+        if (partner.contribution && partner.contribution != '') {
+          stakeholderPartnerships = stakeholderPartnerships + 'In-kind: ' + partner.contribution + ' ';
+        }
       });
     }
 
@@ -124,7 +132,7 @@ class CFMSService {
       <CEPBookkeeperQualifications>${submissionData.CEPBookkeeperQualifications}</CEPBookkeeperQualifications>
       <CEPContactName>${submissionData.CEPContactName}</CEPContactName>
       <CEPContactPhone>${submissionData.CEPContactPhone}</CEPContactPhone>
-      <CEPContactAltPhone>${submissionData.CEPContactAltPhone}</CEPContactAltPhone>
+      ${submissionData.CEPContactAltPhone ? `<CEPContactAltPhone>${submissionData.CEPContactAltPhone}</CEPContactAltPhone>` : ``}
       <CEPBusinessNumber>${submissionData.CEPBusinessNumber}</CEPBusinessNumber>
       <CEPTaxAccountSuffix>${submissionData.CEPTaxAccountSuffix}</CEPTaxAccountSuffix>
       ${
@@ -323,7 +331,7 @@ class CFMSService {
           </tem:ReceiveApplication>
         </soap:Body>
     </soap:Envelope>`;
-    // console.log('Prepared XML: ', xml);
+    console.log('Prepared XML: ', xml);
     return xml;
   }
 }
