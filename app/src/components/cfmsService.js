@@ -71,6 +71,26 @@ class CFMSService {
     if (submissionData.CEPProjectStartDate) submissionData.CEPProjectStartDate = moment(submissionData.CEPProjectStartDate).format('MM/DD/YYYY');
     if (submissionData.CEPProjectEndDate) submissionData.CEPProjectEndDate = moment(submissionData.CEPProjectEndDate).format('MM/DD/YYYY');
 
+    // Clean the submission data (avoid reserved characters that might break the XML) //
+    const cleanNested = (obj) => {
+      for (const [key, value] of Object.entries(obj)) {
+        // Check if the value is an object and not null (since typeof null is 'object')
+        if (typeof value === 'object' && value !== null) {
+          cleanNested(value); // Recursive call
+        } else {
+          if (typeof value === 'string') {
+            let temp = value;
+            temp = value.replaceAll('&', '&amp;');
+            temp = temp.replaceAll('<', '&lt;');
+            temp = temp.replaceAll('>', '&gt;');
+            obj[key] = temp;
+          }
+        }
+      }
+    };
+    cleanNested(submissionData);
+
+    // Set up stakeholder partnerships //
     let stakeholderPartnerships = '';
     //console.log('PARTNERS GRID: ', submissionData.partnersGrid);
     if (submissionData.partnersGrid && submissionData.partnersGrid.length > 0) {
@@ -87,7 +107,7 @@ class CFMSService {
       });
     }
 
-    console.log('STAKEHOLDER PARTNERSHIPS: ', stakeholderPartnerships);
+    //console.log('STAKEHOLDER PARTNERSHIPS: ', stakeholderPartnerships);
 
     // ${submissionData. ? `` : ''}
 
@@ -331,7 +351,8 @@ class CFMSService {
           </tem:ReceiveApplication>
         </soap:Body>
     </soap:Envelope>`;
-    console.log('Prepared XML: ', xml);
+
+    //console.log('Prepared XML: ', xml);
     return xml;
   }
 }
