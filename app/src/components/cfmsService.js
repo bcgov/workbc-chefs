@@ -107,6 +107,11 @@ class CFMSService {
       });
     }
 
+    // Capitalize province //
+    if (submissionData.address_container?.CEPOrgAdrProvince_Mail) {
+      submissionData.address_container.CEPOrgAdrProvince_Mail = submissionData.address_container.CEPOrgAdrProvince_Mail.toUpperCase();
+    }
+
     //console.log('STAKEHOLDER PARTNERSHIPS: ', stakeholderPartnerships);
 
     // ${submissionData. ? `` : ''}
