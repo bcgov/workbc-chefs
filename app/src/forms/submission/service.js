@@ -168,22 +168,22 @@ const service = {
       //console.log('LMP .env version ID: ', LMPVersion);
       //console.log('JCP .env version ID: ', JCPVersion);
       //console.log('RI .env version ID: ', RIVersion);
+      console.log('[submission service - CEP] SubmissionID: ', formSubmissionId);
       if (formVersionId == PBLMTVersion || formVersionId == LMPVersion || formVersionId == JCPVersion || formVersionId == RIVersion) {
-        console.log('===== CFMS Logic =====');
+        console.log('[submission service - CEP] ===== CFMS Logic =====');
         try {
           const createdBy = currentUser.usernameIdp;
           const result = await FormSubmissionCFMSLookup.query().max('cfmsId as max_value').first();
           const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 32000; // cfmsId incrementing starts at 32,000
-          //console.log('CFMS ID: ', cfmsId);
-          const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data);
-          //console.log('XML Prepared: ', xml);
+          console.log('[submission service - CEP] CFMS ID: ', cfmsId);
+          const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data); //TODO: save the xml to DB
+          console.log('[submission service - CEP] XML Prepared: ', xml);
           const newCFMSLookup = {
             id: uuidv4(),
             formSubmissionId: formSubmissionId,
             cfmsId: cfmsId,
             createdBy: createdBy,
           };
-          //console.log('submissionID: ', formSubmissionId);
           await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
           //console.log('CFMS submission lookup inserted');
           const attachments = await FileStorage.query().where('formSubmissionId', formSubmissionId).throwIfNotFound();
@@ -203,17 +203,20 @@ const service = {
           });
           const { response } = await cfmsService.submitApplication(xml);
           const { statusCode } = response;
-          console.log('CFMS Response Status Code: ', statusCode);
-          console.log('CFMS Response: ', response);
-          if (statusCode === 200) {
+          console.log('[submission service - CEP] CFMS Response Status Code: ', statusCode);
+          console.log('[submission service - CEP] CFMS Response: ', response);
+          if (statusCode === 200 && response?.includes('<b:success>true</b:success>')) {
             await emailService.CEPSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
-              console.log('CEP Email Error: ', err);
+              console.log('[submission service - CEP] CEP Email Error: ', err);
             });
+          } else {
+            //TODO: Save the error + flag it in the DB somehow
+            console.log(`[submission service - CEP] Error response from CFMS; Confirmation email not sent. CFMS ID ${cfmsId} and submission ID ${formSubmissionId}`);
           }
         } catch (err) {
-          console.log('CFMS Error: ', err);
+          console.log('[submission service - CEP] CFMS Error: ', err);
         }
-        console.log('===== End CFMS Logic =====');
+        console.log('[submission service - CEP] ===== End CFMS Logic =====');
       }
 
       if (subscribe && subscribe.enabled) {
