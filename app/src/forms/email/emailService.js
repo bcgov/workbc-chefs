@@ -9,7 +9,7 @@ const moment = require('moment');
 /** Helper function used to build the email template based on email type and contents */
 const buildEmailTemplate = async (formId, formSubmissionId, emailType, referer, additionalProperties = 0) => {
   const form = await formService.readForm(formId);
-  const submission = formService.readSubmission(formSubmissionId);
+  const submission = await formService.readSubmission(formSubmissionId);
   let configData = {};
   let contextToVal = [];
   let userTypePath = '';
@@ -442,6 +442,8 @@ const service = {
       console.log(`SUBMISSION CONFIRMATION: '${formId};;;${submissionId};;;${body};;;${referer}`);
       const { configData, contexts } = await buildEmailTemplate(formId, submissionId, EmailTypes.SUBMISSION_CONFIRMATION, referer, { body: body });
 
+      console.log('CONFIG DATA: ', configData);
+      console.log('CONTEXTS: ', contexts);
       return service._sendEmailTemplate(configData, contexts);
     } catch (e) {
       log.error(e.message, {

@@ -169,7 +169,7 @@ const service = {
       //console.log('LMP .env version ID: ', LMPVersion);
       //console.log('JCP .env version ID: ', JCPVersion);
       //console.log('RI .env version ID: ', RIVersion);
-      console.log('[submission service - CEP] SubmissionID: ', formSubmissionId);
+      console.log('[submission service - CEP] SubmissionID: ', formSubmissionId, ' & formVersionId: ', formVersionId);
       if (formVersionId == PBLMTVersion || formVersionId == LMPVersion || formVersionId == JCPVersion || formVersionId == RIVersion) {
         console.log('[submission service - CEP] ===== CFMS Logic =====');
         try {
