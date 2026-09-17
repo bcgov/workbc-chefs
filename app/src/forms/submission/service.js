@@ -205,7 +205,7 @@ const service = {
           const { statusCode } = response;
           console.log('[submission service - CEP] CFMS Response Status Code: ', statusCode);
           console.log('[submission service - CEP] CFMS Response: ', response);
-          if (statusCode === 200 && response?.includes('<b:success>true</b:success>')) {
+          if (statusCode === 200 && response?.body?.includes('<b:success>true</b:success>')) {
             await emailService.CEPSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
               console.log('[submission service - CEP] CEP Email Error: ', err);
             });
