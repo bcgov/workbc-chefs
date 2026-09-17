@@ -136,7 +136,8 @@ const service = {
             await service.changeStatusState(formSubmissionId, { code: Statuses.SUBMITTED }, currentUser, trx);
             // If finalizing submission, send the submission email (quiet fail if anything goes wrong)
             const submissionMetaData = await SubmissionMetadata.query().where('submissionId', formSubmissionId).first();
-            emailService.submissionReceived(submissionMetaData.formId, formSubmissionId, data, referrer).catch(() => {}); // TODO: fix formService bug
+            //console.log('SUBMISSION EMAIL DETAILS: ', submissionMetaData.formId, ' ; ' + formSubmissionId + ' ; ' + data + ' ; ' + referrer);
+            emailService.submissionReceived(submissionMetaData.formId, formSubmissionId, data, referrer).catch(() => {});
           }
         } else {
           if (statuses && statuses.length > 0 && (statuses[0].code === Statuses.SUBMITTED || statuses[0].code === Statuses.COMPLETED)) {

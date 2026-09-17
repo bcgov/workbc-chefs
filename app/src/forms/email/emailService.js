@@ -8,7 +8,6 @@ const formService = require('../form/service');
 const moment = require('moment');
 /** Helper function used to build the email template based on email type and contents */
 const buildEmailTemplate = async (formId, formSubmissionId, emailType, referer, additionalProperties = 0) => {
-  console.log('formService: ', formService);
   const form = await formService.readForm(formId);
   const submission = formService.readSubmission(formSubmissionId);
   let configData = {};
@@ -440,6 +439,7 @@ const service = {
    */
   submissionConfirmation: async (formId, submissionId, body, referer) => {
     try {
+      console.log(`SUBMISSION CONFIRMATION: '${formId};;;${submissionId};;;${body};;;${referer}`);
       const { configData, contexts } = await buildEmailTemplate(formId, submissionId, EmailTypes.SUBMISSION_CONFIRMATION, referer, { body: body });
 
       return service._sendEmailTemplate(configData, contexts);
