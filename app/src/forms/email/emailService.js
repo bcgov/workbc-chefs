@@ -439,11 +439,7 @@ const service = {
    */
   submissionConfirmation: async (formId, submissionId, body, referer) => {
     try {
-      console.log(`SUBMISSION CONFIRMATION: '${formId};;;${submissionId};;;${body};;;${referer}`);
       const { configData, contexts } = await buildEmailTemplate(formId, submissionId, EmailTypes.SUBMISSION_CONFIRMATION, referer, { body: body });
-
-      console.log('CONFIG DATA: ', configData);
-      console.log('CONTEXTS: ', contexts);
       return service._sendEmailTemplate(configData, contexts);
     } catch (e) {
       log.error(e.message, {
