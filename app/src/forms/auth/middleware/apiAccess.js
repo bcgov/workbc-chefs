@@ -4,6 +4,10 @@ const { validate: uuidValidate } = require('uuid');
 
 const formService = require('../../form/service');
 const submissionService = require('../../submission/service');
+const FormSubmissionCFMSLookup = require('../../common/models/tables/formSubmissionCFMSLookup');
+const FileStorageCFMSLookup = require('../../common/models/tables/fileStorageCFMSLookup');
+const { FileStorage } = require('../../common/models');
+const config = require('config');
 
 module.exports = async (req, res, next) => {
   try {
@@ -11,7 +15,6 @@ module.exports = async (req, res, next) => {
     if (req.headers && req.headers.authorization && req.headers.authorization.startsWith('Basic ')) {
       // URL params should override query string params of the same attribute
       const params = { ...req.query, ...req.params };
-
       // Basic auth is currently only used for form and submission endpoints. Use
       // the formId if it exists, otherwise fetch the formId from the submission's
       // form.
@@ -20,6 +23,19 @@ module.exports = async (req, res, next) => {
         formId = params.formId;
       } else if (params.formSubmissionId && uuidValidate(params.formSubmissionId)) {
         const result = await submissionService.read(params.formSubmissionId);
+        formId = result?.form?.id;
+      } else if (params.cfmsId) {
+        // Special case for CFMS submission endpoints
+        const lookup = await FormSubmissionCFMSLookup.query().where('cfmsId', params.cfmsId).select('formSubmissionId').throwIfNotFound();
+        const submissionId = lookup[0].formSubmissionId;
+        const result = await submissionService.read(submissionId);
+        formId = result?.form?.id;
+      } else if (params.cfmsFileId) {
+        // Special case for CFMS file endpoints
+        const cfmsLookup = await FileStorageCFMSLookup.query().where('cfmsFileId', req.params.cfmsFileId).select('fileId').throwIfNotFound();
+        const fileStorageLookup = await FileStorage.query().where('id', cfmsLookup[0].fileId).select('formSubmissionId').throwIfNotFound();
+        const submissionId = fileStorageLookup[0].formSubmissionId;
+        const result = await submissionService.read(submissionId);
         formId = result?.form?.id;
       }
 
@@ -33,6 +49,16 @@ module.exports = async (req, res, next) => {
       const checkCredentials = basicAuth({
         // Must be a synchronous function
         authorizer: (username, password) => {
+          // Special case for CFMS endpoints for forms aside from PBLMT (CFMS only has the PBLMT creds) //
+          if (
+            (formId == config.get('serviceClient.oes.cfms.LMPFormId') && password == config.get('serviceClient.oes.cfms.PBLMTFormPass')) ||
+            (formId == config.get('serviceClient.oes.cfms.JCPFormId') && password == config.get('serviceClient.oes.cfms.PBLMTFormPass')) ||
+            (formId == config.get('serviceClient.oes.cfms.RIFormId') && password == config.get('serviceClient.oes.cfms.PBLMTFormPass'))
+          ) {
+            req.apiUser = true;
+            return req.apiUser;
+          }
+
           const userMatch = formId && basicAuth.safeCompare(username, formId);
           const pwMatch = secret && basicAuth.safeCompare(password, secret);
 

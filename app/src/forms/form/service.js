@@ -5,6 +5,8 @@ const { validateScheduleObject } = require('../common/utils');
 const { SubscriptionEvent } = require('../common/constants');
 const axios = require('axios');
 const log = require('../../components/log')(module.filename);
+const cfmsService = require('../../components/cfmsService');
+const config = require('config');
 
 const {
   FileStorage,
@@ -25,21 +27,36 @@ const {
 } = require('../common/models');
 const { falsey, queryUtils, checkIsFormExpired } = require('../common/utils');
 const { Permissions, Roles, Statuses } = require('../common/constants');
+const FormSubmissionCFMSLookup = require('../common/models/tables/formSubmissionCFMSLookup');
+const FileStorageCFMSLookup = require('../common/models/tables/fileStorageCFMSLookup');
+//const { CEPSubmissionConfirmation } = require('../email/emailService');
+//const emailService = require('../email/emailService');
 const Rolenames = [Roles.OWNER, Roles.TEAM_MANAGER, Roles.FORM_DESIGNER, Roles.SUBMISSION_REVIEWER, Roles.FORM_SUBMITTER];
 
 const service = {
   // Get the list of file IDs from the submission
   _findFileIds: (schema, data) => {
-    return (
-      schema.components
-        // Get the file controls
-        .filter((x) => x.type === 'simplefile')
-        // for the file controls, get their respective data element (skip if it's not in data)
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#for_adding_and_removing_items_during_a_map
-        .flatMap((x) => (data.submission.data[x.key] ? data.submission.data[x.key] : []))
-        // get the id from the data
-        .map((x) => x.data.id)
-    );
+    let fileComponents = [];
+    const getFileComponents = (components) => {
+      if (!components || components?.length === 0) {
+        return;
+      }
+      components.forEach((component) => {
+        if (component.type === 'simplefile') {
+          fileComponents.push(component);
+        } else if (component.components) {
+          getFileComponents(component.components);
+        }
+      });
+    };
+    getFileComponents(schema.components);
+    const ids = fileComponents
+      // for the file controls, get their respective data element (skip if it's not in data)
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#for_adding_and_removing_items_during_a_map
+      .flatMap((x) => (data.submission.data[x.key] ? data.submission.data[x.key] : []))
+      // get the id from the data
+      .map((x) => x.data.id);
+    return ids;
   },
 
   listForms: async (params) => {
@@ -445,6 +462,67 @@ const service = {
 
       await trx.commit();
       const result = await service.readSubmission(obj.id);
+
+      // === [CEP-CHEFS] Uncomment when running locally === ///
+
+      // const PBLMTVersion = config.get('serviceClient.oes.cfms.PBLMTFormVersionId');
+      // const LMPVersion = config.get('serviceClient.oes.cfms.LMPFormVersionId');
+      // const JCPVersion = config.get('serviceClient.oes.cfms.JCPFormVersionId');
+      // const RIVersion = config.get('serviceClient.oes.cfms.RIFormVersionId');
+      // //console.log('PBLMT .env version ID: ', PBLMTVersion);
+      // //console.log('LMP .env version ID: ', LMPVersion);
+      // //console.log('JCP .env version ID: ', JCPVersion);
+      // //console.log('RI .env version ID: ', RIVersion);
+      // console.log('[submission service - CEP] SubmissionID: ', submissionId);
+      // if (formVersionId == PBLMTVersion || formVersionId == LMPVersion || formVersionId == JCPVersion || formVersionId == RIVersion) {
+      //   console.log('[submission service - CEP] ===== CFMS Logic =====');
+      //   try {
+      //     const createdBy = currentUser.usernameIdp;
+      //     const result = await FormSubmissionCFMSLookup.query().max('cfmsId as max_value').first();
+      //     const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 32000; // cfmsId incrementing starts at 32,000
+      //     console.log('[submission service - CEP] CFMS ID: ', cfmsId);
+      //     //const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data); //TODO: save the xml to DB
+      //     //console.log('[submission service - CEP] XML Prepared: ', xml);
+      //     const newCFMSLookup = {
+      //       id: uuidv4(),
+      //       formSubmissionId: submissionId,
+      //       cfmsId: cfmsId,
+      //       createdBy: createdBy,
+      //     };
+      //     await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
+      //     //console.log('CFMS submission lookup inserted');
+      //     const attachments = await FileStorage.query().where('formSubmissionId', submissionId).throwIfNotFound();
+      //     //console.log('attachments: ', attachments);
+      //     const maxFile = await FileStorageCFMSLookup.query().max('cfmsFileId as max_value').first();
+      //     let maxFileID = maxFile && maxFile.max_value ? Number.parseInt(maxFile.max_value, 10) + 1 : 1; // cfmsFileId incrementing starts at 1
+      //     //console.log('max file id result: ', maxFileID);
+      //     attachments.forEach(async (a, index) => {
+      //       const newCFMSFileLookup = {
+      //         id: uuidv4(),
+      //         fileId: a.id,
+      //         cfmsFileId: maxFileID + index,
+      //         createdBy: createdBy,
+      //       };
+      //       //console.log('maxFileID: ', maxFileID + index);
+      //       await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
+      //     });
+      //     // const { response } = await cfmsService.submitApplication(xml);
+      //     // const { statusCode } = response;
+      //     // console.log('[submission service - CEP] CFMS Response Status Code: ', statusCode);
+      //     // console.log('[submission service - CEP] CFMS Response: ', response);
+      //     // if (statusCode === 200 && response?.body?.includes('<b:success>true</b:success>')) {
+      //     //   await emailService.CEPSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
+      //     //     console.log('[submission service - CEP] CEP Email Error: ', err);
+      //     //   });
+      //     // } else {
+      //     //   //TODO: Save the error + flag it in the DB somehow
+      //     //   console.log(`[submission service - CEP] Error response from CFMS; Confirmation email not sent. CFMS ID ${cfmsId} and submission ID ${submissionId}`);
+      //     // }
+      //   } catch (err) {
+      //     console.log('[submission service - CEP] CFMS Error: ', err);
+      //   }
+      //   console.log('[submission service - CEP] ===== End CFMS Logic =====');
+      // }
 
       return result;
     } catch (err) {

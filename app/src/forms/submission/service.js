@@ -1,11 +1,15 @@
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
 const { Statuses, SubscriptionEvent } = require('../common/constants');
-const { Form, FormVersion, FormSubmission, FormSubmissionStatus, Note, SubmissionAudit, SubmissionMetadata, FormSubscription, } = require('../common/models');
+const { Form, FormVersion, FormSubmission, FormSubmissionStatus, Note, SubmissionAudit, SubmissionMetadata, FormSubscription, FileStorage } = require('../common/models');
 const log = require('../../components/log')(module.filename);
-const emailService = require('../email/emailService');
 const formService = require('../form/service');
 const permissionService = require('../permission/service');
+const cfmsService = require('../../components/cfmsService');
+const FormSubmissionCFMSLookup = require('../common/models/tables/formSubmissionCFMSLookup');
+const FileStorageCFMSLookup = require('../common/models/tables/fileStorageCFMSLookup');
+const config = require('config');
+const emailService = require('../email/emailService');
 
 const service = {
   // -------------------------------------------------------------------------------------------------------
@@ -25,6 +29,30 @@ const service = {
         form: data[2],
       };
     });
+  },
+
+  _findFileIds: (schema, data) => {
+    let fileComponents = [];
+    const getFileComponents = (components) => {
+      if (!components || components?.length === 0) {
+        return;
+      }
+      components.forEach((component) => {
+        if (component.type === 'simplefile') {
+          fileComponents.push(component);
+        } else if (component.components) {
+          getFileComponents(component.components);
+        }
+      });
+    };
+    getFileComponents(schema.components);
+    const ids = fileComponents
+      // for the file controls, get their respective data element (skip if it's not in data)
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#for_adding_and_removing_items_during_a_map
+      .flatMap((x) => (data.submission.data[x.key] ? data.submission.data[x.key] : []))
+      // get the id from the data
+      .map((x) => x.data.id);
+    return ids;
   },
 
   // -------------------------------------------------------------------------------------------------------
@@ -93,7 +121,7 @@ const service = {
   update: async (formSubmissionId, data, currentUser, referrer, etrx = undefined) => {
     let trx;
     try {
-      const formObj = await service.read(formSubmissionId)
+      const formObj = await service.read(formSubmissionId);
       const { subscribe } = formObj.form;
       trx = etrx ? etrx : await FormSubmission.startTransaction();
 
@@ -108,6 +136,7 @@ const service = {
             await service.changeStatusState(formSubmissionId, { code: Statuses.SUBMITTED }, currentUser, trx);
             // If finalizing submission, send the submission email (quiet fail if anything goes wrong)
             const submissionMetaData = await SubmissionMetadata.query().where('submissionId', formSubmissionId).first();
+            //console.log('SUBMISSION EMAIL DETAILS: ', submissionMetaData.formId, ' ; ' + formSubmissionId + ' ; ' + data + ' ; ' + referrer);
             emailService.submissionReceived(submissionMetaData.formId, formSubmissionId, data, referrer).catch(() => {});
           }
         } else {
@@ -123,8 +152,73 @@ const service = {
           updatedBy: currentUser.usernameIdp,
         });
       }
+      const formVersionId = formObj.version.id;
+      const formVersion = await FormVersion.query().findById(formVersionId).throwIfNotFound();
+      const fileIds = service._findFileIds(formVersion.schema, data);
+      for (const fileId of fileIds) {
+        await FileStorage.query(trx).patchAndFetchById(fileId, { formSubmissionId: formSubmissionId, updatedBy: currentUser.usernameIdp });
+      }
 
       if (!etrx) await trx.commit();
+
+      const PBLMTVersion = config.get('serviceClient.oes.cfms.PBLMTFormVersionId');
+      const LMPVersion = config.get('serviceClient.oes.cfms.LMPFormVersionId');
+      const JCPVersion = config.get('serviceClient.oes.cfms.JCPFormVersionId');
+      const RIVersion = config.get('serviceClient.oes.cfms.RIFormVersionId');
+      //console.log('PBLMT .env version ID: ', PBLMTVersion);
+      //console.log('LMP .env version ID: ', LMPVersion);
+      //console.log('JCP .env version ID: ', JCPVersion);
+      //console.log('RI .env version ID: ', RIVersion);
+      console.log('[submission service - CEP] SubmissionID: ', formSubmissionId, ' & formVersionId: ', formVersionId);
+      if (formVersionId == PBLMTVersion || formVersionId == LMPVersion || formVersionId == JCPVersion || formVersionId == RIVersion) {
+        console.log('[submission service - CEP] ===== CFMS Logic =====');
+        try {
+          const createdBy = currentUser.usernameIdp;
+          const result = await FormSubmissionCFMSLookup.query().max('cfmsId as max_value').first();
+          const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 32000; // cfmsId incrementing starts at 32,000
+          console.log('[submission service - CEP] CFMS ID: ', cfmsId);
+          const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data); //TODO: save the xml to DB
+          console.log('[submission service - CEP] XML Prepared: ', xml);
+          const newCFMSLookup = {
+            id: uuidv4(),
+            formSubmissionId: formSubmissionId,
+            cfmsId: cfmsId,
+            createdBy: createdBy,
+          };
+          await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
+          //console.log('CFMS submission lookup inserted');
+          const attachments = await FileStorage.query().where('formSubmissionId', formSubmissionId).throwIfNotFound();
+          //console.log('attachments: ', attachments);
+          const maxFile = await FileStorageCFMSLookup.query().max('cfmsFileId as max_value').first();
+          let maxFileID = maxFile && maxFile.max_value ? Number.parseInt(maxFile.max_value, 10) + 1 : 1; // cfmsFileId incrementing starts at 1
+          //console.log('max file id result: ', maxFileID);
+          attachments.forEach(async (a, index) => {
+            const newCFMSFileLookup = {
+              id: uuidv4(),
+              fileId: a.id,
+              cfmsFileId: maxFileID + index,
+              createdBy: createdBy,
+            };
+            //console.log('maxFileID: ', maxFileID + index);
+            await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
+          });
+          const { response } = await cfmsService.submitApplication(xml);
+          const { statusCode } = response;
+          console.log('[submission service - CEP] CFMS Response Status Code: ', statusCode);
+          console.log('[submission service - CEP] CFMS Response: ', response);
+          if (statusCode === 200 && response?.body?.includes('<b:success>true</b:success>')) {
+            await emailService.CEPSubmissionConfirmation(cfmsId, currentUser.email).catch((err) => {
+              console.log('[submission service - CEP] CEP Email Error: ', err);
+            });
+          } else {
+            //TODO: Save the error + flag it in the DB somehow
+            console.log(`[submission service - CEP] Error response from CFMS; Confirmation email not sent. CFMS ID ${cfmsId} and submission ID ${formSubmissionId}`);
+          }
+        } catch (err) {
+          console.log('[submission service - CEP] CFMS Error: ', err);
+        }
+        console.log('[submission service - CEP] ===== End CFMS Logic =====');
+      }
 
       if (subscribe && subscribe.enabled) {
         const subscribeConfig = await service.readFormSubscriptionDetails(formObj.form?.id);

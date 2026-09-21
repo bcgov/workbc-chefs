@@ -5,7 +5,7 @@ const chefs = (formio) => {
   const addHeaders = (xhr, options) => {
     if (options) {
       if (options.headers) {
-        Object.keys(options.headers).forEach(k => {
+        Object.keys(options.headers).forEach((k) => {
           const v = options.headers[k];
           xhr.setRequestHeader(k, v);
         });
@@ -14,7 +14,7 @@ const chefs = (formio) => {
       // Allow manual setting of any supplied headers above, but need to get the latest
       // token from the containing app to deal with expiries and override auth
       if (options.chefsToken) {
-        xhr.setRequestHeader('Authorization', options.chefsToken())
+        xhr.setRequestHeader('Authorization', options.chefsToken());
       }
     }
   };
@@ -22,7 +22,7 @@ const chefs = (formio) => {
   const xhrRequest = (url, name, query, data, options, onprogress) => {
     return new NativePromise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const json = (typeof data === 'string');
+      const json = typeof data === 'string';
       const fd = new FormData();
       if (typeof onprogress === 'function') {
         xhr.upload.onprogress = onprogress;
@@ -37,27 +37,28 @@ const chefs = (formio) => {
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
           // Need to test if xhr.response is decoded or not.
-          let respData = {};
+          let respData = { url: null };
           try {
-            respData = (typeof xhr.response === 'string') ? JSON.parse(xhr.response) : {};
+            respData =
+              typeof xhr.response === 'string' ? JSON.parse(xhr.response) : {};
             // @ts-ignore
-            respData = (respData && respData.data) ? respData.data : respData;
-          }
-          catch (err) {
-            respData = {};
+            respData = respData && respData.data ? respData.data : respData;
+          } catch (err) {
+            respData = { url: null };
           }
 
           // Get the url of the file.
           // @ts-ignore
-          let respUrl = respData.hasOwnProperty('url') ? respData.url : `${xhr.responseURL}/${name}`;
+          let respUrl = respData.hasOwnProperty('url')
+            ? respData.url
+            : `${xhr.responseURL}/${name}`;
 
           // If they provide relative url, then prepend the url.
           if (respUrl && respUrl[0] === '/') {
             respUrl = `${url}${respUrl}`;
           }
           resolve({ url: respUrl, data: respData });
-        }
-        else {
+        } else {
           reject(xhr.response || 'Unable to upload file');
         }
       };
@@ -86,7 +87,8 @@ const chefs = (formio) => {
 
       //Overrides previous request props
       if (options) {
-        const parsedOptions = typeof options === 'string' ? JSON.parse(options) : options;
+        const parsedOptions =
+          typeof options === 'string' ? JSON.parse(options) : options;
         for (const prop in parsedOptions) {
           xhr[prop] = parsedOptions[prop];
         }
@@ -98,13 +100,30 @@ const chefs = (formio) => {
   return {
     title: 'CHEFS',
     name: 'chefs',
-    uploadFile(file, name, dir, progressCallback, url, options, fileKey) {
+    uploadFile(
+      file,
+      name,
+      dir,
+      progressCallback,
+      url,
+      options,
+      fileKey,
+      questionName,
+    ) {
       const uploadRequest = function (form) {
-        return xhrRequest(url, name, {}, {
-          [fileKey]: file,
+        return xhrRequest(
+          url,
           name,
-          dir
-        }, options, progressCallback).then(response => {
+          {},
+          {
+            [fileKey]: file,
+            name,
+            dir,
+            questionName: questionName,
+          },
+          options,
+          progressCallback,
+        ).then((response) => {
           response.data = response.data || {};
           return {
             storage: 'chefs',
@@ -112,14 +131,13 @@ const chefs = (formio) => {
             url: `${url}/${response.data.id}`,
             size: response.data.size,
             type: response.data.mimetype,
-            data: { id: response.data.id }
+            data: { id: response.data.id },
           };
         });
       };
       if (file.private && formio.formId) {
         return formio.loadForm().then((form) => uploadRequest(form));
-      }
-      else {
+      } else {
         // @ts-ignore
         return uploadRequest();
       }
@@ -132,8 +150,7 @@ const chefs = (formio) => {
         xhr.onload = () => {
           if (xhr.status >= 200 && xhr.status < 300) {
             resolve('File deleted');
-          }
-          else {
+          } else {
             reject(xhr.response || 'Unable to delete file');
           }
         };
@@ -153,10 +170,15 @@ const chefs = (formio) => {
 
           // IE/EDGE doesn't send all response headers
           if (xhr.getResponseHeader('content-disposition')) {
-            const contentDisposition = xhr.getResponseHeader('content-disposition');
-            fileName = contentDisposition.substring(contentDisposition.indexOf('=') + 1);
+            const contentDisposition = xhr.getResponseHeader(
+              'content-disposition',
+            );
+            fileName = contentDisposition.substring(
+              contentDisposition.indexOf('=') + 1,
+            );
           } else {
-            fileName = 'unnamed.' + contentType.substring(contentType.indexOf('/') + 1);
+            fileName =
+              'unnamed.' + contentType.substring(contentType.indexOf('/') + 1);
           }
 
           const url = window.URL.createObjectURL(blob);
@@ -169,7 +191,7 @@ const chefs = (formio) => {
         };
         xhr.send();
       });
-    }
+    },
   };
 };
 

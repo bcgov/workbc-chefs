@@ -1,5 +1,6 @@
 const config = require('config');
 const { v4: uuidv4 } = require('uuid');
+const Problem = require('api-problem');
 
 const { FileStorage } = require('../common/models');
 const storageService = require('./storage/storageService');
@@ -7,7 +8,7 @@ const storageService = require('./storage/storageService');
 const PERMANENT_STORAGE = config.get('files.permanent');
 
 const service = {
-  create: async (data, currentUser, folder = 'uploads') => {
+  create: async (data, currentUser, questionName, folder = 'uploads') => {
     let trx;
     try {
       trx = await FileStorage.startTransaction();
@@ -20,6 +21,7 @@ const service = {
       obj.size = data.size;
       obj.path = data.path;
       obj.createdBy = currentUser.usernameIdp;
+      obj.questionName = questionName;
 
       const uploadResult = await storageService.upload(obj);
       obj.path = uploadResult.path;
@@ -87,6 +89,15 @@ const service = {
       if (trx) await trx.rollback();
       throw err;
     }
+  },
+
+  getApplicationSummary: async (id) => {
+    if (!id) {
+      throw new Problem(422, {
+        detail: 'Could not retrieve application summary. Invalid options provided',
+      });
+    }
+    return FileStorage.query().findById(id).throwIfNotFound();
   },
 };
 

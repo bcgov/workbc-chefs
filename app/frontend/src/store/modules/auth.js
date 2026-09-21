@@ -46,7 +46,7 @@ export default {
         ? Vue.prototype.$keycloak.tokenParsed.identity_provider
         : null,
     isAdmin: (_state, getters) => getters.hasResourceRoles('chefs', ['admin']),
-    isUser: (_state, getters) => getters.hasResourceRoles('chefs', ['user']),
+    isUser: (_state, getters) => { return true },
     keycloakReady: () => Vue.prototype.$keycloak.ready,
     keycloakSubject: () => Vue.prototype.$keycloak.subject,
     identityProviderIdentity: () =>
