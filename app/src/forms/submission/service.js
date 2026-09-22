@@ -161,16 +161,13 @@ const service = {
 
       if (!etrx) await trx.commit();
 
-      const PBLMTVersion = config.get('serviceClient.oes.cfms.PBLMTFormVersionId');
-      const LMPVersion = config.get('serviceClient.oes.cfms.LMPFormVersionId');
-      const JCPVersion = config.get('serviceClient.oes.cfms.JCPFormVersionId');
-      const RIVersion = config.get('serviceClient.oes.cfms.RIFormVersionId');
-      //console.log('PBLMT .env version ID: ', PBLMTVersion);
-      //console.log('LMP .env version ID: ', LMPVersion);
-      //console.log('JCP .env version ID: ', JCPVersion);
-      //console.log('RI .env version ID: ', RIVersion);
-      console.log('[submission service - CEP] SubmissionID: ', formSubmissionId, ' & formVersionId: ', formVersionId);
-      if (formVersionId == PBLMTVersion || formVersionId == LMPVersion || formVersionId == JCPVersion || formVersionId == RIVersion) {
+      const PBLMTFormID = config.get('serviceClient.oes.cfms.PBLMTFormId');
+      const LMPFormID = config.get('serviceClient.oes.cfms.LMPFormId');
+      const JCPFormID = config.get('serviceClient.oes.cfms.JCPFormId');
+      const RIFormID = config.get('serviceClient.oes.cfms.RIFormId');
+      const formID = formVersion.formId;
+      console.log('[submission service - CEP] SubmissionID: ', formSubmissionId, ' & formVersionId: ', formVersionId, ' & formId: ', formID);
+      if (formID == PBLMTFormID || formID == LMPFormID || formID == JCPFormID || formID == RIFormID) {
         console.log('[submission service - CEP] ===== CFMS Logic =====');
         try {
           const createdBy = currentUser.usernameIdp;

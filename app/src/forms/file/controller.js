@@ -161,6 +161,7 @@ module.exports = {
             'Organization Category': submission.CEPOrgEligibleType,
             'Applicant (Organization) Legal Name': submission.CEPOrgLegalName,
             'Applicant (Organization) Email Address': submission.CEPOrgEmail,
+            ...(submission.CEPOrgWebSite && { 'Applicant (Organization) Website': submission.CEPOrgWebSite }),
           },
           'Primary Contact / Accounting': {
             'Primary Contact': submission.CEPContactName,
@@ -176,6 +177,8 @@ module.exports = {
             'Owe to Government': submission.CEPOweGovt,
             'Liability Insurance': submission.CEPLiabilityInsurance,
             'Existing Policy Covers Project Activities': submission.CEPExistingPolicy,
+            ...(submission.CEPWorkSafeNumber && { 'WorkSafeBC Number': submission.CEPWorkSafeNumber }),
+            ...(submission.CEPWorkSafeRate && { 'WorkSafeBC Rate': submission.CEPWorkSafeRate }),
             ...(submission.CEPDisplacement && { Displacement: submission.CEPDisplacement }),
             ...(submission.CEPEPBCDelivery && { 'WorkBC Delivery': submission.CEPEPBCDelivery }),
             ...(submission.CEPOtherGovtFunding && { 'Other Government Funding': submission.CEPOtherGovtFunding }),
