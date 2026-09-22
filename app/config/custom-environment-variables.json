@@ -79,14 +79,11 @@
         "username": "CFMS_USERNAME",
         "password": "CFMS_PASSWORD",
         "apiUrl": "CFMS_API_URL",
-        "PBLMTFormVersionId": "PBLMT_FORM_VERSION_ID",
+        "PBLMTFormId": "PBLMT_FORM_ID",
         "PBLMTFormPass": "PBLMT_FORM_PASS",
         "LMPFormId": "LMP_FORM_ID",
-        "LMPFormVersionId": "LMP_FORM_VERSION_ID",
         "JCPFormId": "JCP_FORM_ID",
-        "JCPFormVersionId": "JCP_FORM_VERSION_ID",
-        "RIFormId": "RI_FORM_ID",
-        "RIFormVersionId": "RI_FORM_VERSION_ID"
+        "RIFormId": "RI_FORM_ID"
       }
     }
   }
