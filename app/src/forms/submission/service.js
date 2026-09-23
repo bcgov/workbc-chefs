@@ -10,6 +10,7 @@ const FormSubmissionCFMSLookup = require('../common/models/tables/formSubmission
 const FileStorageCFMSLookup = require('../common/models/tables/fileStorageCFMSLookup');
 const config = require('config');
 const emailService = require('../email/emailService');
+const Problem = require('api-problem');
 
 const service = {
   // -------------------------------------------------------------------------------------------------------
