@@ -10,7 +10,6 @@ const FormSubmissionCFMSLookup = require('../common/models/tables/formSubmission
 const FileStorageCFMSLookup = require('../common/models/tables/fileStorageCFMSLookup');
 const config = require('config');
 const emailService = require('../email/emailService');
-const Problem = require('api-problem');
 
 const service = {
   // -------------------------------------------------------------------------------------------------------
@@ -109,8 +108,6 @@ const service = {
         );
 
         axiosInstance.post(subscribe.endpointUrl, jsonData);
-
-        throw new Problem(401, jsonData);
       }
     } catch (err) {
       log.error(err.message, err, {
