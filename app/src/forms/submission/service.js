@@ -165,7 +165,7 @@ const service = {
       const RIFormID = config.get('serviceClient.oes.cfms.RIFormId');
       const formID = formVersion.formId;
       console.log('[submission service - CEP] SubmissionID: ', formSubmissionId, ' & formVersionId: ', formVersionId, ' & formId: ', formID);
-      if (formID == PBLMTFormID || formID == LMPFormID || formID == JCPFormID || formID == RIFormID) {
+      if (!data.draft && (formID == PBLMTFormID || formID == LMPFormID || formID == JCPFormID || formID == RIFormID)) {
         console.log('[submission service - CEP] ===== CFMS Logic =====');
         try {
           const createdBy = currentUser.usernameIdp;
