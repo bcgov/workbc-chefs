@@ -320,7 +320,8 @@ class CFMSService {
       ${submissionData.CEPIPRights ? `<CEPIPRights>${submissionData.CEPIPRights}</CEPIPRights>` : ''}
       ${submissionData.CEPIPRightsExplanation ? `<CEPIPRightsExplanation>${submissionData.CEPIPRightsExplanation}</CEPIPRightsExplanation>` : ''}
       ${submissionData.CEPObj_LMP_CommBenefit ? `<CEPObj_LMP_CommBenefit>${submissionData.CEPObj_LMP_CommBenefit}</CEPObj_LMP_CommBenefit>` : ''}
-      ${stakeholderPartnerships != '' ? `<CEPStakeholderPartnerships>${stakeholderPartnerships}</CEPStakeholderPartnerships>` : ''}
+      ${stakeholderPartnerships != '' && submissionData.CEPProjectType != 'RI' ? `<CEPStakeholderPartnerships>${stakeholderPartnerships}</CEPStakeholderPartnerships>` : ''}
+      ${stakeholderPartnerships != '' && submissionData.CEPProjectType == 'RI' ? `<CEPStakeholderPartnerships_RI>${stakeholderPartnerships}</CEPStakeholderPartnerships_RI>` : ''}
       ${submissionData.CEPUnfairCompJCP ? `<CEPUnfairCompJCP>${submissionData.CEPUnfairCompJCP}</CEPUnfairCompJCP>` : ''}
       ${submissionData.CEPObj_JCP_Objectives ? `<CEPObj_JCP_Objectives>${submissionData.CEPObj_JCP_Objectives}</CEPObj_JCP_Objectives>` : ''}
       ${submissionData.CEPObj_JCP_CommBenefit ? `<CEPObj_JCP_CommBenefit>${submissionData.CEPObj_JCP_CommBenefit}</CEPObj_JCP_CommBenefit>` : ''}
