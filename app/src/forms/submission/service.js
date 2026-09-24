@@ -172,7 +172,7 @@ const service = {
         try {
           const createdBy = currentUser.usernameIdp;
           const result = await FormSubmissionCFMSLookup.query().max('cfmsId as max_value').first();
-          const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 32000; // cfmsId incrementing starts at 32,000
+          const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 5605000; // cfmsId incrementing starts at 5,605,000
           console.log('[submission service - CEP] CFMS ID: ', cfmsId);
           const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data); //TODO: save the xml to DB
           console.log('[submission service - CEP] XML Prepared: ', xml);
@@ -183,12 +183,10 @@ const service = {
             createdBy: createdBy,
           };
           await FormSubmissionCFMSLookup.query().insert(newCFMSLookup, 'formSubmissionId');
-          //console.log('CFMS submission lookup inserted');
           const attachments = await FileStorage.query().where('formSubmissionId', formSubmissionId).throwIfNotFound();
-          //console.log('attachments: ', attachments);
           const maxFile = await FileStorageCFMSLookup.query().max('cfmsFileId as max_value').first();
           let maxFileID = maxFile && maxFile.max_value ? Number.parseInt(maxFile.max_value, 10) + 1 : 1; // cfmsFileId incrementing starts at 1
-          //console.log('max file id result: ', maxFileID);
+          console.log('[submission service - CEP] Max file id result: ', maxFileID);
           attachments.forEach(async (a, index) => {
             const newCFMSFileLookup = {
               id: uuidv4(),
@@ -196,7 +194,6 @@ const service = {
               cfmsFileId: maxFileID + index,
               createdBy: createdBy,
             };
-            //console.log('maxFileID: ', maxFileID + index);
             await FileStorageCFMSLookup.query().insert(newCFMSFileLookup, 'fileId');
           });
           const { response } = await cfmsService.submitApplication(xml);
