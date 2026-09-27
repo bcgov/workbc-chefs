@@ -175,7 +175,7 @@ const service = {
           const cfmsId = result && result.max_value ? Number.parseInt(result.max_value, 10) + 1 : 5605000; // cfmsId incrementing starts at 5,605,000
           console.log('[submission service - CEP] CFMS ID: ', cfmsId);
           const xml = await cfmsService.prepareSubmission(cfmsId, currentUser, data.submission.data); //TODO: save the xml to DB
-          console.log('[submission service - CEP] XML Prepared: ', xml);
+          console.log('[submission service - CEP] XML Prepared: ', xml.replace(/^\s*[\r\n]/gm, ''));
           const newCFMSLookup = {
             id: uuidv4(),
             formSubmissionId: formSubmissionId,
