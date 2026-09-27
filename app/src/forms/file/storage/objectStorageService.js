@@ -4,6 +4,8 @@ const mime = require('mime-types');
 const path = require('path');
 const Problem = require('api-problem');
 const S3 = require('aws-sdk/clients/s3');
+const axios = require('axios');
+const FormData = require('form-data');
 
 const StorageTypes = require('../../common/constants').StorageTypes;
 const errorToProblem = require('../../../components/errorToProblem');
@@ -64,6 +66,27 @@ class ObjectStorageService {
     try {
       const fileContent = fs.readFileSync(fileStorage.path);
 
+      // scan file content for virues //
+      const form = new FormData();
+      form.append('fileToScan', fileContent);
+      const scanResult = await axios({
+        method: 'post',
+        timeout: 10000,
+        url: `${config.get('files.objectStorage.fileScannerURL')}/FileScan`,
+        data: form,
+        headers: {
+          'content-type': `multipart/form-data`,
+        },
+      }).catch((e) => {
+        console.log('[objectStorageService] FILE SCAN ERROR: ', e);
+        errorToProblem(SERVICE, e);
+      });
+      console.log('[objectStorageService] SCAN RESULT: ', scanResult.data);
+      if (scanResult.data?.infected == true) {
+        console.log(`[objectStorageService] virus detected with filename ${fileStorage.originalName} and id ${fileStorage.id}; aborting file upload`);
+        throw new Problem(400, 'virus detected during file upload');
+      }
+
       // uploads can go to a 'holding' area, we can shuffle it later if we want to.
       const key = this._join(this._key, TEMP_DIR, fileStorage.id);
 
@@ -87,14 +110,14 @@ class ObjectStorageService {
           this._s3.upload(params, (err, data) => {
             if (err) {
               // retry once
-              console.log('error uploading: ', err);
-              console.log('retrying...');
+              console.log('[objectStorageService] error uploading: ', err);
+              console.log('[objectStorageService] retrying...');
               this._s3.upload(params, (err, data) => {
                 if (err) {
-                  console.log('second error uploading: ', err);
+                  console.log('[objectStorageService] second error uploading: ', err);
                   reject(err);
                 } else {
-                  console.log('second upload successful');
+                  console.log('[objectStorageService] second upload successful');
                   resolve({
                     path: data.Key,
                     storage: StorageTypes.OBJECT_STORAGE,
@@ -102,7 +125,7 @@ class ObjectStorageService {
                 }
               });
             } else {
-              console.log('upload successful');
+              console.log('[objectStorageService] upload successful');
               resolve({
                 path: data.Key,
                 storage: StorageTypes.OBJECT_STORAGE,

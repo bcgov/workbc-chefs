@@ -257,7 +257,7 @@ class CFMSService {
       ${submissionData.CEPWORKBCDeliveryOther ? `<CEPWORKBCDeliveryOther>${submissionData.CEPWORKBCDeliveryOther}</CEPWORKBCDeliveryOther>` : ''}
       ${submissionData.CEPOtherGovtFundingExplanation ? `<CEPOtherGovtFundingExplanation>${submissionData.CEPOtherGovtFundingExplanation}</CEPOtherGovtFundingExplanation>` : ''}
       ${submissionData.CEPOrgMandate ? `<CEPOrgMandate>${submissionData.CEPOrgMandate}</CEPOrgMandate>` : ''}
-      ${submissionData.CEPEPBCConflict ? `<CEPEPBCConflict>${submissionData.CEPEPBCConflict}</CEPEPBCConflict>` : ''}
+      ${submissionData.CEPWORKBCConflict ? `<CEPWORKBCConflict>${submissionData.CEPWORKBCConflict}</CEPWORKBCConflict>` : ''}
       ${submissionData.CEPUnfairCompPBLMT ? `<CEPUnfairCompPBLMT>${submissionData.CEPUnfairCompPBLMT}</CEPUnfairCompPBLMT>` : ''}
       ${submissionData.CEPWorksiteUnions ? `<CEPWorksiteUnions>${submissionData.CEPWorksiteUnions}</CEPWorksiteUnions>` : ''}
       ${submissionData.CEPDisputeExplanation ? `<CEPDisputeExplanation>${submissionData.CEPDisputeExplanation}</CEPDisputeExplanation>` : ''}
@@ -265,7 +265,7 @@ class CFMSService {
       <CEPLiabilityInsurance>${submissionData.CEPLiabilityInsurance}</CEPLiabilityInsurance>
       <CEPExistingPolicy>${submissionData.CEPExistingPolicy}</CEPExistingPolicy>
       <CEPDisplacement>${submissionData.CEPDisplacement}</CEPDisplacement>
-      <CEPEPBCDelivery>${submissionData.CEPEPBCDelivery}</CEPEPBCDelivery>
+      <CEPWORKBCDelivery>${submissionData.CEPWORKBCDelivery}</CEPWORKBCDelivery>
       <CEPOtherGovtFunding>${submissionData.CEPOtherGovtFunding}</CEPOtherGovtFunding>
       <CEPDisputeInProgress>${submissionData.CEPDisputeInProgress}</CEPDisputeInProgress>
       <CEPProjectDateRange/>
