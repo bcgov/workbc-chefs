@@ -81,7 +81,6 @@ class ObjectStorageService {
         console.log('[objectStorageService] FILE SCAN ERROR: ', e);
         errorToProblem(SERVICE, e);
       });
-      console.log('[objectStorageService] SCAN RESULT: ', scanResult.data);
       if (scanResult.data?.infected == true) {
         console.log(`[objectStorageService] virus detected with filename ${fileStorage.originalName} and id ${fileStorage.id}; aborting file upload`);
         throw new Problem(400, 'virus detected during file upload');
