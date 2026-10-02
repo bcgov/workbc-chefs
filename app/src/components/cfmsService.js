@@ -110,6 +110,9 @@ class CFMSService {
     // Capitalize province //
     if (submissionData.address_container?.CEPOrgAdrProvince_Mail) {
       submissionData.address_container.CEPOrgAdrProvince_Mail = submissionData.address_container.CEPOrgAdrProvince_Mail.toUpperCase();
+      if (submissionData.address_container.CEPOrgAdrProvince_Mail == 'BRITISH COLUMBIA') {
+        submissionData.address_container.CEPOrgAdrProvince_Mail = 'BC';
+      }
     }
 
     //console.log('STAKEHOLDER PARTNERSHIPS: ', stakeholderPartnerships);
@@ -117,7 +120,7 @@ class CFMSService {
     // ${submissionData. ? `` : ''}
 
     const xml = `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tem="http://tempuri.org/">
-        <soap:Header xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsrm="http://docs.oasis-open.org/ws-rx/wsrm/200702"><wsrm:Sequence><wsrm:Identifier>Server Error</wsrm:Identifier><wsrm:MessageNumber>1</wsrm:MessageNumber></wsrm:Sequence><wsa:Action>http://tempuri.org/ICFM_Data_Services/ReceiveApplication</wsa:Action><wsa:MessageID>uuid:d02aec5a-7d6d-44c7-b235-86e6cd5cc871</wsa:MessageID><wsa:To>https://dev1-cfms.services.sd.gov.bc.ca/CFM_Data_Services.svc</wsa:To></soap:Header>
+        <soap:Header xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsrm="http://docs.oasis-open.org/ws-rx/wsrm/200702"><wsrm:Sequence><wsrm:Identifier>Server Error</wsrm:Identifier><wsrm:MessageNumber>1</wsrm:MessageNumber></wsrm:Sequence><wsa:Action>http://tempuri.org/ICFM_Data_Services/ReceiveApplication</wsa:Action><wsa:MessageID>uuid:d02aec5a-7d6d-44c7-b235-86e6cd5cc871</wsa:MessageID><wsa:To>https://cfms.services.sd.gov.bc.ca/CFM_Data_Services.svc</wsa:To></soap:Header>
         <soap:Body>
           <tem:ReceiveApplication>
               <!--Optional:-->
