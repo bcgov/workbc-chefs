@@ -145,7 +145,7 @@ class CFMSService {
       <CEPOrgWebSite>${submissionData.CEPOrgWebSite}</CEPOrgWebSite>
       <CEPBookkeeperName>${submissionData.CEPBookkeeperName}</CEPBookkeeperName>
       <CEPOrgMailingAddress/>
-      <CEPProjectType>${submissionData.CEPProjectType ?? 'PBLMT'}</CEPProjectType>
+      <CEPProjectType>${submissionData.CEPProjectType != null && submissionData.CEPProjectType != '' ? submissionData.CEPProjectType : 'PBLMT'}</CEPProjectType>
       <CEPOrgEligibleType>${submissionData.CEPOrgEligibleType}</CEPOrgEligibleType>
       ${submissionData.pastAgreementsContainer?.CEPPPContract1 ? `<CEPPPContract1>${submissionData.pastAgreementsContainer.CEPPPContract1}</CEPPPContract1>` : ''}
       ${submissionData.pastAgreementsContainer?.CEPPPEndDate1 ? `<CEPPPEndDate1>${submissionData.pastAgreementsContainer.CEPPPEndDate1}</CEPPPEndDate1>` : ''}
