@@ -96,13 +96,7 @@ class CFMSService {
     if (submissionData.partnersGrid && submissionData.partnersGrid.length > 0) {
       submissionData.partnersGrid.forEach((partner) => {
         if (partner.partner && partner.partner != '') {
-          stakeholderPartnerships = stakeholderPartnerships + partner.partner + ' ';
-        }
-        if (partner.involvement && partner.involvement != '') {
-          stakeholderPartnerships = stakeholderPartnerships + partner.involvement + ' ';
-        }
-        if (partner.contribution && partner.contribution != '') {
-          stakeholderPartnerships = stakeholderPartnerships + 'In-kind: ' + partner.contribution + ' ';
+          stakeholderPartnerships = stakeholderPartnerships + partner.partner + ', ';
         }
       });
     }
