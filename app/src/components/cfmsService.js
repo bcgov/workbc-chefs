@@ -96,7 +96,11 @@ class CFMSService {
     if (submissionData.partnersGrid && submissionData.partnersGrid.length > 0) {
       submissionData.partnersGrid.forEach((partner) => {
         if (partner.partner && partner.partner != '') {
-          stakeholderPartnerships = stakeholderPartnerships + partner.partner + ', ';
+          if (stakeholderPartnerships == '') {
+            stakeholderPartnerships = partner.partner;
+          } else {
+            stakeholderPartnerships = stakeholderPartnerships + ', ' + partner.partner;
+          }
         }
       });
     }
