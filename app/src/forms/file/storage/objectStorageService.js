@@ -94,7 +94,7 @@ class ObjectStorageService {
         Key: key,
         Body: fileContent,
         Metadata: {
-          name: fileStorage.originalName,
+          name: encodeURIComponent(fileStorage.originalName),
           id: fileStorage.id,
         },
       };
