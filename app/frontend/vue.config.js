@@ -7,26 +7,28 @@ const proxyObject = {
 };
 
 module.exports = {
-publicPath: process.env.VUE_APP_FRONTEND_BASEPATH ? process.env.VUE_APP_FRONTEND_BASEPATH : '/app',
-transpileDependencies: ['vuetify'],
-configureWebpack: {
+  publicPath: process.env.VUE_APP_FRONTEND_BASEPATH
+    ? process.env.VUE_APP_FRONTEND_BASEPATH
+    : '/app',
+  transpileDependencies: ['vuetify', 'inputmask'],
+  configureWebpack: {
     module: {
-    rules: [
+      rules: [
         {
-        test: /\.mjs$/,
-        include: /node_modules\/keycloak-js/,
-        type: 'javascript/auto',
-        use: {
+          test: /\.mjs$/,
+          include: /node_modules\/keycloak-js/,
+          type: 'javascript/auto',
+          use: {
             loader: 'babel-loader',
             options: {
-            presets: [['@babel/preset-env', { modules: false }]],
-            plugins: ['@babel/plugin-proposal-class-properties']
-            }
-        }
-        }
-    ]
-    }
-},
+              presets: [['@babel/preset-env', { modules: false }]],
+              plugins: ['@babel/plugin-proposal-class-properties'],
+            },
+          },
+        },
+      ],
+    },
+  },
   devServer: {
     compress: true,
     proxy: {
@@ -36,7 +38,7 @@ configureWebpack: {
   },
   pluginOptions: {
     Keycloak: {
-      chainWebpackMainProcess: config => {
+      chainWebpackMainProcess: (config) => {
         config.module
           .rule('babel')
           .test(/background\.js$/)
@@ -44,9 +46,9 @@ configureWebpack: {
           .loader('babel-loader')
           .options({
             presets: [['@babel/preset-env', { modules: false }]],
-            plugins: ['@babel/plugin-proposal-class-properties']
-          })
-      }
-    }
-  }
+            plugins: ['@babel/plugin-proposal-class-properties'],
+          });
+      },
+    },
+  },
 };

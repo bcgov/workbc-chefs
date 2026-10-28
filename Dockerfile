@@ -1,4 +1,4 @@
-FROM docker.io/node:16.15.0-alpine
+FROM artifacts.developer.gov.bc.ca/docker-remote/node:20.3.0-alpine
 
 ENV NO_UPDATE_NOTIFIER=true
 
