@@ -8,6 +8,9 @@
   },
   "author": "Forminators <submit.digital@gov.bc.ca>",
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">=24"
+  },
   "bugs": {
     "url": "https://github.com/bcgov/common-hosted-form-service/issues"
   },
