@@ -95,7 +95,7 @@ function deployComponents() {
 function runSync(cmd, cwd = undefined) {
   const { spawnSync } = require('child_process');
   const parts = cmd.split(/\s+/g);
-  const opts = { stdio: 'inherit', shell: true };
+  const opts = { stdio: 'inherit', shell: false };
   if (cwd) opts.cwd = cwd;
 
   const p = spawnSync(parts[0], parts.slice(1), opts);
