@@ -2,8 +2,6 @@ FROM artifacts.developer.gov.bc.ca/docker-remote/node:24.21.0-alpine
 
 ENV NO_UPDATE_NOTIFIER=true
 
-# python3, make, and g++ compile native addons such as deasync, which ships
-# no Node 24 prebuild. They are removed after the frontend build.
 RUN apk add --no-cache openssl curl \
     && apk add --no-cache --virtual .build-deps python3 make g++
 
